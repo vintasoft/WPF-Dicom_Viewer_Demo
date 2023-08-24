@@ -1,0 +1,77 @@
+﻿<Window x:Class="WpfDicomViewerDemo.VoiLutParamsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
+    Title="VOI LUT parameters" 
+    Width="350"
+    Height="178"
+    ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Name="voiLutPanel">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0">VOI LUT</Label>
+            <ComboBox Grid.Row="0" Grid.Column="1"  
+                      Grid.ColumnSpan="2"
+                      Height="23" 
+                      Name="voiLutsComboBox"
+                      SelectionChanged="voiLutsComboBox_SelectionChanged"/>
+
+            <ComboBox Grid.Row="1" Grid.Column="1"
+                      Height="23"
+                      Name="voiLutSearchMethodComboBox"
+                      SelectionChanged="VoiLutSearchMethodComboBox_SelectionChanged"/>
+
+            <Button Grid.Row="1" Grid.Column="2" 
+                    Width="75" Height="23" 
+                    Margin="3"
+                    Click="calculateVoiLutButton_Click"
+                    Name="calculateVoiLutButton">
+                Calculate
+            </Button>
+
+            <Label Grid.Row="2">Window Center</Label>
+            <CustomControls:NumericUpDown Grid.Row="2" Grid.Column="1" 
+                                          x:Name="windowCenterNumericUpDown"
+                                          Grid.ColumnSpan="2"
+                                          Width="Auto" Height="24" 
+                                          Margin="0,0,3,0"
+                                          ValueChanged="windowCenterNumericUpDown_ValueChanged"/>
+
+            <Label Grid.Row="3">Window Width</Label>
+            <CustomControls:NumericUpDown Grid.Row="3" Grid.Column="1" 
+                                          x:Name="windowWidthNumericUpDown"
+                                          Grid.ColumnSpan="2" 
+                                          Width="Auto" Height="24" 
+                                          Margin="0,0,3,0"
+                                          ValueChanged="windowWidthNumericUpDown_ValueChanged"/>
+        </Grid>
+
+        <TextBlock 
+            TextWrapping="Wrap"
+            FontSize="14" 
+            FontFamily="Microsoft Sans Serif" 
+            Width="270"
+            Height="34"
+            TextAlignment="Center"
+            FontWeight="DemiBold"
+            Grid.Row="1">
+            Press left mouse button on image for changing VOI LUT.
+        </TextBlock>
+    </Grid>
+</Window>

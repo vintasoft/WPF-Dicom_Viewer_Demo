@@ -1,0 +1,57 @@
+﻿<Window x:Class="WpfDemosCommonCode.Imaging.RenderingSettingsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
+    Title="Rendering Settings" Height="269" Width="303" Topmost="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="124*" />
+            <ColumnDefinition Width="156*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32*" />
+            <RowDefinition Height="125*" />
+            <RowDefinition Height="33*" />
+        </Grid.RowDefinitions>
+        
+        <CheckBox Name="cbDefault" Grid.Column="0" Grid.Row="0" Click="cbDefault_Click" VerticalAlignment="Center">Default Settings</CheckBox>
+        
+        <GroupBox Header="Custom Settings" Name="gbCustomSettings" Grid.Column="0" Grid.Row="1" IsEnabled="False" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="107*" />
+                    <ColumnDefinition Width="73*" />
+                    <ColumnDefinition Width="80*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Column="0" Grid.Row="0">Horizontal Resolution</Label>
+                <Label Grid.Column="2" Grid.Row="0">dpi</Label>
+                <CustomControls:NumericUpDown x:Name="horizontalResolution" Grid.Column="1" Grid.Row="0" Width="75" Value="96" Minimum="1" Maximum="10000"/>
+                
+                <Label Grid.Column="0" Grid.Row="1">Vertical Resolution</Label>
+                <Label Grid.Column="2" Grid.Row="1">dpi</Label>
+                <CustomControls:NumericUpDown x:Name="verticalResolution" Grid.Column="1" Grid.Row="1" Width="75" Value="96" Minimum="1" Maximum="10000"/>
+
+                <Label Grid.Column="0" Grid.Row="2">Smoothing Mode</Label>
+                <ComboBox Name="smoothingModeComboBox" Margin="3" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" />
+                          
+                <Label Grid.Column="0" Grid.Row="3">Interpolation Mode</Label>
+                <ComboBox Name="interpolationModeComboBox" Margin="3" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" />
+
+                <CheckBox Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" VerticalAlignment="Center" Name="optimizeImageDrawingCheckBox">Optimize Image Drawing</CheckBox>
+            </Grid>            
+            
+        </GroupBox>
+
+        <Button Name="btOk" Grid.Column="1" Grid.Row="2" Height="27" Width="75" HorizontalAlignment="Left" Click="btOk_Click">OK</Button>
+        <Button Name="btCancel" Grid.Column="1" Grid.Row="2" Height="27" Margin="0,0,3,0" Width="75" HorizontalAlignment="Right" Click="btCancel_Click">Cancel</Button>
+
+    </Grid>
+</Window>

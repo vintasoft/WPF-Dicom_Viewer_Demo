@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="WpfDemosCommonCode.CustomControls.ValueEditorControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
+    MinHeight="76" MaxHeight="76" MinWidth="130"
+    HorizontalAlignment="Stretch">
+    <Grid>
+        <GroupBox Name="valueGroupBox" Header="Value Name">
+            <Grid Name="contentGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="78" />
+                </Grid.ColumnDefinitions>
+
+                <Slider Name="valueSlider" Grid.Column="0" Height="45" Margin="4,0" Minimum="1" Maximum="50" LargeChange="1" ValueChanged="valueSlider_ValueChanged"/>
+                <Label Name="minValueLabel" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom">0</Label>
+                <Label Name="maxValueLabel" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom">100</Label>
+
+                <CustomControls:NumericUpDown x:Name="valueNumericUpDown" Grid.Column="1" Height="25" VerticalAlignment="Top" ValueChanged="valueNumericUpDown_ValueChanged" Margin="1.5,0" />
+
+                <Button Name="resetButton" Grid.Column="1" Height="23" Width="75" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Click="resetButton_Click" Margin="1.5,0">Reset</Button>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

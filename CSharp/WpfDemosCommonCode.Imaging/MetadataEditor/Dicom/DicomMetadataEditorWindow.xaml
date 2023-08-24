@@ -1,0 +1,58 @@
+﻿<Window x:Class="WpfDemosCommonCode.Imaging.DicomMetadataEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfDemosCommonCode.Imaging"
+        xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        mc:Ignorable="d"
+        Title="DICOM Metadata Editor" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <GridSplitter Grid.Column="0" Width="4" />
+
+        <local:DicomMetadataTreeView Margin="0,0,4,0" Grid.Column="0" x:Name="metadataTreeView" SelectedItemChanged="MetadataTreeView_SelectedItemChanged" />
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="{}{selected node}" Name="selectedNodeGroupBox">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="37*"/>
+                        <ColumnDefinition Width="154*"/>
+                        <ColumnDefinition Width="191*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Name="metadataEditingPanel" Grid.ColumnSpan="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="191*"/>
+                            <ColumnDefinition Width="191*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Name="addButton" Grid.Column="0" Height="23" Margin="0,3,3,3" Click="AddButton_Click">Add DICOM Data Element...</Button>
+                        <Button Name="removeButton" Grid.Column="1" Height="23" Margin="3,3,0,3" Click="RemoveButton_Click">Delete This Node</Button>
+                    </Grid>
+                    
+                    <WindowsFormsHost Grid.ColumnSpan="3" Grid.Row="1" Name="windowsFormsHost1" >
+                        <wf:PropertyGrid x:Name="nodePropertyGrid"/>
+                    </WindowsFormsHost>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1" Header="Search Data Element">
+                <CustomControls:TreeViewSearchControl x:Name="treeViewSearchControl1" />
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>

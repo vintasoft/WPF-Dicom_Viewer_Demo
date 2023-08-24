@@ -1,0 +1,61 @@
+﻿<Window x:Class="WpfDemosCommonCode.Imaging.Codecs.Dialogs.JpegEncoderSettingsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
+    Title="JPEG Encoder Settings" Height="280" Width="238"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen"  ShowInTaskbar="False"
+    Loaded="Window_Loaded">
+    <Grid Margin="3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="29" />
+        </Grid.RowDefinitions>
+        
+        <TabControl Name="tabControl1" Grid.Row="0" SelectedIndex="0">
+            <TabItem Header="Compression" Name="compressionTabPage">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="63*" />
+                        <ColumnDefinition Width="137*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <Label Grid.Column="0" Grid.Row="0">Quality</Label>
+                    <CustomControls:NumericUpDown x:Name="jpegQualityNumericUpDown" Grid.Column="1" Grid.Row="0" Minimum="5" Maximum="100" Value="90" Width="65" HorizontalAlignment="Left"/>
+                    
+                    <CheckBox Name="jpegGrayscaleCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Center">Grayscale (8 bpp)</CheckBox>
+                    <CheckBox Name="disableSubsamplingCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center">Disable subsampling</CheckBox>
+                    <CheckBox Name="optimizeHuffmanTablesCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Center">Optimize Huffman tables</CheckBox>
+                    <CheckBox Name="createThumbnailCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" VerticalAlignment="Center">Create thumbnail</CheckBox>
+                    <CheckBox Name="saveCommentsCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" VerticalAlignment="Center">Save comments</CheckBox>
+                    <CheckBox Name="copyExifMetadataCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" VerticalAlignment="Center">Copy EXIF metadata</CheckBox>
+                    <CheckBox Name="copyUnkwonwnApplicationMetadataCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" VerticalAlignment="Center">Copy unknown application metadata</CheckBox>
+                </Grid>
+            </TabItem>
+            
+            <TabItem Header="Annotations Format" Name="annotationsTabPage">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="23" />
+                        <RowDefinition Height="23" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    <CheckBox Name="annotationsBinaryCheckBox" Grid.Row="0" Margin="3">Vintasoft Binary</CheckBox>
+                    <CheckBox Name="annotationXmpCheckBox" Grid.Row="1" Margin="3">Vintasoft XMP</CheckBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Button Name="buttonOk" Margin="0,0,85,0" Grid.Row="2" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Center" Click="buttonOk_Click">OK</Button>
+        <Button Name="buttonCancel" Margin="85,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Center" Click="buttonCancel_Click">Cancel</Button>
+    </Grid>
+</Window>

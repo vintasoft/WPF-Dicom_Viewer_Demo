@@ -1,0 +1,38 @@
+﻿<ToolBar x:Class="WpfDicomViewerDemo.AnnotationsToolBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ToolBar.Resources>
+        <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Type Separator}}">
+            <Setter Property="Margin" Value="6,0,6,0"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <TransformCollection>
+                                <RotateTransform Angle="90"/>
+                            </TransformCollection>
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <BitmapImage x:Key="ArrowIcon" UriSource="Icons\Arrow.png" />
+        <BitmapImage x:Key="AxisIcon" UriSource="Icons\Axis.png" />
+        <BitmapImage x:Key="CircleIcon" UriSource="Icons\Circle.png" />
+        <BitmapImage x:Key="CrosshairIcon" UriSource="Icons\Crosshair.png" />
+        <BitmapImage x:Key="CutlineIcon" UriSource="Icons\Cutline.png" />
+        <BitmapImage x:Key="EllipseIcon" UriSource="Icons\Ellipse.png" />
+        <BitmapImage x:Key="InfinitelineIcon" UriSource="Icons\Infiniteline.png" />
+        <BitmapImage x:Key="InterpolatedIcon" UriSource="Icons\Interpolated.png" />
+        <BitmapImage x:Key="MultilineIcon" UriSource="Icons\Multiline.png" />
+        <BitmapImage x:Key="PointIcon" UriSource="Icons\Point.png" />
+        <BitmapImage x:Key="PolylineIcon" UriSource="Icons\Polyline.png" />
+        <BitmapImage x:Key="RangelineIcon" UriSource="Icons\Rangeline.png" />
+        <BitmapImage x:Key="RectangleIcon" UriSource="Icons\Rectangle.png" />
+        <BitmapImage x:Key="RulerIcon" UriSource="Icons\Ruler.png" />
+        <BitmapImage x:Key="TextIcon" UriSource="Icons\Text.png" />
+    </ToolBar.Resources>
+
+    <StackPanel Name="StackPanel" Orientation="Horizontal" />
+</ToolBar>
