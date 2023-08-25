@@ -1,6 +1,6 @@
 # VintaSoft WPF DICOM Viewer Demo
 
-The project uses <a href="https://www.vintasoft.com/vsimaging-dotnet-index.html">VintaSoft Imaging .NET SDK</a> and demonstrates how to view and annotate DICOM images in WPF:
+This C# project uses <a href="https://www.vintasoft.com/vsimaging-dotnet-index.html">VintaSoft Imaging .NET SDK</a> and demonstrates how to view and annotate DICOM images in WPF:
 * Preview single- and multipage DICOM files.
 * Display DICOM image with necessary VOI LUT (value of interest lookup table).
 * Display DICOM image with/without overlays.

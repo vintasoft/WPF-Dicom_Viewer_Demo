@@ -91,10 +91,6 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="UIAutomationProvider" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="WindowsFormsIntegration" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Vintasoft.Imaging" Version="12.2.6.1" />
     <PackageReference Include="Vintasoft.Imaging.Gdi" Version="12.2.6.1" />
     <PackageReference Include="Vintasoft.Imaging.Annotation" Version="12.2.6.1" />
@@ -109,6 +105,8 @@
     <PackageReference Include="Vintasoft.Imaging.Wpf" Version="12.2.6.1" />
     <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="12.2.6.1" />
     <PackageReference Include="Vintasoft.Shared" Version="4.0.0.3" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
