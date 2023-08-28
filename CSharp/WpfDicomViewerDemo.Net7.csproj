@@ -32,7 +32,7 @@
   
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0-rc.1.22426.10" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
 
   </ItemGroup>
 
