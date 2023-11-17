@@ -13,7 +13,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>    
     <EnableDefaultItems>false</EnableDefaultItems>
-    <Version>12.2.11.1</Version>
+    <Version>12.2.12.1</Version>
     <AssemblyName>WpfDicomViewerDemo</AssemblyName>
     <RootNamespace>WpfDicomViewerDemo</RootNamespace>
     <StartupObject>WpfDicomViewerDemo.App</StartupObject>
