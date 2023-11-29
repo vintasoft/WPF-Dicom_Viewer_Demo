@@ -57,6 +57,33 @@ namespace WpfDemosCommonCode.Imaging.Codecs
         const string Filters_Xlsx = "*.xlsx";
         const string Filters_XlsxFiles = "XLSX files|" + Filters_Xlsx;
 
+        /// <summary>
+        /// The XLS file extensions.
+        /// </summary>
+        const string Filters_Xls = "*.xls";
+        /// <summary>
+        /// The file filter for XLSX files.
+        /// </summary>
+        const string Filters_XlsFiles = "XLS files|" + Filters_Xls;
+
+        /// <summary>
+        /// The TSV file extensions.
+        /// </summary>
+        const string Filters_Tsv = "*.tsv;*.tab";
+        /// <summary>
+        /// The file filter for TSV files.
+        /// </summary>
+        const string Filters_TsvFiles = "TSV files|" + Filters_Tsv;
+
+        /// <summary>
+        /// The CSV file extensions.
+        /// </summary>
+        const string Filters_Csv = "*.csv";
+        /// <summary>
+        /// The file filter for CSV files.
+        /// </summary>
+        const string Filters_CsvFiles = "CSV files|" + Filters_Csv;
+
         const string Filters_Xps = "*.xps";
         const string Filters_XpsFiles = "XPS files|" + Filters_Xps;
 
@@ -70,13 +97,13 @@ namespace WpfDemosCommonCode.Imaging.Codecs
         /// </summary>
         const string SVG_FILE_DIALOG_FILTER = "SVG Files|" + SVG_FILE_EXTENSIONS;
 
-#endregion
+        #endregion
 
 
 
-#region Properties
+        #region Properties
 
-#region Decoder
+        #region Decoder
 
         static string _decoderFilters = null;
         public static string DecoderFilters
@@ -100,10 +127,10 @@ namespace WpfDemosCommonCode.Imaging.Codecs
             }
         }
 
-#endregion
+        #endregion
 
 
-#region Encoder
+        #region Encoder
 
         static string _encoderFilters = null;
         public static string EncoderFilters
@@ -127,7 +154,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs
             }
         }
 
-        static string _multiPageEncoderFilters = null;       
+        static string _multiPageEncoderFilters = null;
         public static string MultipageEncoderFilters
         {
             get
@@ -195,15 +222,15 @@ namespace WpfDemosCommonCode.Imaging.Codecs
             }
         }
 
-#endregion
-        
-#endregion
+        #endregion
+
+        #endregion
 
 
 
-#region Methods
+        #region Methods
 
-#region Decoder
+        #region Decoder
 
         static void SetDecoderFilters()
         {
@@ -229,6 +256,18 @@ namespace WpfDemosCommonCode.Imaging.Codecs
             {
                 filter1 += "|" + Filters_DocxFiles;
                 filter2 += Filters_Docx + ";";
+                _decoderFiltersDefaultFilterIndex++;
+
+                filter1 += "|" + Filters_XlsFiles;
+                filter2 += Filters_Xls + ";";
+                _decoderFiltersDefaultFilterIndex++;
+
+                filter1 += "|" + Filters_TsvFiles;
+                filter2 += Filters_Tsv + ";";
+                _decoderFiltersDefaultFilterIndex++;
+
+                filter1 += "|" + Filters_CsvFiles;
+                filter2 += Filters_Csv + ";";
                 _decoderFiltersDefaultFilterIndex++;
             }
 
@@ -310,10 +349,10 @@ namespace WpfDemosCommonCode.Imaging.Codecs
             dialog.DefaultExt = ".tif";
         }
 
-#endregion
+        #endregion
 
 
-#region Encoder
+        #region Encoder
 
         static void SetEncoderFilters()
         {
@@ -377,9 +416,9 @@ namespace WpfDemosCommonCode.Imaging.Codecs
             _multiPageEncoderFiltersWithAnnotations = filter1;
         }
 
-#endregion
+        #endregion
 
-#endregion
+        #endregion
 
     }
 }

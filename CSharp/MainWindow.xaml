@@ -139,6 +139,8 @@
         <CommandBinding x:Name="closeCommandBinding" Command="{x:Static cc:MainWindow._closeCommand}" CanExecute="closeCommandBinding_CanExecute" Executed="closeDicomSeriesMenuItem_Click"/>
         <CommandBinding x:Name="exitCommandBinding" Command="{x:Static cc:MainWindow._exitCommand}" CanExecute="exitCommandBinding_CanExecute" Executed="exitMenuItem_Click"/>
 
+        <CommandBinding x:Name="fullScreenCommandBinding" Command="{x:Static cc:MainWindow._fullScreenCommand}" Executed="fullScreenMenuItem_Click" />
+        <CommandBinding x:Name="showScrollbarsCommandBinding" Command="{x:Static cc:MainWindow._showScrollbarsCommand}" Executed="showScrollbarsMenuItem_Click" />
         <CommandBinding x:Name="isNegativeCommandBinding" Command="{x:Static cc:MainWindow._isNegativeCommand}" CanExecute="isNegativeCommandBinding_CanExecute" Executed="negativeImageMenuItem_Click"/>
 
         <CommandBinding x:Name="cutCommandBinding" Command="{x:Static cc:MainWindow._cutCommand}" CanExecute="cutCommandBinding_CanExecute" Executed="cutMenuItem_Click"/>
@@ -158,6 +160,8 @@
         <KeyBinding Command="{x:Static cc:MainWindow._closeCommand}" Modifiers="CTRL" Key="W" />
         <KeyBinding Command="{x:Static cc:MainWindow._exitCommand}" Modifiers="ALT" Key="X" />
 
+        <KeyBinding Command="{x:Static cc:MainWindow._fullScreenCommand}" Key="F5" />
+        <KeyBinding Command="{x:Static cc:MainWindow._showScrollbarsCommand}" Key="F6" />
         <KeyBinding Command="{x:Static cc:MainWindow._isNegativeCommand}" Key="F11" />
 
         <KeyBinding Command="{x:Static cc:MainWindow._cutCommand}" Modifiers="CTRL" Key="X" />
@@ -179,9 +183,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="27" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
+        <Menu Grid.Row="0" Name="menu1">
             <MenuItem Header="File" Name="fileMenuItem">
                 <MenuItem HeaderStringFormat="{}{0} (Ctrl+ O)" Header="Open DICOM File(s) ..." Name="openDicomFilesMenuItem" Click="openDicomFilesMenuItem_Click" />
                 <MenuItem Header="Save DICOM File To Image File..." Name="saveDicomFileToImageFileMenuItem" Click="saveDicomFileToImageFileMenuItem_Click" />
@@ -206,6 +210,9 @@
                     <MenuItem Header="Clockwise (Shift+Ctrl+Plus)" Name="rotateClockwiseMenuItem" Click="rotateClockwiseMenuItem_Click"/>
                     <MenuItem Header="Counterclockwise (Shift+Ctrl+Minus)" Name="rotateCounterclockwiseMenuItem" Click="rotateCounterclockwiseMenuItem_Click"/>
                 </MenuItem>
+                <Separator />
+                <MenuItem HeaderStringFormat="{}{0} (F5)" Header="Full Screen" Name="fullScreenMenuItem" Click="fullScreenMenuItem_Click"/>
+                <MenuItem HeaderStringFormat="{}{0} (F6)" Header="Show Scrollbars" Name="showScrollbarsMenuItem" IsChecked="True" Click="showScrollbarsMenuItem_Click"/>
                 <Separator />
                 <MenuItem Header="Show Overlay Images" Name="showOverlayImagesMenuItem" IsCheckable="True" Click="showOverlayImagesMenuItem_Click" />
                 <MenuItem Header="Overlay Color..." Name="overlayColorMenuItem" Click="overlayColorMenuItem_Click" />
@@ -310,7 +317,7 @@
             </MenuItem>
         </Menu>
 
-        <ToolBarTray Grid.Row="1" IsLocked="True">
+        <ToolBarTray Grid.Row="1" IsLocked="True" Name="toolBarTray1">
             <CustomConstrols:ImageViewerToolBar
                 Grid.Row="1" 
                 x:Name="imageViewerToolBar" 
@@ -356,12 +363,11 @@
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="571*" MinWidth="15" />
-                    <ColumnDefinition Width="229*" MinWidth="10" />
+                    <ColumnDefinition Width="*" MinWidth="15" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <ImagingControls:WpfImageViewer
-                    Margin="0,0,5,0"
                     Background="Black"
                     Grid.Column="0"
                     SizeMode="BestFit"
@@ -374,9 +380,8 @@
                     InputGestureInsert="{x:Null}"
                     IsKeyboardNavigationEnabled="True"
                     x:Name="imageViewer1" />
-                <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" Width="5" HorizontalAlignment="Right" ResizeDirection="Columns" />
 
-                <Grid Grid.Column="1" Margin="3,0">
+                <Grid Grid.Column="1" Width="240" Name="propertyGridPanel">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="27" />
                         <RowDefinition Height="*" />
@@ -412,7 +417,7 @@
                 InputGestureSelectAll="{x:Null}"/>
         </Grid>
 
-        <DockPanel Grid.Row="3" Margin="3,0" Name="InfoPanel">
+        <DockPanel Grid.Row="3" Margin="3,0" Height="27" Name="InfoPanel">
             <ProgressBar DockPanel.Dock="Left" Width="100" Height="23" Visibility="Collapsed" Name="progressBar1" />
             <Label DockPanel.Dock="Left" Content="Action Label" VerticalAlignment="Center" Visibility="Collapsed" Name="actionLabel" />
 

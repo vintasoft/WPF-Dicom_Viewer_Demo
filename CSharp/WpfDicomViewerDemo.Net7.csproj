@@ -13,7 +13,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>    
     <EnableDefaultItems>false</EnableDefaultItems>
-    <Version>12.2.12.1</Version>
+    <Version>12.3.0.1</Version>
     <AssemblyName>WpfDicomViewerDemo</AssemblyName>
     <RootNamespace>WpfDicomViewerDemo</RootNamespace>
     <StartupObject>WpfDicomViewerDemo.App</StartupObject>
@@ -38,21 +38,21 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Vintasoft.Imaging" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Gdi" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom.Wpf.UI" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.UI" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Wpf.UI" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Dicom" Version="5.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Dicom.Wpf.UI" Version="5.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Jpeg2000Codec" Version="8.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.UI" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.WebpCodec" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Wpf" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="12.2.7.1" />
-    <PackageReference Include="Vintasoft.Shared" Version="4.0.0.3" />
+    <PackageReference Include="Vintasoft.Imaging" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Gdi" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom.Wpf.UI" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.UI" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Wpf.UI" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Dicom" Version="5.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Dicom.Wpf.UI" Version="5.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Jpeg2000Codec" Version="8.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.UI" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.WebpCodec" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Wpf" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="12.3.0.1" />
+    <PackageReference Include="Vintasoft.Shared" Version="4.1.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -470,6 +470,8 @@
     <Resource Include="WpfDemosCommonCode\Resources\VintasoftLogo.png">
     </Resource>
     <EmbeddedResource Include="WpfDemosCommonCode.Imaging\VisualToolsToolBar\VisualTools\ZoomVisualTools\Resources\WpfMagnifierTool.png">
+    </EmbeddedResource>
+    <EmbeddedResource Include="WpfDemosCommonCode.Imaging\VisualToolsToolBar\VisualTools\ZoomVisualTools\Resources\WpfPanTool.png">
     </EmbeddedResource>
   </ItemGroup>
 </Project>

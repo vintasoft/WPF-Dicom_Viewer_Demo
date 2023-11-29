@@ -1,17 +1,16 @@
-﻿using Microsoft.Win32;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+
+using Microsoft.Win32;
 
 using Vintasoft.Imaging;
 using Vintasoft.Imaging.Annotation;
@@ -29,7 +28,6 @@ using Vintasoft.Imaging.Codecs.ImageFiles.Dicom;
 using Vintasoft.Imaging.Dicom.Wpf.UI.VisualTools;
 using Vintasoft.Imaging.ImageColors;
 using Vintasoft.Imaging.Metadata;
-using Vintasoft.Imaging.UI;
 using Vintasoft.Imaging.UIActions;
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 
@@ -119,6 +117,10 @@ namespace WpfDicomViewerDemo
         /// </summary>
         bool _isVisualToolChanging = false;
 
+        /// <summary>
+        /// Current application window state.
+        /// </summary>
+        WindowState _windowState;
 
         #region File Dialogs
 
@@ -266,6 +268,8 @@ namespace WpfDicomViewerDemo
         public static RoutedCommand _closeCommand = new RoutedCommand();
         public static RoutedCommand _exitCommand = new RoutedCommand();
         public static RoutedCommand _isNegativeCommand = new RoutedCommand();
+        public static RoutedCommand _showScrollbarsCommand = new RoutedCommand();
+        public static RoutedCommand _fullScreenCommand = new RoutedCommand();
         public static RoutedCommand _cutCommand = new RoutedCommand();
         public static RoutedCommand _copyCommand = new RoutedCommand();
         public static RoutedCommand _pasteCommand = new RoutedCommand();
@@ -328,6 +332,13 @@ namespace WpfDicomViewerDemo
                 "Magnifier",
                 DemosResourcesManager.GetResourceAsBitmap("WpfDemosCommonCode.Imaging.VisualToolsToolBar.VisualTools.ZoomVisualTools.Resources.WpfMagnifierTool.png"));
 
+            // create action, which allows to pan an image in image viewer
+            VisualToolAction panToolAction = new VisualToolAction(
+                new WpfPanTool(),
+                "Pan Tool",
+                "Pan",
+                DemosResourcesManager.GetResourceAsBitmap("WpfDemosCommonCode.Imaging.VisualToolsToolBar.VisualTools.ZoomVisualTools.Resources.WpfPanTool.png"));
+
             WpfDicomViewerTool dicomViewerTool = new WpfDicomViewerTool();
             _dicomViewerTool = new WpfDicomAnnotatedViewerTool(
                dicomViewerTool,
@@ -337,9 +348,11 @@ namespace WpfDicomViewerDemo
             // add visual tools to tool strip
             dicomAnnotatedViewerToolBar.DicomAnnotatedViewerTool = _dicomViewerTool;
             dicomAnnotatedViewerToolBar.AddVisualToolAction(magnifierToolAction);
+            dicomAnnotatedViewerToolBar.AddVisualToolAction(panToolAction);
             dicomAnnotatedViewerToolBar.MainVisualTool.ActiveTool = _dicomViewerTool;
 
             magnifierToolAction.Activated += new EventHandler(magnifierToolAction_Activated);
+            panToolAction.Activated += PanToolAction_Activated;
 
             _dicomViewerTool.DicomViewerTool.TextOverlay.Add(
                 new WpfCompressionInfoTextOverlay(AnchorType.Top | AnchorType.Left));
@@ -724,6 +737,58 @@ namespace WpfDicomViewerDemo
         private void rotateCounterclockwiseMenuItem_Click(object sender, RoutedEventArgs e)
         {
             RotateViewCounterClockwise();
+        }
+
+        /// <summary>
+        /// Handles the Click event of FullScreenMenuItem object.
+        /// </summary>
+        private void fullScreenMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            fullScreenMenuItem.IsChecked ^= true;
+
+            if (fullScreenMenuItem.IsChecked)
+            {
+                // enable full screen mode
+                menu1.Visibility = Visibility.Collapsed;
+                toolBarTray1.Visibility = Visibility.Collapsed;
+                propertyGridPanel.Visibility = Visibility.Collapsed;
+                thumbnailViewer1.Background = Brushes.Black;
+                InfoPanel.Visibility = Visibility.Collapsed;
+
+                // update the form settings
+                _windowState = WindowState;
+
+                Topmost = true;
+                WindowStyle = WindowStyle.None;
+                WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                // disable full screen mode
+                menu1.Visibility = Visibility.Visible;
+                toolBarTray1.Visibility = Visibility.Visible;
+                propertyGridPanel.Visibility = Visibility.Visible;
+                thumbnailViewer1.Background = null;
+                InfoPanel.Visibility = Visibility.Visible;
+
+                // update the form settings
+                Topmost = true;
+                WindowStyle = WindowStyle.SingleBorderWindow;
+                WindowState = WindowState.Normal;
+                if (WindowState != _windowState)
+                    WindowState = _windowState;
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of ShowScrollbarsMenuItem object.
+        /// </summary>
+        private void showScrollbarsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            showScrollbarsMenuItem.IsChecked ^= true;
+
+            // show/hide scrollbars in image viewer
+            imageViewer1.AutoScroll = showScrollbarsMenuItem.IsChecked;
         }
 
         #endregion
@@ -1614,6 +1679,18 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
+        /// Handles the Activated event of PanToolAction object.
+        /// </summary>
+        private void PanToolAction_Activated(object sender, EventArgs e)
+        {
+            _isVisualToolChanging = true;
+            dicomAnnotatedViewerToolBar.MainVisualTool.ActiveTool =
+                dicomAnnotatedViewerToolBar.MainVisualTool.FindVisualTool<WpfPanTool>();
+            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.None;
+            _isVisualToolChanging = false;
+        }
+
+        /// <summary>
         /// Handles the PageIndexChanged event of ImageViewerToolBar object.
         /// </summary>
         private void imageViewerToolBar_PageIndexChanged(object sender, PageIndexChangedEventArgs e)
@@ -1638,7 +1715,7 @@ namespace WpfDicomViewerDemo
         /// <summary>
         /// Handles the SelectionChanged event of AnnotationComboBox object.
         /// </summary>
-        private void annotationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void annotationComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (imageViewer1.FocusedIndex != -1 && annotationComboBox.SelectedIndex != -1)
             {
@@ -1650,7 +1727,7 @@ namespace WpfDicomViewerDemo
         /// <summary>
         /// Handles the SelectionChanged event of AnnotationInteractionModeComboBox object.
         /// </summary>
-        private void annotationInteractionModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void annotationInteractionModeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode =
                 (AnnotationInteractionMode)annotationInteractionModeComboBox.SelectedItem;
