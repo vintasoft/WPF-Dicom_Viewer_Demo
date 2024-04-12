@@ -29,6 +29,7 @@ using Vintasoft.Imaging.Dicom.Wpf.UI.VisualTools;
 using Vintasoft.Imaging.ImageColors;
 using Vintasoft.Imaging.Metadata;
 using Vintasoft.Imaging.UIActions;
+using Vintasoft.Imaging.Wpf.UI;
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 
 using WpfDemosCommonCode;
@@ -533,7 +534,7 @@ namespace WpfDicomViewerDemo
         #region 'File' menu
 
         /// <summary>
-        /// Handles the Click event of OpenDicomFilesMenuItem object.
+        /// Handles the Click event of openDicomFilesMenuItem object.
         /// </summary>
         private void openDicomFilesMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -541,7 +542,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of SaveDicomFileToImageFileMenuItem object.
+        /// Handles the Click event of saveDicomFileToImageFileMenuItem object.
         /// </summary>
         private void saveDicomFileToImageFileMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -613,7 +614,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of CloseDicomSeriesMenuItem object.
+        /// Handles the Click event of closeDicomSeriesMenuItem object.
         /// </summary>
         private void closeDicomSeriesMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -622,7 +623,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of ExitMenuItem object.
+        /// Handles the Click event of exitMenuItem object.
         /// </summary>
         private void exitMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -635,7 +636,7 @@ namespace WpfDicomViewerDemo
         #region 'Edit' menu
 
         /// <summary>
-        /// Handles the SubmenuOpened event of EditMenuItem object.
+        /// Handles the SubmenuOpened event of editMenuItem object.
         /// </summary>
         private void editMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
         {
@@ -643,7 +644,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the SubmenuClosed event of EditMenuItem object.
+        /// Handles the SubmenuClosed event of editMenuItem object.
         /// </summary>
         private void editMenuItem_SubmenuClosed(object sender, RoutedEventArgs e)
         {
@@ -651,7 +652,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of CutMenuItem object.
+        /// Handles the Click event of cutMenuItem object.
         /// </summary>
         private void cutMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -659,7 +660,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of CopyMenuItem object.
+        /// Handles the Click event of copyMenuItem object.
         /// </summary>
         private void copyMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -667,7 +668,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of PasteMenuItem object.
+        /// Handles the Click event of pasteMenuItem object.
         /// </summary>
         private void pasteMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -675,7 +676,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of DeleteMenuItem object.
+        /// Handles the Click event of deleteMenuItem object.
         /// </summary>
         private void deleteMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -683,7 +684,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of DeleteAllMenuItem object.
+        /// Handles the Click event of deleteAllMenuItem object.
         /// </summary>
         private void deleteAllMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -698,7 +699,7 @@ namespace WpfDicomViewerDemo
         #region Thumbnail viewer settings
 
         /// <summary>
-        /// Handles the Click event of ThumbnailViewerSettingsMenuItem object.
+        /// Handles the Click event of thumbnailViewerSettingsMenuItem object.
         /// </summary>
         private void thumbnailViewerSettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -714,7 +715,7 @@ namespace WpfDicomViewerDemo
         #region Image viewer settings
 
         /// <summary>
-        /// Handles the Click event of ImageViewerSettingsMenuItem object.
+        /// Handles the Click event of imageViewerSettingsMenuItem object.
         /// </summary>
         private void imageViewerSettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -724,7 +725,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of RotateClockwiseMenuItem object.
+        /// Handles the Click event of rotateClockwiseMenuItem object.
         /// </summary>
         private void rotateClockwiseMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -732,7 +733,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of RotateCounterclockwiseMenuItem object.
+        /// Handles the Click event of rotateCounterclockwiseMenuItem object.
         /// </summary>
         private void rotateCounterclockwiseMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -740,7 +741,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of FullScreenMenuItem object.
+        /// Handles the Click event of fullScreenMenuItem object.
         /// </summary>
         private void fullScreenMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -781,7 +782,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of ShowScrollbarsMenuItem object.
+        /// Handles the Click event of showScrollbarsMenuItem object.
         /// </summary>
         private void showScrollbarsMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -797,7 +798,7 @@ namespace WpfDicomViewerDemo
         #region Overlay images
 
         /// <summary>
-        /// Handles the Click event of ShowOverlayImagesMenuItem object.
+        /// Handles the Click event of showOverlayImagesMenuItem object.
         /// </summary>
         private void showOverlayImagesMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -809,7 +810,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of OverlayColorMenuItem object.
+        /// Handles the Click event of overlayColorMenuItem object.
         /// </summary>
         private void overlayColorMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -837,7 +838,7 @@ namespace WpfDicomViewerDemo
         #region Metadata
 
         /// <summary>
-        /// Handles the Click event of ShowMetadataOnViewerMenuItem object.
+        /// Handles the Click event of showMetadataOnViewerMenuItem object.
         /// </summary>
         private void showMetadataOnViewerMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -846,7 +847,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of TextOverlaySettingsMenuItem object.
+        /// Handles the Click event of textOverlaySettingsMenuItem object.
         /// </summary>
         private void textOverlaySettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -868,7 +869,7 @@ namespace WpfDicomViewerDemo
         #region Rulers
 
         /// <summary>
-        /// Handles the Click event of ShowRulersOnViewerMenuItem object.
+        /// Handles the Click event of showRulersOnViewerMenuItem object.
         /// </summary>
         private void showRulersOnViewerMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -877,7 +878,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of RulersColorMenuItem object.
+        /// Handles the Click event of rulersColorMenuItem object.
         /// </summary>
         private void rulersColorMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -903,7 +904,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of RulersUnitOfMeasureMenuItem object.
+        /// Handles the Click event of rulersUnitOfMeasureMenuItem object.
         /// </summary>
         private void rulersUnitOfMeasureMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -920,7 +921,7 @@ namespace WpfDicomViewerDemo
         #region VOI LUT
 
         /// <summary>
-        /// Handles the Click event of VoiLutMainMenuItem object.
+        /// Handles the Click event of voiLutMainMenuItem object.
         /// </summary>
         private void voiLutMainMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -928,7 +929,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Closing event of VoiLutParamsWindow object.
+        /// Handles the Closing event of voiLutParamsWindow object.
         /// </summary>
         private void voiLutParamsWindow_Closing(object sender, CancelEventArgs e)
         {
@@ -954,7 +955,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of NegativeImageMenuItem object.
+        /// Handles the Click event of negativeImageMenuItem object.
         /// </summary>
         private void negativeImageMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -963,7 +964,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the DicomImageVoiLutChanged event of DicomViewerTool object.
+        /// Handles the DicomImageVoiLutChanged event of dicomViewerTool object.
         /// </summary>
         private void dicomViewerTool_DicomImageVoiLutChanged(object sender, WpfVoiLutChangedEventArgs e)
         {
@@ -1021,7 +1022,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of VoiLutMouseMoveDirectionMenuItem object.
+        /// Handles the Click event of voiLutMouseMoveDirectionMenuItem object.
         /// </summary>
         private void voiLutMouseMoveDirectionMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1040,7 +1041,7 @@ namespace WpfDicomViewerDemo
         #region Magnifier
 
         /// <summary>
-        /// Handles the Click event of MagnifierSettings object.
+        /// Handles the Click event of magnifierSettings object.
         /// </summary>
         private void magnifierSettings_Click(object sender, RoutedEventArgs e)
         {
@@ -1058,7 +1059,7 @@ namespace WpfDicomViewerDemo
         #region 'Metadata' menu
 
         /// <summary>
-        /// Handles the Click event of FileMetadataMenuItem object.
+        /// Handles the Click event of fileMetadataMenuItem object.
         /// </summary>
         private void fileMetadataMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1071,7 +1072,7 @@ namespace WpfDicomViewerDemo
         #region 'Page' menu
 
         /// <summary>
-        /// Handles the Click event of OverlayImagesMenuItem object.
+        /// Handles the Click event of overlayImagesMenuItem object.
         /// </summary>
         private void overlayImagesMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1090,7 +1091,7 @@ namespace WpfDicomViewerDemo
         #region 'Animation' menu
 
         /// <summary>
-        /// Handles the Click event of ShowAnimationMenuItem object.
+        /// Handles the Click event of showAnimationMenuItem object.
         /// </summary>
         private void showAnimationMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1098,7 +1099,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of AnimationRepeatMenuItem object.
+        /// Handles the Click event of animationRepeatMenuItem object.
         /// </summary>
         private void animationRepeatMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1106,7 +1107,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the TextChanged event of AnimationDelayComboBox object.
+        /// Handles the TextChanged event of animationDelayComboBox object.
         /// </summary>
         private void animationDelayComboBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -1118,7 +1119,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of SaveAsGifFileToolStripMenuItem object.
+        /// Handles the Click event of saveAsGifFileToolStripMenuItem object.
         /// </summary>
         private void saveAsGifFileToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1207,7 +1208,7 @@ namespace WpfDicomViewerDemo
         #region 'Annotation' menu
 
         /// <summary>
-        /// Handles the Click event of InfoMenuItem object.
+        /// Handles the Click event of infoMenuItem object.
         /// </summary>
         private void infoMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1218,7 +1219,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of InteractionModeNoneMenuItem object.
+        /// Handles the Click event of interactionModeNoneMenuItem object.
         /// </summary>
         private void interactionModeNoneMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1226,7 +1227,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of InteractionModeViewMenuItem object.
+        /// Handles the Click event of interactionModeViewMenuItem object.
         /// </summary>
         private void interactionModeViewMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1234,7 +1235,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of InteractionModeAuthorMenuItem object.
+        /// Handles the Click event of interactionModeAuthorMenuItem object.
         /// </summary>
         private void interactionModeAuthorMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1242,7 +1243,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the SubmenuOpened event of AnnotationsMenuItem object.
+        /// Handles the SubmenuOpened event of annotationsMenuItem object.
         /// </summary>
         private void annotationsMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
         {
@@ -1266,7 +1267,7 @@ namespace WpfDicomViewerDemo
         }
     
         /// <summary>
-        /// Handles the Click event of TransformationModeRectangularMenuItem object.
+        /// Handles the Click event of transformationModeRectangularMenuItem object.
         /// </summary>
         private void transformationModeRectangularMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1276,7 +1277,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of TransformationModePointsMenuItem object.
+        /// Handles the Click event of transformationModePointsMenuItem object.
         /// </summary>
         private void transformationModePointsMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1286,7 +1287,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of TransformationModeRectangularAndPointsMenuItem object.
+        /// Handles the Click event of transformationModeRectangularAndPointsMenuItem object.
         /// </summary>
         private void transformationModeRectangularAndPointsMenuItem_Click(
             object sender,
@@ -1299,7 +1300,7 @@ namespace WpfDicomViewerDemo
 
 
         /// <summary>
-        /// Handles the Click event of PresentationStateLoadMenuItem object.
+        /// Handles the Click event of presentationStateLoadMenuItem object.
         /// </summary>
         private void presentationStateLoadMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1343,7 +1344,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of PresentationStateInfoMenuItem object.
+        /// Handles the Click event of presentationStateInfoMenuItem object.
         /// </summary>
         private void presentationStateInfoMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1354,7 +1355,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of PresentationStateSaveMenuItem object.
+        /// Handles the Click event of presentationStateSaveMenuItem object.
         /// </summary>
         private void presentationStateSaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1375,7 +1376,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of PresentationStateSaveToMenuItem object.
+        /// Handles the Click event of presentationStateSaveToMenuItem object.
         /// </summary>
         private void presentationStateSaveToMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1415,7 +1416,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of BinaryFormatLoadMenuItem object.
+        /// Handles the Click event of binaryFormatLoadMenuItem object.
         /// </summary>
         private void binaryFormatLoadMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1423,7 +1424,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of BinaryFormatSaveToMenuItem object.
+        /// Handles the Click event of binaryFormatSaveToMenuItem object.
         /// </summary>
         private void binaryFormatSaveToMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1453,7 +1454,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of XmpFormatLoadMenuItem object.
+        /// Handles the Click event of xmpFormatLoadMenuItem object.
         /// </summary>
         private void xmpFormatLoadMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1461,7 +1462,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of XmpFormatSaveToMenuItem object.
+        /// Handles the Click event of xmpFormatSaveToMenuItem object.
         /// </summary>
         private void xmpFormatSaveToMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1492,7 +1493,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of AddMenuItem object.
+        /// Handles the Click event of addMenuItem object.
         /// </summary>
         private void addMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1510,7 +1511,7 @@ namespace WpfDicomViewerDemo
         #region 'Help' menu
 
         /// <summary>
-        /// Handles the Click event of aboutMenuItem property of Help object.
+        /// Handles the aboutMenuItem_Click event of help object.
         /// </summary>
         private void help_aboutMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1547,7 +1548,7 @@ namespace WpfDicomViewerDemo
         #region File Manipulation
 
         /// <summary>
-        /// Handles the OpenFile event of ImageViewerToolBar object.
+        /// Handles the OpenFile event of imageViewerToolBar object.
         /// </summary>
         private void imageViewerToolBar_OpenFile(object sender, EventArgs e)
         {
@@ -1560,7 +1561,7 @@ namespace WpfDicomViewerDemo
         #region Image Viewer
 
         /// <summary>
-        /// Handles the ImageLoadingProgress event of ImageViewer1 object.
+        /// Handles the ImageLoadingProgress event of imageViewer1 object.
         /// </summary>
         private void imageViewer1_ImageLoadingProgress(object sender, ProgressEventArgs e)
         {
@@ -1572,7 +1573,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the FocusedIndexChanged event of ImageViewer1 object.
+        /// Handles the FocusedIndexChanged event of imageViewer1 object.
         /// </summary>
         private void imageViewer1_FocusedIndexChanged(object sender, PropertyChangedEventArgs<int> e)
         {
@@ -1633,7 +1634,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Activated event of NoneAction object.
+        /// Handles the Activated event of noneAction object.
         /// </summary>
         private void noneAction_Activated(object sender, EventArgs e)
         {
@@ -1644,7 +1645,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Deactivated event of NoneAction object.
+        /// Handles the Deactivated event of noneAction object.
         /// </summary>
         private void noneAction_Deactivated(object sender, EventArgs e)
         {
@@ -1655,7 +1656,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Activated event of ImageMeasureToolAction object.
+        /// Handles the Activated event of imageMeasureToolAction object.
         /// </summary>
         private void imageMeasureToolAction_Activated(object sender, EventArgs e)
         {
@@ -1667,7 +1668,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Activated event of MagnifierToolAction object.
+        /// Handles the Activated event of magnifierToolAction object.
         /// </summary>
         private void magnifierToolAction_Activated(object sender, EventArgs e)
         {
@@ -1691,7 +1692,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the PageIndexChanged event of ImageViewerToolBar object.
+        /// Handles the PageIndexChanged event of imageViewerToolBar object.
         /// </summary>
         private void imageViewerToolBar_PageIndexChanged(object sender, PageIndexChangedEventArgs e)
         {
@@ -1705,7 +1706,7 @@ namespace WpfDicomViewerDemo
         #region Annotations UI
 
         /// <summary>
-        /// Handles the DropDownOpened event of AnnotationComboBox object.
+        /// Handles the DropDownOpened event of annotationComboBox object.
         /// </summary>
         private void annotationComboBox_DropDownOpened(object sender, EventArgs e)
         {
@@ -1713,7 +1714,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the SelectionChanged event of AnnotationComboBox object.
+        /// Handles the SelectionChanged event of annotationComboBox object.
         /// </summary>
         private void annotationComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
@@ -1725,7 +1726,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the SelectionChanged event of AnnotationInteractionModeComboBox object.
+        /// Handles the SelectionChanged event of annotationInteractionModeComboBox object.
         /// </summary>
         private void annotationInteractionModeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
@@ -1734,7 +1735,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the AnnotationInteractionModeChanged event of AnnotationTool object.
+        /// Handles the AnnotationInteractionModeChanged event of annotationTool object.
         /// </summary>
         private void annotationTool_AnnotationInteractionModeChanged(object sender, AnnotationInteractionModeChangedEventArgs e)
         {
@@ -1782,7 +1783,7 @@ namespace WpfDicomViewerDemo
         #region Annotation visual tool
 
         /// <summary>
-        /// Handles the FocusedAnnotationViewChanged event of AnnotationTool object.
+        /// Handles the FocusedAnnotationViewChanged event of annotationTool object.
         /// </summary>
         private void annotationTool_FocusedAnnotationViewChanged(object sender, WpfAnnotationViewChangedEventArgs e)
         {
@@ -1799,7 +1800,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the AnnotationBuildingFinished event of AnnotationTool object.
+        /// Handles the AnnotationBuildingFinished event of annotationTool object.
         /// </summary>
         private void annotationTool_AnnotationBuildingFinished(object sender, WpfAnnotationViewEventArgs e)
         {
@@ -1807,7 +1808,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the AnnotationTransformingStarted event of AnnotationTool object.
+        /// Handles the AnnotationTransformingStarted event of annotationTool object.
         /// </summary>
         private void annotationTool_AnnotationTransformingStarted(object sender, WpfAnnotationViewEventArgs e)
         {
@@ -1815,7 +1816,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the AnnotationTransformingFinished event of AnnotationTool object.
+        /// Handles the AnnotationTransformingFinished event of annotationTool object.
         /// </summary>
         private void annotationTool_AnnotationTransformingFinished(object sender, WpfAnnotationViewEventArgs e)
         {
@@ -1838,7 +1839,7 @@ namespace WpfDicomViewerDemo
         #region VOI LUT
 
         /// <summary>
-        /// Handles the Click event of VoiLutMenuItem object.
+        /// Handles the Click event of voiLutMenuItem object.
         /// </summary>
         private void voiLutMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -1854,7 +1855,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of CustomVoiLutMenuItem object.
+        /// Handles the Click event of customVoiLutMenuItem object.
         /// </summary>
         private void customVoiLutMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -3559,7 +3560,7 @@ namespace WpfDicomViewerDemo
         #region Hot keys
 
         /// <summary>
-        /// Handles the CanExecute event of OpenCommandBinding object.
+        /// Handles the CanExecute event of openCommandBinding object.
         /// </summary>
         private void openCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3567,7 +3568,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of CloseCommandBinding object.
+        /// Handles the CanExecute event of closeCommandBinding object.
         /// </summary>
         private void closeCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3575,7 +3576,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of ExitCommandBinding object.
+        /// Handles the CanExecute event of exitCommandBinding object.
         /// </summary>
         private void exitCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3583,7 +3584,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of IsNegativeCommandBinding object.
+        /// Handles the CanExecute event of isNegativeCommandBinding object.
         /// </summary>
         private void isNegativeCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3591,7 +3592,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of CutCommandBinding object.
+        /// Handles the CanExecute event of cutCommandBinding object.
         /// </summary>
         private void cutCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3599,7 +3600,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of CopyCommandBinding object.
+        /// Handles the CanExecute event of copyCommandBinding object.
         /// </summary>
         private void copyCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3607,7 +3608,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of PasteCommandBinding object.
+        /// Handles the CanExecute event of pasteCommandBinding object.
         /// </summary>
         private void pasteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3615,7 +3616,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of DeleteCommandBinding object.
+        /// Handles the CanExecute event of deleteCommandBinding object.
         /// </summary>
         private void deleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3624,7 +3625,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of DeleteAllCommandBinding object.
+        /// Handles the CanExecute event of deleteAllCommandBinding object.
         /// </summary>
         private void deleteAllCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3632,7 +3633,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of RotateClockwiseCommandBinding object.
+        /// Handles the CanExecute event of rotateClockwiseCommandBinding object.
         /// </summary>
         private void rotateClockwiseCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -3640,13 +3641,62 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the CanExecute event of RotateCounterclockwiseCommandBinding object.
+        /// Handles the CanExecute event of rotateCounterclockwiseCommandBinding object.
         /// </summary>
         private void rotateCounterclockwiseCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = rotateCounterclockwiseMenuItem.IsEnabled;
         }
 
+        #endregion
+
+
+        #region Drag&Drop
+
+        /// <summary>
+        /// Handles the Dragging event of imageViewer1 object.
+        /// </summary>
+        private void imageViewer1_Dragging(object sender, DragEventArgs e)
+        {
+            // if image files are dragging
+            if (e.Data.GetDataPresent("FileNameW"))
+            {
+                e.Effects = DragDropEffects.Move;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+            e.Handled = true;
+        }
+       
+        /// <summary>
+        /// Handles the Drop event of imageViewer1 object.
+        /// </summary>
+        private void imageViewer1_Drop(object sender, DragEventArgs e)
+        {
+            // if image viewer allows to drop image files and image files are dropped
+            if (e.Data.GetDataPresent("FileDrop"))
+            {
+                // get image file names
+                string[] filenames = (string[])e.Data.GetData("FileDrop");
+
+                // close the previously opened DICOM files
+                ClosePreviouslyOpenedFiles();
+
+                // if is single directory
+                if (filenames.Length == 1 && Directory.Exists(filenames[0]))
+                {
+                    // get files from directory
+                    filenames = Directory.GetFiles(filenames[0]);
+                }
+
+                // add DICOM files to the DICOM series
+                AddDicomFilesToSeries(filenames);
+                _dicomViewerTool.DicomViewerTool.DicomImageVoiLut = _dicomViewerTool.DicomViewerTool.DefaultDicomImageVoiLut;
+            }
+        }
+    
         #endregion
 
         #endregion

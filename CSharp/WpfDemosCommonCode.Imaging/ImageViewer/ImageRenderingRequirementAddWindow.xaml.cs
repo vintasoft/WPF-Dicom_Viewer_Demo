@@ -55,7 +55,7 @@ namespace WpfDemosCommonCode.Imaging
         #region Methods
 
         /// <summary>
-        /// Handles the Click event of OkButton object.
+        /// Handles the Click event of okButton object.
         /// </summary>
         private void okButton_Click(object sender, RoutedEventArgs e)
         {
@@ -64,7 +64,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonCancel object.
+        /// Handles the Click event of buttonCancel object.
         /// </summary>
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -72,7 +72,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the SelectionChanged event of CodecComboBox object.
+        /// Handles the SelectionChanged event of codecComboBox object.
         /// </summary>
         private void codecComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
@@ -83,7 +83,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the SelectionChanged event of MegapixelsComboBox object.
+        /// Handles the SelectionChanged event of megapixelsComboBox object.
         /// </summary>
         private void megapixelsComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
@@ -91,7 +91,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the KeyUp event of MegapixelsComboBox object.
+        /// Handles the KeyUp event of megapixelsComboBox object.
         /// </summary>
         private void megapixelsComboBox_KeyUp(object sender, KeyEventArgs e)
         {

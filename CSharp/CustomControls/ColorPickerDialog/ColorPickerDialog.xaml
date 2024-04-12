@@ -19,14 +19,14 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button Name="OKButton"
-                    Click="okButtonClicked"
+                    Click="okButton_Clicked"
                     IsEnabled="True"
                     Height="23"
                     Width="75">OK</Button>
             <Button Height="23"
                     Width="75"
                     Margin="3,0"
-                    Click="cancelButtonClicked">Cancel</Button>
+                    Click="cancelButton_Clicked">Cancel</Button>
         </StackPanel>
     </Grid>
 </Window>

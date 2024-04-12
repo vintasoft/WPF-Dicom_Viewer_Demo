@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -442,13 +442,13 @@ namespace WpfDemosCommonCode.CustomControls
             _colorDetail = GetTemplateChild(ColorDetailName) as FrameworkElement;
             _colorMarker = GetTemplateChild(ColorMarkerName) as Path;
             _colorSlider = GetTemplateChild(ColorSliderName) as SpectrumSlider;
-            _colorSlider.ValueChanged += new RoutedPropertyChangedEventHandler<double>(BaseColorChanged);
+            _colorSlider.ValueChanged += new RoutedPropertyChangedEventHandler<double>(_colorSlider_ValueChanged);
 
             _colorMarker.RenderTransform = _markerTransform;
             _colorMarker.RenderTransformOrigin = new Point(0.5, 0.5);
-            _colorDetail.MouseLeftButtonDown += new MouseButtonEventHandler(OnMouseLeftButtonDown);
-            _colorDetail.PreviewMouseMove += new MouseEventHandler(OnMouseMove);
-            _colorDetail.SizeChanged += new SizeChangedEventHandler(ColorDetailSizeChanged);
+            _colorDetail.MouseLeftButtonDown += new MouseButtonEventHandler(_colorDetail_MouseLeftButtonDown);
+            _colorDetail.PreviewMouseMove += new MouseEventHandler(_colorDetail_PreviewMouseMove);
+            _colorDetail.SizeChanged += new SizeChangedEventHandler(_colorDetail_SizeChanged);
 
             _opacitySlider = GetTemplateChild("opacitySlider") as Slider;
             _scAChannelTextBox = GetTemplateChild("ScAChannelTextBox") as TextBox;
@@ -475,10 +475,10 @@ namespace WpfDemosCommonCode.CustomControls
             _templateApplied = false;
             if (oldTemplate != null)
             {
-                _colorSlider.ValueChanged -= new RoutedPropertyChangedEventHandler<double>(BaseColorChanged);
-                _colorDetail.MouseLeftButtonDown -= new MouseButtonEventHandler(OnMouseLeftButtonDown);
-                _colorDetail.PreviewMouseMove -= new MouseEventHandler(OnMouseMove);
-                _colorDetail.SizeChanged -= new SizeChangedEventHandler(ColorDetailSizeChanged);
+                _colorSlider.ValueChanged -= new RoutedPropertyChangedEventHandler<double>(_colorSlider_ValueChanged);
+                _colorDetail.MouseLeftButtonDown -= new MouseButtonEventHandler(_colorDetail_MouseLeftButtonDown);
+                _colorDetail.PreviewMouseMove -= new MouseEventHandler(_colorDetail_PreviewMouseMove);
+                _colorDetail.SizeChanged -= new SizeChangedEventHandler(_colorDetail_SizeChanged);
                 _colorDetail = null;
                 _colorMarker = null;
                 _colorSlider = null;
@@ -667,7 +667,10 @@ namespace WpfDemosCommonCode.CustomControls
 
         #region Template Part Event Handlers
 
-        private void BaseColorChanged(object sender, RoutedPropertyChangedEventArgs<Double> e)
+        /// <summary>
+        /// Handles the ValueChanged event of _colorSlider object.
+        /// </summary>
+        private void _colorSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<Double> e)
         {
             if (_colorPosition != null)
             {
@@ -675,13 +678,19 @@ namespace WpfDemosCommonCode.CustomControls
             }
         }
 
-        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// Handles the MouseLeftButtonDown event of _colorDetail object.
+        /// </summary>
+        private void _colorDetail_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(_colorDetail);
             UpdateMarkerPosition(p);
         }
 
-        private void OnMouseMove(object sender, MouseEventArgs e)
+        /// <summary>
+        /// Handles the PreviewMouseMove event of _colorDetail object.
+        /// </summary>
+        private void _colorDetail_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -691,7 +700,10 @@ namespace WpfDemosCommonCode.CustomControls
             }
         }
 
-        private void ColorDetailSizeChanged(object sender, SizeChangedEventArgs args)
+        /// <summary>
+        /// Handles the SizeChanged event of _colorDetail object.
+        /// </summary>
+        private void _colorDetail_SizeChanged(object sender, SizeChangedEventArgs args)
         {
             if (args.PreviousSize != Size.Empty &&
                 args.PreviousSize.Width != 0 &&

@@ -58,6 +58,16 @@ namespace WpfDemosCommonCode.Imaging.Codecs
         const string Filters_XlsxFiles = "XLSX files|" + Filters_Xlsx;
 
         /// <summary>
+        /// The WSI file extensions.
+        /// </summary>
+        const string WSI_FILE_EXTENSIONS = "*.ndpi;*.vms";
+        /// <summary>
+        /// The file filter for DICOM files.
+        /// </summary>
+        const string WSI_FILE_DIALOG_FILTER = "WSI (Whole-Slide image) files|" + WSI_FILE_EXTENSIONS;
+
+
+        /// <summary>
         /// The XLS file extensions.
         /// </summary>
         const string Filters_Xls = "*.xls";
@@ -303,6 +313,14 @@ namespace WpfDemosCommonCode.Imaging.Codecs
             {
                 filter1 += "|" + Filters_XpsFiles;
                 filter2 += Filters_Xps + ";";
+                _decoderFiltersDefaultFilterIndex++;
+            }
+
+            // if WSI decoders (NDPI) is available
+            if (AvailableDecoders.IsDecoderAvailable("Ndpi"))
+            {
+                filter1 += "|" + WSI_FILE_DIALOG_FILTER;
+                filter2 += WSI_FILE_EXTENSIONS + ";";
                 _decoderFiltersDefaultFilterIndex++;
             }
 

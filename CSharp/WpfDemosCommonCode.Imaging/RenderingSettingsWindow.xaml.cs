@@ -112,7 +112,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the Click event of CbDefault object.
+        /// Handles the Click event of cbDefault object.
         /// </summary>
         private void cbDefault_Click(object sender, RoutedEventArgs e)
         {
@@ -120,7 +120,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the Click event of BtOk object.
+        /// Handles the Click event of btOk object.
         /// </summary>
         private void btOk_Click(object sender, RoutedEventArgs e)
         {
@@ -137,7 +137,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the Click event of BtCancel object.
+        /// Handles the Click event of btCancel object.
         /// </summary>
         private void btCancel_Click(object sender, RoutedEventArgs e)
         {

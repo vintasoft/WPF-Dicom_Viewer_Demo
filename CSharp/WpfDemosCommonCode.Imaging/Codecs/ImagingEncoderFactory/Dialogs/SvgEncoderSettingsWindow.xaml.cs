@@ -81,7 +81,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonOk object.
+        /// Handles the Click event of buttonOk object.
         /// </summary>
         private void buttonOk_Click(object sender, RoutedEventArgs e)
         {
@@ -117,7 +117,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonCancel object.
+        /// Handles the Click event of buttonCancel object.
         /// </summary>
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -125,7 +125,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the SelectedIndexChanged event of EncoderNameComboBox object.
+        /// Handles the SelectedIndexChanged event of encoderNameComboBox object.
         /// </summary>
         private void encoderNameComboBox_SelectedIndexChanged(object sender, SelectionChangedEventArgs e)
         {

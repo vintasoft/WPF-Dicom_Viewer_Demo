@@ -68,7 +68,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the ValueChanged event of CompressionRatioNumericUpDown object.
+        /// Handles the ValueChanged event of compressionRatioNumericUpDown object.
         /// </summary>
         private void compressionRatioNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
@@ -76,7 +76,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of WaveletTransformCheckBox object.
+        /// Handles the Click event of waveletTransformCheckBox object.
         /// </summary>
         private void waveletTransformCheckBox_Click(object sender, RoutedEventArgs e)
         {
@@ -149,7 +149,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of UseTilesCheckBox object.
+        /// Handles the Click event of useTilesCheckBox object.
         /// </summary>
         private void useTilesCheckBox_Click(object sender, RoutedEventArgs e)
         {
@@ -166,7 +166,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonOk object.
+        /// Handles the Click event of buttonOk object.
         /// </summary>
         private void buttonOk_Click(object sender, RoutedEventArgs e)
         {
@@ -182,7 +182,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonCancel object.
+        /// Handles the Click event of buttonCancel object.
         /// </summary>
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {

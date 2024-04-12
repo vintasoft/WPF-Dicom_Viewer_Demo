@@ -111,7 +111,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonOk object.
+        /// Handles the Click event of buttonOk object.
         /// </summary>
         private void buttonOk_Click(object sender, RoutedEventArgs e)
         {
@@ -120,7 +120,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonCancel object.
+        /// Handles the Click event of buttonCancel object.
         /// </summary>
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -128,7 +128,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the SelectionChanged event of MegapixelsComboBox object.
+        /// Handles the SelectionChanged event of megapixelsComboBox object.
         /// </summary>
         private void megapixelsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -136,7 +136,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the KeyUp event of MegapixelsComboBox object.
+        /// Handles the KeyUp event of megapixelsComboBox object.
         /// </summary>
         private void megapixelsComboBox_KeyUp(object sender, KeyEventArgs e)
         {
@@ -157,7 +157,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the SelectionChanged event of CodecComboBox object.
+        /// Handles the SelectionChanged event of codecComboBox object.
         /// </summary>
         private void codecComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -166,7 +166,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the Click event of AddButton object.
+        /// Handles the Click event of addButton object.
         /// </summary>
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
@@ -191,7 +191,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the Click event of RemoveButton object.
+        /// Handles the Click event of removeButton object.
         /// </summary>
         private void removeButton_Click(object sender, RoutedEventArgs e)
         {

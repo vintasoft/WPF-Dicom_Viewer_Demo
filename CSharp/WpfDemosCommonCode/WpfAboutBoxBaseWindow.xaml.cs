@@ -103,7 +103,7 @@ namespace WpfDemosCommonCode
         #region Methods
 
         /// <summary>
-        /// Handles the Click event of OkButton object.
+        /// Handles the Click event of okButton object.
         /// </summary>
         private void okButton_Click(object sender, RoutedEventArgs e)
         {
@@ -111,7 +111,7 @@ namespace WpfDemosCommonCode
         }
 
         /// <summary>
-        /// Handles the MouseDown event of LinkLabel object.
+        /// Handles the MouseDown event of linkLabel object.
         /// </summary>
         private void linkLabel_MouseDown(object sender, MouseButtonEventArgs e)
         {

@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 
@@ -100,14 +100,20 @@ namespace WpfDemosCommonCode.CustomControls
 
         #region PRIVATE
 
-        private void okButtonClicked(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Handles the Clicked event of okButton object.
+        /// </summary>
+        private void okButton_Clicked(object sender, RoutedEventArgs e)
         {
             _color = cPicker.SelectedColor;
             DialogResult = true;
             Hide();
         }
 
-        private void cancelButtonClicked(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Handles the Clicked event of cancelButton object.
+        /// </summary>
+        private void cancelButton_Clicked(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
         }

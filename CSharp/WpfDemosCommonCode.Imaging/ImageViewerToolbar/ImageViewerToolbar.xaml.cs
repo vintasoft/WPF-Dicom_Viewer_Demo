@@ -22,7 +22,7 @@ namespace WpfDemosCommonCode.Imaging
         /// <summary>
         /// Available zoom values.
         /// </summary>
-        int[] _wpfZoomValues = new int[] { 1, 5, 10, 25, 50, 75, 100, 125, 150, 200, 400, 600, 800, 1000, 2000, 4000, 8000, 10000 };
+        int[] _wpfZoomValues = new int[] { 1, 5, 10, 25, 50, 75, 100, 125, 150, 200, 400, 600, 800, 1000, 2000, 4000, 8000, 10000, 20000, 50000, 100000 };
 
         /// <summary>
         /// Selected "image scale mode" menu item.
@@ -922,7 +922,7 @@ namespace WpfDemosCommonCode.Imaging
         #region Image viewer
 
         /// <summary>
-        /// Handles the ImagesChanging event of ImageViewer object.
+        /// Handles the ImagesChanging event of imageViewer object.
         /// </summary>
         private void imageViewer_ImagesChanging(object sender, EventArgs e)
         {
@@ -935,7 +935,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the ImagesChanged event of ImageViewer object.
+        /// Handles the ImagesChanged event of imageViewer object.
         /// </summary>
         private void imageViewer_ImagesChanged(object sender, EventArgs e)
         {
@@ -945,7 +945,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the FocusedIndexChanged event of ImageViewer object.
+        /// Handles the FocusedIndexChanged event of imageViewer object.
         /// </summary>
         private void imageViewer_FocusedIndexChanged(object sender, PropertyChangedEventArgs<int> e)
         {
@@ -954,7 +954,7 @@ namespace WpfDemosCommonCode.Imaging
         }
 
         /// <summary>
-        /// Handles the ZoomChanged event of ImageViewer object.
+        /// Handles the ZoomChanged event of imageViewer object.
         /// </summary>
         private void imageViewer_ZoomChanged(object sender, ZoomChangedEventArgs e)
         {

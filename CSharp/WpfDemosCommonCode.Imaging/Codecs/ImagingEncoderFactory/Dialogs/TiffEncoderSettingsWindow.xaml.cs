@@ -225,7 +225,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Checked event of RadioButton object.
+        /// Handles the Checked event of radioButton object.
         /// </summary>
         private void radioButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -233,7 +233,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the ValueChanged event of TileWidthNumericUpDown object.
+        /// Handles the ValueChanged event of tileWidthNumericUpDown object.
         /// </summary>
         private void tileWidthNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
@@ -245,7 +245,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the ValueChanged event of TileHeightNumericUpDown object.
+        /// Handles the ValueChanged event of tileHeightNumericUpDown object.
         /// </summary>
         private void tileHeightNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
@@ -257,7 +257,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of CompressionJpeg2000SettingsButton object.
+        /// Handles the Click event of compressionJpeg2000SettingsButton object.
         /// </summary>
         private void compressionJpeg2000SettingsButton_Click(object sender, RoutedEventArgs e)
         {
@@ -280,7 +280,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonOk object.
+        /// Handles the Click event of buttonOk object.
         /// </summary>
         private void buttonOk_Click(object sender, RoutedEventArgs e)
         {
@@ -370,7 +370,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonCancel object.
+        /// Handles the Click event of buttonCancel object.
         /// </summary>
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -378,7 +378,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the SelectionChanged event of BinarizationModeComboBox object.
+        /// Handles the SelectionChanged event of binarizationModeComboBox object.
         /// </summary>
         private void binarizationModeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {

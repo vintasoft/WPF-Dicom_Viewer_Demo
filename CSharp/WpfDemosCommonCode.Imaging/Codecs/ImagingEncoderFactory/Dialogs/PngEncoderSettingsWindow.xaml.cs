@@ -154,7 +154,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonOk object.
+        /// Handles the Click event of buttonOk object.
         /// </summary>
         private void buttonOk_Click(object sender, RoutedEventArgs e)
         {
@@ -164,7 +164,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of ButtonCancel object.
+        /// Handles the Click event of buttonCancel object.
         /// </summary>
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -172,7 +172,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Checked event of RadioButton object.
+        /// Handles the Checked event of radioButton object.
         /// </summary>
         private void radioButton_Checked(object sender, RoutedEventArgs e)
         {

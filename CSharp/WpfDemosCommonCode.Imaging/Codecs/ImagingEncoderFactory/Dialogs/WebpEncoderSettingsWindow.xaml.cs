@@ -89,7 +89,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of OkButton object.
+        /// Handles the Click event of okButton object.
         /// </summary>
         private void okButton_Click(object sender, RoutedEventArgs e)
         {
@@ -117,7 +117,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Click event of CancelButton object.
+        /// Handles the Click event of cancelButton object.
         /// </summary>
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
@@ -128,7 +128,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         #region Formats
 
         /// <summary>
-        /// Handles the Checked event of LosslessRadioButton object.
+        /// Handles the Checked event of losslessRadioButton object.
         /// </summary>
         private void losslessRadioButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -143,7 +143,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         }
 
         /// <summary>
-        /// Handles the Checked event of LossyRadioButton object.
+        /// Handles the Checked event of lossyRadioButton object.
         /// </summary>
         private void lossyRadioButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -163,7 +163,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
         #region NearLossless
 
         /// <summary>
-        /// Handles the Checked event of NearLosslessCheckBox object.
+        /// Handles the Checked event of nearLosslessCheckBox object.
         /// </summary>
         private void nearLosslessCheckBox_Checked(object sender, RoutedEventArgs e)
         {

@@ -55,7 +55,7 @@ namespace WpfDemosCommonCode.CustomControls
         #region Methods
 
         /// <summary>
-        /// Handles the SelectionChanged event of FontFamilyComboBox object.
+        /// Handles the SelectionChanged event of fontFamilyComboBox object.
         /// </summary>
         private void fontFamilyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

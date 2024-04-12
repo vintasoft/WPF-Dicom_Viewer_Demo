@@ -172,7 +172,7 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of ImageViewerBackColorToolStripMenuItem object.
+        /// Handles the Click event of imageViewerBackColorToolStripMenuItem object.
         /// </summary>
         private void imageViewerBackColorToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
