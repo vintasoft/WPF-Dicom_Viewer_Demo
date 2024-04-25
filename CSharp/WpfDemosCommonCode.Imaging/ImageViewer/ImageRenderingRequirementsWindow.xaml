@@ -32,7 +32,7 @@
             <ComboBoxItem>100</ComboBoxItem>
         </ComboBox>
 
-        <Label Grid.Column="3" Grid.Row="2">Megapixels</Label>
+        <Label x:Name="sizeTypeLabel" Grid.Column="3" Grid.Row="2">Megapixels</Label>
 
         <Button Grid.Row="3" Grid.ColumnSpan="3" Name="buttonOk" Margin="0,3,82,3"  HorizontalAlignment="Center" Height="23" Width="75" Click="buttonOk_Click">OK</Button>
         <Button Grid.Row="3" Grid.ColumnSpan="3" Name="buttonCancel" Margin="82,3,0,3" HorizontalAlignment="Center" Height="23" Width="75" Click="buttonCancel_Click">Cancel</Button>

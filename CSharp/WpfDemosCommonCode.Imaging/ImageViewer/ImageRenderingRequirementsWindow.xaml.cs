@@ -18,9 +18,20 @@ namespace WpfDemosCommonCode.Imaging
 
         #region Fields
 
-        Dictionary<string, float> _requirements = new Dictionary<string, float>();
+        /// <summary>
+        /// Dictionary: codec name => the image size in megapixels.
+        /// </summary>
+        Dictionary<string, float> _codecNameToImageSizeInMegapixels = new Dictionary<string, float>();
 
-        string[] _codes = new string[] { "Bmp", "Jpeg", "Jpeg2000", "Tiff", "Png", "Pdf", "Xps", "Docx" };
+        /// <summary>
+        /// Dictionary: codec name => the image size in megabytes.
+        /// </summary>
+        Dictionary<string, float> _codecNameToImageSizeInMegabytes = new Dictionary<string, float>();
+
+        /// <summary>
+        /// The available codec names.
+        /// </summary>
+        string[] _codecNames = new string[] { "Bmp", "Jpeg", "Jpeg2000", "Tiff", "Png", "Pdf", "Docx", "Xlsx", "Wmf" };
 
         #endregion
 
@@ -28,11 +39,18 @@ namespace WpfDemosCommonCode.Imaging
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageRenderingRequirementsWindow"/> class.
+        /// </summary>
         public ImageRenderingRequirementsWindow()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageRenderingRequirementsWindow"/> class.
+        /// </summary>
+        /// <param name="renderingRequirements">The rendering requirements.</param>
         public ImageRenderingRequirementsWindow(ImageRenderingRequirements renderingRequirements)
             : this()
         {
@@ -48,6 +66,9 @@ namespace WpfDemosCommonCode.Imaging
         #region Properties
 
         ImageRenderingRequirements _renderingRequirements;
+        /// <summary>
+        /// Gets the current rendering requirements.
+        /// </summary>
         public ImageRenderingRequirements RenderingRequirements
         {
             get
@@ -62,17 +83,30 @@ namespace WpfDemosCommonCode.Imaging
 
         #region Methods
 
+        /// <summary>
+        /// Shows the <see cref="RenderingRequirements"/> settings.
+        /// </summary>
         private void ShowSettings()
         {
 
-            for (int i = 0; i < _codes.Length; i++)
+            for (int i = 0; i < _codecNames.Length; i++)
             {
-                ImageSizeRenderingRequirement requirement;
-                requirement = _renderingRequirements.GetRequirement(_codes[i]) as ImageSizeRenderingRequirement;
-                if (requirement != null)
+                // get image size rendering requirements
+                ImageSizeRenderingRequirement sizeRequirement =
+                    _renderingRequirements.GetRequirement(_codecNames[i]) as ImageSizeRenderingRequirement;
+                if (sizeRequirement != null)
                 {
-                    codecComboBox.Items.Add(_codes[i]);
-                    _requirements.Add(_codes[i], requirement.ImageSize);
+                    codecComboBox.Items.Add(_codecNames[i]);
+                    _codecNameToImageSizeInMegapixels.Add(_codecNames[i], sizeRequirement.ImageSize);
+                }
+
+                // get memory usage rendering requirements
+                MemoryUsageRenderingRequirement memoryRequirement =
+                    _renderingRequirements.GetRequirement(_codecNames[i]) as MemoryUsageRenderingRequirement;
+                if (memoryRequirement != null)
+                {
+                    codecComboBox.Items.Add(_codecNames[i]);
+                    _codecNameToImageSizeInMegabytes.Add(_codecNames[i], memoryRequirement.MemorySize);
                 }
             }
 
@@ -83,15 +117,27 @@ namespace WpfDemosCommonCode.Imaging
 
         private bool SetSettings()
         {
-            for (int i = 0; i < _codes.Length; i++)
+            // for each codec in codecs
+            for (int i = 0; i < _codecNames.Length; i++)
             {
-                string codec = _codes[i];
-                if (_requirements.ContainsKey(codec))
+                // get codec
+                string codec = _codecNames[i];
+                // if codec has rendering requirement
+                if (_codecNameToImageSizeInMegapixels.ContainsKey(codec))
                 {
+                    // if current codec is "TIFF"
                     if (codec == "Tiff")
-                        _renderingRequirements.SetRequirement(codec, new TiffRenderingRequirement(_requirements[codec]));
+                        _renderingRequirements.SetRequirement(codec, new TiffRenderingRequirement(_codecNameToImageSizeInMegapixels[codec]));
                     else
-                        _renderingRequirements.SetRequirement(codec, new ImageSizeRenderingRequirement(_requirements[codec]));
+                        _renderingRequirements.SetRequirement(codec, new ImageSizeRenderingRequirement(_codecNameToImageSizeInMegapixels[codec]));
+                }
+                else if (_codecNameToImageSizeInMegabytes.ContainsKey(codec))
+                {
+                    // if current codec is "TIFF"
+                    if (codec == "Tiff")
+                        _renderingRequirements.SetRequirement(codec, new TiffMemoryUsageRenderingRequirement(_codecNameToImageSizeInMegabytes[codec]));
+                    else
+                        _renderingRequirements.SetRequirement(codec, new MemoryUsageRenderingRequirement(_codecNameToImageSizeInMegabytes[codec]));
                 }
                 else
                 {
@@ -103,7 +149,7 @@ namespace WpfDemosCommonCode.Imaging
 
         private void UpdateUI()
         {
-            bool isEmptyRenderingRequirments = _requirements.Count == 0;
+            bool isEmptyRenderingRequirments = _codecNameToImageSizeInMegapixels.Count == 0;
 
             codecComboBox.IsEnabled = !isEmptyRenderingRequirments;
             megapixelsComboBox.IsEnabled = !isEmptyRenderingRequirments;
@@ -148,7 +194,15 @@ namespace WpfDemosCommonCode.Imaging
             try
             {
                 if (megapixelsComboBox.Text != "")
-                    _requirements[(string)codecComboBox.SelectedItem] = float.Parse(megapixelsComboBox.Text, CultureInfo.InvariantCulture);
+                {
+                    // update requirement image size for selected codec
+                    string codecName = (string)codecComboBox.SelectedItem;
+                    float value = float.Parse(megapixelsComboBox.Text, CultureInfo.InvariantCulture);
+                    if (_codecNameToImageSizeInMegapixels.ContainsKey(codecName))
+                        _codecNameToImageSizeInMegapixels[codecName] = value;
+                    if (_codecNameToImageSizeInMegabytes.ContainsKey(codecName))
+                        _codecNameToImageSizeInMegabytes[codecName] = value;
+                }
             }
             catch (Exception ex)
             {
@@ -162,7 +216,20 @@ namespace WpfDemosCommonCode.Imaging
         private void codecComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (codecComboBox.SelectedItem != null)
-                megapixelsComboBox.Text = _requirements[(string)codecComboBox.SelectedItem].ToString(CultureInfo.InvariantCulture);
+            {
+                string codecName = (string)codecComboBox.SelectedItem;
+                // update image size requirement for selected codec
+                if (_codecNameToImageSizeInMegapixels.ContainsKey(codecName))
+                {
+                    megapixelsComboBox.Text = _codecNameToImageSizeInMegapixels[codecName].ToString(CultureInfo.InvariantCulture);
+                    sizeTypeLabel.Content = "Megapixels";
+                }
+                else if (_codecNameToImageSizeInMegabytes.ContainsKey(codecName))
+                {
+                    megapixelsComboBox.Text = _codecNameToImageSizeInMegabytes[codecName].ToString(CultureInfo.InvariantCulture);
+                    sizeTypeLabel.Content = "Megabytes";
+                }
+            }
         }
 
         /// <summary>
@@ -175,13 +242,23 @@ namespace WpfDemosCommonCode.Imaging
             {
                 string codec = form.Codec;
                 float value = form.Value;
-                if (_requirements.ContainsKey(codec))
-                    _requirements[codec] = value;
+                
+                // if rendering requirement must be updated
+                if (_codecNameToImageSizeInMegapixels.ContainsKey(codec))
+                {
+                    _codecNameToImageSizeInMegapixels[codec] = value;
+                }
+                else if (_codecNameToImageSizeInMegabytes.ContainsKey(codec))
+                {
+                    _codecNameToImageSizeInMegabytes[codec] = value;
+                }
+                // if rendering requirement must be added
                 else
                 {
-                    _requirements.Add(codec, value);
+                    _codecNameToImageSizeInMegapixels.Add(codec, value);
                     codecComboBox.Items.Add(codec);
                 }
+
                 UpdateUI();
                 if (codecComboBox.SelectedItem != null && codecComboBox.SelectedItem.ToString() == codec)
                     codecComboBox_SelectionChanged(this, null);
@@ -196,9 +273,10 @@ namespace WpfDemosCommonCode.Imaging
         private void removeButton_Click(object sender, RoutedEventArgs e)
         {
             string codec = codecComboBox.SelectedItem.ToString();
-            if (_requirements.ContainsKey(codec))
+            if (_codecNameToImageSizeInMegapixels.ContainsKey(codec))
             {
-                _requirements.Remove(codec);
+                _codecNameToImageSizeInMegapixels.Remove(codec);
+                _codecNameToImageSizeInMegabytes.Remove(codec);
                 codecComboBox.Items.Remove(codec);
                 codecComboBox.SelectedIndex = codecComboBox.Items.Count - 1;
                 UpdateUI();
