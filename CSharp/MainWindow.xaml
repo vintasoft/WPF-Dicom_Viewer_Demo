@@ -227,8 +227,9 @@
                 <MenuItem Header="VOI LUT..." Name="voiLutMainMenuItem" Click="voiLutMainMenuItem_Click" />
                 <MenuItem HeaderStringFormat="{}{0} (F11)" Header="Is Negative" Name="negativeImageMenuItem" Click="negativeImageMenuItem_Click"/>
                 <MenuItem Header="VOI LUT Mouse Move Direction" Name="voiLutMouseMoveDirectionMenuItem">
-                    <MenuItem Header="Width Horizontal, Center Vertical" Name="widthHorizontalCenterVerticalMenuItem" Click="voiLutMouseMoveDirectionMenuItem_Click" IsChecked="True"/>
-                    <MenuItem Header="Width Vertical, Center Horizontal" Name="widthVerticalCenterHorizontalMenuItem" Click="voiLutMouseMoveDirectionMenuItem_Click" />
+                    <MenuItem Header="Width Horizontal Inverted, Center Vertical" Name="widthHorizontalInvertedCenterVerticalMenuItem" Click="widthHorizontalInvertedCenterVerticalMenuItem_Click" IsChecked="True"/>
+                    <MenuItem Header="Width Horizontal, Center Vertical" Name="widthHorizontalCenterVerticalMenuItem" Click="widthHorizontalCenterVerticalMenuItem_Click" />
+                    <MenuItem Header="Width Vertical, Center Horizontal" Name="widthVerticalCenterHorizontalMenuItem" Click="widthVerticalCenterHorizontalMenuItem_Click" />
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Magnifier Settings..." Name="magnifierSettings" Click="magnifierSettings_Click">

@@ -102,12 +102,6 @@ namespace WpfDicomViewerDemo
             new Dictionary<MenuItem, UnitOfMeasure>();
 
         /// <summary>
-        /// Dictionary: the menu item => <see cref="DicomImageVoiLutMouseMoveDirection"/>.
-        /// </summary>
-        Dictionary<MenuItem, DicomImageVoiLutMouseMoveDirection> _menuItemToMouseMoveDirection =
-            new Dictionary<MenuItem, DicomImageVoiLutMouseMoveDirection>();
-
-        /// <summary>
         /// Dictionary: the menu item => VOI LUT.
         /// </summary>
         Dictionary<MenuItem, DicomImageVoiLookupTable> _menuItemToVoiLut =
@@ -383,11 +377,6 @@ namespace WpfDicomViewerDemo
             _defaultVoiLutMenuItem.Header = "Default VOI LUT";
             _defaultVoiLutMenuItem.IsCheckable = true;
             _defaultVoiLutMenuItem.Click += new RoutedEventHandler(voiLutMenuItem_Click);
-
-            _menuItemToMouseMoveDirection.Add(widthHorizontalCenterVerticalMenuItem,
-                DicomImageVoiLutMouseMoveDirection.WidthHorizontalCenterVertical);
-            _menuItemToMouseMoveDirection.Add(widthVerticalCenterHorizontalMenuItem,
-                DicomImageVoiLutMouseMoveDirection.WidthVerticalCenterHorizontal);
 
             this.Title = string.Format(_titlePrefix, "(Untitled)");
 
@@ -1022,17 +1011,42 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of voiLutMouseMoveDirectionMenuItem object.
+        /// Handles the Click event of widthHorizontalInvertedCenterVerticalMenuItem object.
         /// </summary>
-        private void voiLutMouseMoveDirectionMenuItem_Click(object sender, RoutedEventArgs e)
+        private void widthHorizontalInvertedCenterVerticalMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            widthHorizontalInvertedCenterVerticalMenuItem.IsChecked = true;
             widthHorizontalCenterVerticalMenuItem.IsChecked = false;
             widthVerticalCenterHorizontalMenuItem.IsChecked = false;
-            MenuItem voiLutMouseMoveDirectionMenuItem = (MenuItem)sender;
-            voiLutMouseMoveDirectionMenuItem.IsChecked = true;
 
-            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutMouseMoveDirection =
-                _menuItemToMouseMoveDirection[voiLutMouseMoveDirectionMenuItem];
+            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutCenterDirection = DicomInteractionDirection.BottomToTop;
+            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutWidthDirection = DicomInteractionDirection.LeftToRight;
+        }
+
+        /// <summary>
+        /// Handles the Click event of widthHorizontalCenterVerticalMenuItem object.
+        /// </summary>
+        private void widthHorizontalCenterVerticalMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            widthHorizontalInvertedCenterVerticalMenuItem.IsChecked = false;
+            widthHorizontalCenterVerticalMenuItem.IsChecked = true;
+            widthVerticalCenterHorizontalMenuItem.IsChecked = false;
+
+            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutCenterDirection = DicomInteractionDirection.BottomToTop;
+            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutWidthDirection = DicomInteractionDirection.RightToLeft;
+        }
+
+        /// <summary>
+        /// Handles the Click event of widthVerticalCenterHorizontalMenuItem object.
+        /// </summary>
+        private void widthVerticalCenterHorizontalMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            widthHorizontalInvertedCenterVerticalMenuItem.IsChecked = false;
+            widthHorizontalCenterVerticalMenuItem.IsChecked = false;
+            widthVerticalCenterHorizontalMenuItem.IsChecked = true;
+
+            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutCenterDirection = DicomInteractionDirection.RightToLeft;
+            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutWidthDirection = DicomInteractionDirection.BottomToTop;
         }
 
         #endregion
