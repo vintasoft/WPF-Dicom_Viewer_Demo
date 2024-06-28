@@ -91,19 +91,19 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="UIAutomationProvider" />
-    <PackageReference Include="Vintasoft.Imaging" Version="12.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Gdi" Version="12.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation" Version="12.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom" Version="12.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom.Wpf.UI" Version="12.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.UI" Version="12.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Wpf.UI" Version="12.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Dicom" Version="5.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Dicom.Wpf.UI" Version="5.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Jpeg2000Codec" Version="8.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.UI" Version="12.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Wpf" Version="12.4.6.1" />
-    <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="12.4.6.1" />
+    <PackageReference Include="Vintasoft.Imaging" Version="12.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Gdi" Version="12.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation" Version="12.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom" Version="12.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom.Wpf.UI" Version="12.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.UI" Version="12.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Wpf.UI" Version="12.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Dicom" Version="5.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Dicom.Wpf.UI" Version="5.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Jpeg2000Codec" Version="8.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.UI" Version="12.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Wpf" Version="12.4.7.1" />
+    <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="12.4.7.1" />
     <PackageReference Include="Vintasoft.Shared" Version="4.2.0.1" />
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
