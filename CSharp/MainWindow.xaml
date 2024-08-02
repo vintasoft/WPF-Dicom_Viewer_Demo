@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:WpfDicomViewerDemo"
     xmlns:ImagingControls="clr-namespace:Vintasoft.Imaging.Wpf.UI;assembly=Vintasoft.Imaging.Wpf.UI"
-    xmlns:WindowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-    xmlns:CustomConstrols="clr-namespace:WpfDemosCommonCode.Imaging"
+    xmlns:vsdui="clr-namespace:Vintasoft.Imaging.Dicom.Wpf.UI;assembly=Vintasoft.Imaging.Dicom.Wpf.UI"
+    xmlns:CustomConstrols="clr-namespace:WpfDemosCommonCode.Imaging"        
     xmlns:vsui="clr-namespace:Vintasoft.Imaging.Wpf.UI;assembly=Vintasoft.Imaging.Wpf.UI"
     xmlns:DicomViewerDemoControls="clr-namespace:WpfDicomViewerDemo"
     xmlns:DicomViewerImaging="clr-namespace:WpfDemosCommonCode.Imaging"        
@@ -188,7 +188,11 @@
         <Menu Grid.Row="0" Name="menu1">
             <MenuItem Header="File" Name="fileMenuItem">
                 <MenuItem HeaderStringFormat="{}{0} (Ctrl+ O)" Header="Open DICOM File(s) ..." Name="openDicomFilesMenuItem" Click="openDicomFilesMenuItem_Click" />
+                <MenuItem Header="Open Directory..." Name="openDirectoryMenuItem" Click="openDirectoryMenuItem_Click" />
+                <Separator />
                 <MenuItem Header="Save DICOM File To Image File..." Name="saveDicomFileToImageFileMenuItem" Click="saveDicomFileToImageFileMenuItem_Click" />
+                <MenuItem Header="Burn And Save To DICOM file..." Name="burnAndSaveToDICOMFileMenuItem" Click="burnAndSaveToDICOMFileMenuItem_Click"/>
+                <Separator />
                 <MenuItem HeaderStringFormat="{}{0} (Ctrl+ W)" Header="Close DICOM File" Name="closeDicomSeriesMenuItem" Click="closeDicomSeriesMenuItem_Click" />
                 <Separator />
                 <MenuItem HeaderStringFormat="{}{0} (Alt+ X)" Header="Exit" Name="exitMenuItem" Click="exitMenuItem_Click" />
@@ -203,8 +207,6 @@
             </MenuItem>
 
             <MenuItem Header="View" Name="viewMenuItem">
-                <MenuItem Header="Thumbnail Viewer Settings..." Name="thumbnailViewerSettingsMenuItem" Click="thumbnailViewerSettingsMenuItem_Click" />
-                <Separator />
                 <MenuItem Header="Image Viewer Settings..." Name="imageViewerSettingsMenuItem" Click="imageViewerSettingsMenuItem_Click" />
                 <MenuItem Header="Rotate View" Name="rotateViewModeMenuItem">
                     <MenuItem Header="Clockwise (Shift+Ctrl+Plus)" Name="rotateClockwiseMenuItem" Click="rotateClockwiseMenuItem_Click"/>
@@ -311,6 +313,8 @@
                     <Separator />
                     <MenuItem Header="Text" Name="add_textMenuItem" Click="addMenuItem_Click" />
                 </MenuItem>
+                <Separator />
+                <MenuItem Header="Properties..." Name="propertiesMenuItem" Click="propertiesMenuItem_Click"/>
             </MenuItem>
 
             <MenuItem Header="Help" Name="helpMenuItem">
@@ -319,18 +323,10 @@
         </Menu>
 
         <ToolBarTray Grid.Row="1" IsLocked="True" Name="toolBarTray1">
-            <CustomConstrols:ImageViewerToolBar
-                Grid.Row="1" 
-                x:Name="imageViewerToolBar" 
-                CanNavigate="True" 
-                CanPrint="False" 
-                CanSaveFile="False"
-                OpenFile="imageViewerToolBar_OpenFile" />
-
             <DicomViewerImaging:DicomAnnotatedViewerToolBar 
                 Grid.Row="1"
                 x:Name="dicomAnnotatedViewerToolBar" />
-
+            
             <ToolBar Grid.Row="1" Background="Transparent" Name="voiLutToolBar" ToolBarTray.IsLocked="True">
                 <Menu VerticalAlignment="Center" Background="Transparent">
                     <MenuItem Width="52">
@@ -343,6 +339,19 @@
                     </MenuItem>
                 </Menu>
             </ToolBar>
+
+            <DicomViewerDemoControls:DicomViewerToolInteractionButtonToolBar
+                Grid.Row="1"
+                x:Name="dicomViewerToolInteractionButtonToolBar" />
+
+            <CustomConstrols:ImageViewerToolBar
+                Grid.Row="1" 
+                x:Name="imageViewerToolBar" 
+                CanNavigate="False"
+                CanOpenFile="False"
+                CanPrint="False" 
+                CanSaveFile="False"
+                OpenFile="imageViewerToolBar_OpenFile" />
 
 
             <DicomViewerDemoControls:AnnotationsToolBar Grid.Row="2" x:Name="annotationsToolBar" Band="1" />
@@ -357,20 +366,21 @@
         </ToolBarTray>
 
         <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="400*" MinHeight="10" />
-                <RowDefinition Height="122*" MinHeight="10" />
-            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220" MinWidth="10" />
+                <ColumnDefinition Width="*" MinWidth="10" />
+            </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MinWidth="15" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+            <vsdui:WpfDicomSeriesManagerControl Grid.Column="0" x:Name="dicomSeriesManagerControl1"/>
 
-                <ImagingControls:WpfImageViewer
+            <GridSplitter Grid.Column="0" 
+                          HorizontalAlignment="Right"
+                          Width="5"
+                          VerticalAlignment="Stretch"
+                          ResizeDirection="Columns" />
+            <ImagingControls:WpfImageViewer
                     Background="Black"
-                    Grid.Column="0"
+                    Grid.Column="1"
                     SizeMode="BestFit"
                     CenterImage="True"
                     AllowDrop="True"
@@ -385,45 +395,9 @@
                     InputGestureInsert="{x:Null}"
                     IsKeyboardNavigationEnabled="True"
                     x:Name="imageViewer1" />
-
-                <Grid Grid.Column="1" Width="240" Name="propertyGridPanel">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="27" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <ComboBox Grid.Row="0" Height="23"
-                              Name="annotationComboBox" 
-                              DropDownOpened="annotationComboBox_DropDownOpened"
-                              SelectionChanged="annotationComboBox_SelectionChanged" />
-
-                    <WindowsFormsHost Grid.Row="1">
-                        <WindowsForms:PropertyGrid x:Name="propertyGrid1" />
-                    </WindowsFormsHost>
-                </Grid>
-            </Grid>
-
-            <GridSplitter Grid.Row="1" VerticalAlignment="Top" Height="5" HorizontalAlignment="Stretch" ResizeDirection="Rows" />
-            <ImagingControls:WpfThumbnailViewer 
-                Margin="0,5,0,0"
-                Grid.Row="1"
-                x:Name="thumbnailViewer1" 
-                MultiSelect="False" 
-                AllowDrag="False" 
-                DragEffects="None" 
-                DropEffects="None" 
-                ThumbnailContainerStyle="{StaticResource ThumbnailItemStyle}" 
-                ThumbnailFlowStyle="SingleRow" 
-                GenerateOnlyVisibleThumbnails="True"
-                InputGestureCopy="{x:Null}"
-                InputGestureCut="{x:Null}"
-                InputGestureDelete="{x:Null}"
-                InputGestureInsert="{x:Null}"
-                InputGestureSelectAll="{x:Null}"/>
         </Grid>
-
         <DockPanel Grid.Row="3" Margin="3,0" Height="27" Name="InfoPanel">
-            <ProgressBar DockPanel.Dock="Left" Width="100" Height="23" Visibility="Collapsed" Name="progressBar1" />
+            <ProgressBar DockPanel.Dock="Left" Width="215" Height="23" Visibility="Collapsed" Name="progressBar1" />
             <Label DockPanel.Dock="Left" Content="Action Label" VerticalAlignment="Center" Visibility="Collapsed" Name="actionLabel" />
 
             <Label DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Name="imageInfoStatusLabel" />

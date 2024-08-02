@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
 
+#if !REMOVE_ANNOTATION_PLUGIN
 using Vintasoft.Imaging.Annotation;
-using Vintasoft.Imaging.Annotation.TypeEditors;
+using Vintasoft.Imaging.Annotation.TypeEditors; 
+#endif
 
 namespace WpfDemosCommonCode.Imaging
 {
@@ -16,7 +18,9 @@ namespace WpfDemosCommonCode.Imaging
         /// </summary>
         public static void Register()
         {
-            TypeDescriptor.AddAttributes(typeof(AnnotationFont), new EditorAttribute(typeof(AnnotationFontEditor), typeof(System.Drawing.Design.UITypeEditor)));
+#if !REMOVE_ANNOTATION_PLUGIN
+            TypeDescriptor.AddAttributes(typeof(AnnotationFont), new EditorAttribute(typeof(AnnotationFontEditor), typeof(System.Drawing.Design.UITypeEditor))); 
+#endif
         }
 
     }

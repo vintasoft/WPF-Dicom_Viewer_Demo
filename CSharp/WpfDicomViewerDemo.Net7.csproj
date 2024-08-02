@@ -13,7 +13,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>    
     <EnableDefaultItems>false</EnableDefaultItems>
-    <Version>12.4.10.1</Version>
+    <Version>12.5.0.1</Version>
     <AssemblyName>WpfDicomViewerDemo</AssemblyName>
     <RootNamespace>WpfDicomViewerDemo</RootNamespace>
     <StartupObject>WpfDicomViewerDemo.App</StartupObject>
@@ -38,21 +38,21 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Vintasoft.Imaging" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Gdi" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom.Wpf.UI" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.UI" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Wpf.UI" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Dicom" Version="5.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Dicom.Wpf.UI" Version="5.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Jpeg2000Codec" Version="8.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.UI" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.WebpCodec" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Wpf" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="12.4.10.1" />
-    <PackageReference Include="Vintasoft.Shared" Version="4.2.0.1" />
+    <PackageReference Include="Vintasoft.Imaging" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Gdi" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom.Wpf.UI" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.UI" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Wpf.UI" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Dicom" Version="5.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Dicom.Wpf.UI" Version="5.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Jpeg2000Codec" Version="8.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.UI" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.WebpCodec" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Wpf" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="12.5.0.1" />
+    <PackageReference Include="Vintasoft.Shared" Version="4.3.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -396,33 +396,19 @@
     <Compile Include="Dialogs\VoiLutParamsWindow.xaml.cs">
       <DependentUpon>VoiLutParamsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DicomSeriesController.cs" />
     <Compile Include="PresentationStateFileController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+    <Compile Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\DicomViewerToolInteractionButtonToolBar.xaml.cs">
+      <DependentUpon>DicomViewerToolInteractionButtonToolBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="WpfCompressionInfoTextOverlay.cs" />
     <Compile Include="WpfDemosCommonCode.Imaging\VisualToolsToolBar\DicomAnnotatedViewerToolBar.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <AppDesigner Include="Properties\" />
+    <Page Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\DicomViewerToolInteractionButtonToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Resource Include="Resources\VOI_LUT.png" />
     <Resource Include="Icons\Arrow.png" />
     <Resource Include="Icons\Ellipse.png" />
@@ -473,5 +459,42 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WpfDemosCommonCode.Imaging\VisualToolsToolBar\VisualTools\ZoomVisualTools\Resources\WpfPanTool.png">
     </EmbeddedResource>
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\MouseWheel.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Browse.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Browse_000.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Browse_001.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Browse_010.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Browse_011.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Browse_100.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Browse_101.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Browse_110.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Browse_111.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Pan.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Pan_000.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Pan_001.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Pan_010.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Pan_011.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Pan_100.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Pan_101.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Pan_110.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Pan_111.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\WindowLevel.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\WindowLevel_000.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\WindowLevel_001.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\WindowLevel_010.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\WindowLevel_011.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\WindowLevel_100.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\WindowLevel_101.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\WindowLevel_110.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\WindowLevel_111.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Zoom.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Zoom_000.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Zoom_001.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Zoom_010.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Zoom_011.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Zoom_100.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Zoom_101.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Zoom_110.png" />
+    <Resource Include="WpfDemosCommonCode.Imaging.Dicom\DicomViewerToolInteractionButton\Icons\Zoom_111.png" />
   </ItemGroup>
 </Project>

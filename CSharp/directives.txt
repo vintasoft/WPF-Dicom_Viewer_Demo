@@ -1,2 +1,3 @@
 The project contains the following compiler directives:
 1. REMOVE_JPEG2000_PLUGIN - allows to disable code, which references to VintaSoft JPEG2000 .NET Plug-in
+2. REMOVE_ANNOTATION_PLUGIN - allows to disable code, which references to VintaSoft Annotation .NET Plug-in

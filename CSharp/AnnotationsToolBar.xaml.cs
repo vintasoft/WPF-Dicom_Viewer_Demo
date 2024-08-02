@@ -4,10 +4,12 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
+#if !REMOVE_ANNOTATION_PLUGIN
 using Vintasoft.Imaging.Annotation.Dicom;
 using Vintasoft.Imaging.Annotation.UI;
 using Vintasoft.Imaging.Annotation.Wpf.UI;
-using Vintasoft.Imaging.Annotation.Wpf.UI.VisualTools;
+using Vintasoft.Imaging.Annotation.Wpf.UI.VisualTools; 
+#endif
 using Vintasoft.Imaging.Wpf.UI;
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 
@@ -68,7 +70,9 @@ namespace WpfDicomViewerDemo
             TextButtonName,
         };
 
-        WpfAnnotationVisualTool _annotationTool;
+#if !REMOVE_ANNOTATION_PLUGIN
+        WpfAnnotationVisualTool _annotationTool; 
+#endif
 
         #endregion
 
@@ -136,6 +140,7 @@ namespace WpfDicomViewerDemo
             }
             set
             {
+#if !REMOVE_ANNOTATION_PLUGIN
                 if (_annotationTool != null)
                 {
                     _annotationTool.AnnotationBuildingFinished -= viewer_AnnotationBuildingFinished;
@@ -151,7 +156,8 @@ namespace WpfDicomViewerDemo
                 {
                     _annotationTool.AnnotationBuildingFinished += new EventHandler<WpfAnnotationViewEventArgs>(viewer_AnnotationBuildingFinished);
                     _annotationTool.AnnotationBuildingCanceled += new EventHandler<WpfAnnotationViewEventArgs>(viewer_AnnotationBuildingCanceled);
-                }
+                } 
+#endif
             }
         }
 
@@ -184,6 +190,7 @@ namespace WpfDicomViewerDemo
 
         #region Methods
 
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// Returns an annotation object by the annotation type name.
         /// </summary>
@@ -257,13 +264,15 @@ namespace WpfDicomViewerDemo
             }
 
             return WpfAnnotationViewFactory.CreateView(data);
-        }
+        } 
+#endif
 
         /// <summary>
         /// User started the annotation building.
         /// </summary>
         private void buildAnnotationButton_Click(object sender, RoutedEventArgs e)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             Button annotationButton = (Button)sender;
             SelectedButton = annotationButton;
 
@@ -287,9 +296,11 @@ namespace WpfDicomViewerDemo
                     _buildingAnnotationButton = annotationButton;
                 else
                     _buildingAnnotationButton = null;
-            }
+            } 
+#endif
         }
 
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// Adds an annotation to an image and starts building of annotation.
         /// </summary>
@@ -316,7 +327,7 @@ namespace WpfDicomViewerDemo
             }
 
             return annotationView;
-        }
+        } 
 
         /// <summary>
         /// Annotation building is finished.
@@ -369,6 +380,7 @@ namespace WpfDicomViewerDemo
 
             return visualTool as WpfAnnotationVisualTool;
         }
+#endif
 
         #endregion
 

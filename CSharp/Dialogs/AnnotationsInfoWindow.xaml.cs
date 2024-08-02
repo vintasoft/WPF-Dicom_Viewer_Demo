@@ -1,7 +1,9 @@
 using System.Windows;
 
+#if !REMOVE_ANNOTATION_PLUGIN
 using Vintasoft.Imaging.Annotation;
-using Vintasoft.Imaging.Annotation.Dicom;
+using Vintasoft.Imaging.Annotation.Dicom; 
+#endif
 
 
 namespace WpfDicomViewerDemo
@@ -20,6 +22,7 @@ namespace WpfDicomViewerDemo
         class DicomAnnotationDataView
         {
 
+#if !REMOVE_ANNOTATION_PLUGIN
             /// <summary>
             /// Initializes a new instance of the <see cref="DicomAnnotationDataView"/> class.
             /// </summary>
@@ -30,7 +33,8 @@ namespace WpfDicomViewerDemo
                 _pageNumber = string.Format("Page {0}", pageNumber);
                 _annotationType = annotationData.GetType().ToString();
                 _location = annotationData.Location.ToString();
-            }
+            } 
+#endif
 
 
 
@@ -75,6 +79,7 @@ namespace WpfDicomViewerDemo
 
 
 
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnotationsInfoWindow"/> class.
         /// </summary>
@@ -88,7 +93,8 @@ namespace WpfDicomViewerDemo
                 for (int j = 0; j < annotations[i].Count; j++)
                     annoInfoListView.Items.Add(new DicomAnnotationDataView(i + 1, annotations[i][j]));
             }
-        }
+        } 
+#endif
 
 
 

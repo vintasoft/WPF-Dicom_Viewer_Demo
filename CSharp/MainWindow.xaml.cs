@@ -13,6 +13,7 @@ using System.Windows.Media;
 using Microsoft.Win32;
 
 using Vintasoft.Imaging;
+#if !REMOVE_ANNOTATION_PLUGIN
 using Vintasoft.Imaging.Annotation;
 using Vintasoft.Imaging.Annotation.Dicom;
 using Vintasoft.Imaging.Annotation.Dicom.Wpf.UI;
@@ -20,16 +21,16 @@ using Vintasoft.Imaging.Annotation.Dicom.Wpf.UI.VisualTools;
 using Vintasoft.Imaging.Annotation.Formatters;
 using Vintasoft.Imaging.Annotation.UI;
 using Vintasoft.Imaging.Annotation.Wpf.UI;
-using Vintasoft.Imaging.Annotation.Wpf.UI.VisualTools;
+#endif
 using Vintasoft.Imaging.Codecs;
 using Vintasoft.Imaging.Codecs.Decoders;
 using Vintasoft.Imaging.Codecs.Encoders;
 using Vintasoft.Imaging.Codecs.ImageFiles.Dicom;
+using Vintasoft.Imaging.Dicom.Wpf.UI;
 using Vintasoft.Imaging.Dicom.Wpf.UI.VisualTools;
 using Vintasoft.Imaging.ImageColors;
 using Vintasoft.Imaging.Metadata;
 using Vintasoft.Imaging.UIActions;
-using Vintasoft.Imaging.Wpf.UI;
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 
 using WpfDemosCommonCode;
@@ -60,14 +61,15 @@ namespace WpfDicomViewerDemo
         #region Fields
 
         /// <summary>
-        /// Template of the application title.
+        /// DICOM viewer tool.
         /// </summary>
-        string _titlePrefix = "VintaSoft WPF DICOM Viewer Demo v" + ImagingGlobalSettings.ProductVersion + " - {0}";
+        WpfDicomViewerTool _dicomViewerTool;
 
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// DICOM annotated viewer tool.
         /// </summary>
-        WpfDicomAnnotatedViewerTool _dicomViewerTool;
+        WpfDicomAnnotatedViewerTool _dicomAnnotatedViewerTool;
 
         /// <summary>
         /// The previous interaction mode in DICOM viewer tool.
@@ -78,6 +80,7 @@ namespace WpfDicomViewerDemo
         /// The previous interaction mode in DICOM annotation tool.
         /// </summary>
         AnnotationInteractionMode _prevDicomAnnotationToolInteractionMode;
+#endif
 
         /// <summary>
         /// Current rulers unit menu item.
@@ -92,7 +95,7 @@ namespace WpfDicomViewerDemo
         /// <summary>
         /// Indicates whether the main window is initialized.
         /// </summary>
-        readonly bool _isInitialized = false;
+        bool _isInitialized = false;
 
 
         /// <summary>
@@ -116,6 +119,17 @@ namespace WpfDicomViewerDemo
         /// Current application window state.
         /// </summary>
         WindowState _windowState;
+
+        /// <summary>
+        /// Decoding setting of DICOM frame.
+        /// </summary>
+        DicomDecodingSettings _dicomFrameDecodingSettings = new DicomDecodingSettings(false);
+
+        /// <summary>
+        /// A value indicating whether image coolection must be disposed after save.
+        /// </summary>
+        bool _disposeImageCollectionAfterSave = false;
+
 
         #region File Dialogs
 
@@ -144,25 +158,10 @@ namespace WpfDicomViewerDemo
         /// </summary>
         SaveFileDialog _saveDicomAnnotationsFileDialog = new SaveFileDialog();
 
-        #endregion
-
-
-        #region DICOM file
-
         /// <summary>
-        /// Controller of files in current DICOM series.
+        /// The folder browser dialog.
         /// </summary>
-        DicomSeriesController _dicomSeriesController = new DicomSeriesController();
-
-        /// <summary>
-        /// DICOM file without images.
-        /// </summary>
-        DicomFile _dicomFileWithoutImages = null;
-
-        /// <summary>
-        /// Decoding setting of DICOM frame.
-        /// </summary>
-        DicomDecodingSettings _dicomFrameDecodingSettings = new DicomDecodingSettings(false);
+        System.Windows.Forms.FolderBrowserDialog _folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
 
         #endregion
 
@@ -296,16 +295,15 @@ namespace WpfDicomViewerDemo
 
             AnnotationTypeEditorRegistrator.Register();
 
-            imageViewer1.MasterViewer = thumbnailViewer1;
-
             InitFileDialogs();
 
             MoveDicomCodecToFirstPosition();
 
             _presentationStateFileExtensions = new string[] { ".DCM", ".DIC", ".ACR", ".PRE", "" };
 
+            _voiLutsButton = FindVoiLutsButton();
             // init ImageViewerToolBar
-            InitImageViewerToolBar();
+            imageViewerToolBar.ImageViewer = imageViewer1;
 
             dicomAnnotatedViewerToolBar.ImageViewer = imageViewer1;
             MeasurementVisualToolActionFactory.CreateActions(dicomAnnotatedViewerToolBar);
@@ -315,9 +313,11 @@ namespace WpfDicomViewerDemo
             noneAction.Activated += new EventHandler(noneAction_Activated);
             noneAction.Deactivated += new EventHandler(noneAction_Deactivated);
 
+#if !REMOVE_ANNOTATION_PLUGIN
             ImageMeasureToolAction imageMeasureToolAction =
-                dicomAnnotatedViewerToolBar.FindAction<ImageMeasureToolAction>();
+                  dicomAnnotatedViewerToolBar.FindAction<ImageMeasureToolAction>();
             imageMeasureToolAction.Activated += new EventHandler(imageMeasureToolAction_Activated);
+#endif
 
             WpfMagnifierTool magnifierTool = new WpfMagnifierTool();
             // create action, which allows to magnify of image region in image viewer
@@ -327,48 +327,61 @@ namespace WpfDicomViewerDemo
                 "Magnifier",
                 DemosResourcesManager.GetResourceAsBitmap("WpfDemosCommonCode.Imaging.VisualToolsToolBar.VisualTools.ZoomVisualTools.Resources.WpfMagnifierTool.png"));
 
-            // create action, which allows to pan an image in image viewer
-            VisualToolAction panToolAction = new VisualToolAction(
-                new WpfPanTool(),
-                "Pan Tool",
-                "Pan",
-                DemosResourcesManager.GetResourceAsBitmap("WpfDemosCommonCode.Imaging.VisualToolsToolBar.VisualTools.ZoomVisualTools.Resources.WpfPanTool.png"));
-
-            WpfDicomViewerTool dicomViewerTool = new WpfDicomViewerTool();
-            _dicomViewerTool = new WpfDicomAnnotatedViewerTool(
-               dicomViewerTool,
-               new WpfDicomAnnotationTool(),
-               (Vintasoft.Imaging.Annotation.Wpf.UI.Measurements.WpfImageMeasureTool)imageMeasureToolAction.VisualTool);
+            _dicomViewerTool = new WpfDicomViewerTool();
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool = new WpfDicomAnnotatedViewerTool(
+                 _dicomViewerTool,
+                 new WpfDicomAnnotationTool(),
+                 (Vintasoft.Imaging.Annotation.Wpf.UI.Measurements.WpfImageMeasureTool)imageMeasureToolAction.VisualTool);
+            _dicomAnnotatedViewerTool.InteractionMode = WpfDicomAnnotatedViewerToolInteractionMode.None;
+#endif
 
             // add visual tools to tool strip
+#if REMOVE_ANNOTATION_PLUGIN
             dicomAnnotatedViewerToolBar.DicomAnnotatedViewerTool = _dicomViewerTool;
+#else
+            dicomAnnotatedViewerToolBar.DicomAnnotatedViewerTool = _dicomAnnotatedViewerTool;
+#endif
             dicomAnnotatedViewerToolBar.AddVisualToolAction(magnifierToolAction);
-            dicomAnnotatedViewerToolBar.AddVisualToolAction(panToolAction);
+#if REMOVE_ANNOTATION_PLUGIN
             dicomAnnotatedViewerToolBar.MainVisualTool.ActiveTool = _dicomViewerTool;
+#else
+            dicomAnnotatedViewerToolBar.MainVisualTool.ActiveTool = _dicomAnnotatedViewerTool;
+#endif
 
             magnifierToolAction.Activated += new EventHandler(magnifierToolAction_Activated);
-            panToolAction.Activated += PanToolAction_Activated;
 
-            _dicomViewerTool.DicomViewerTool.TextOverlay.Add(
-                new WpfCompressionInfoTextOverlay(AnchorType.Top | AnchorType.Left));
+            _dicomViewerTool.NavigateBySeries = true;
 
+            _openDicomFileDialog.Multiselect = true;
             DemosTools.SetTestFilesFolder(_openDicomFileDialog);
 
+#if REMOVE_ANNOTATION_PLUGIN
             WpfCompositeVisualTool compositeTool = new WpfCompositeVisualTool(_dicomViewerTool, magnifierTool);
             compositeTool.ActiveTool = _dicomViewerTool;
             imageViewer1.VisualTool = compositeTool;
+#else
+            WpfCompositeVisualTool compositeTool = new WpfCompositeVisualTool(_dicomAnnotatedViewerTool, magnifierTool);
+            compositeTool.ActiveTool = _dicomAnnotatedViewerTool;
+            imageViewer1.VisualTool = compositeTool;
+#endif
             annotationsToolBar.Viewer = imageViewer1;
+            imageViewer1.IsFastScrollingEnabled = false;
+            imageViewer1.ImageDecodingSettings = (DecodingSettings)_dicomFrameDecodingSettings.Clone();
+
+            dicomSeriesManagerControl1.DicomViewer = imageViewer1;
+            dicomSeriesManagerControl1.AddedFileCountChanged += dicomSeriesManagerControl1_AddedFileCountChanged;
+            dicomSeriesManagerControl1.AddFilesException += dicomSeriesManagerControl1_AddFilesException;
+
+            dicomViewerToolInteractionButtonToolBar.Tool = _dicomViewerTool;
 
             // init DICOM annotation tool
             InitDicomAnnotationTool();
 
-            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutChanged +=
+            _dicomViewerTool.DicomImageVoiLutChanged +=
                 new EventHandler<WpfVoiLutChangedEventArgs>(dicomViewerTool_DicomImageVoiLutChanged);
 
-            thumbnailViewer1.ImageDecodingSettings = _dicomFrameDecodingSettings;
-
-            imageViewer1.Images.ImageCollectionSavingProgress += new EventHandler<ProgressEventArgs>(Images_ImageCollectionSavingProgress);
-            imageViewer1.Images.ImageCollectionSavingFinished += new EventHandler(Images_ImageCollectionSavingFinished);
+            SubscribeToImageCollectionEvents(imageViewer1.Images);
 
             // init rulers unit of measure
             InitUnitOfMeasuresForRulers();
@@ -378,7 +391,7 @@ namespace WpfDicomViewerDemo
             _defaultVoiLutMenuItem.IsCheckable = true;
             _defaultVoiLutMenuItem.Click += new RoutedEventHandler(voiLutMenuItem_Click);
 
-            this.Title = string.Format(_titlePrefix, "(Untitled)");
+            Title = "VintaSoft WPF DICOM Viewer Demo v" + ImagingGlobalSettings.ProductVersion;
 
             // update the UI
             UpdateUI();
@@ -446,7 +459,6 @@ namespace WpfDicomViewerDemo
                 else
                     StopAnimation();
 
-                imageViewerToolBar.IsNavigationEnabled = !value;
                 UpdateUI();
             }
         }
@@ -460,9 +472,9 @@ namespace WpfDicomViewerDemo
             {
                 VintasoftImage image = imageViewer1.Image;
                 if (image != null)
-                    return _dicomSeriesController.GetDicomFile(image);
+                    return DicomFile.GetFileAssociatedWithImage(image);
 
-                return _dicomFileWithoutImages;
+                return null;
             }
         }
 
@@ -514,7 +526,7 @@ namespace WpfDicomViewerDemo
             _isWindowClosing = true;
 
             // close the previously opened DICOM files
-            ClosePreviouslyOpenedFiles();
+            CloseDicomFiles();
         }
 
         #endregion
@@ -527,7 +539,15 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void openDicomFilesMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            OpenDicomFile();
+            AddDicomFiles();
+        }
+
+        /// <summary>
+        /// Handles the Click event of openDirectoryMenuItem object.
+        /// </summary>
+        private void openDirectoryMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenDirectory();
         }
 
         /// <summary>
@@ -535,9 +555,13 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void saveDicomFileToImageFileMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ImageCollection images = imageViewer1.Images;
+            ImageCollection images = GetSeriesImages();
+            SubscribeToImageCollectionEvents(images);
+            _disposeImageCollectionAfterSave = false;
+            bool useMultipageEncoderOnly = images.Count > 1;
 
-            WpfDicomAnnotationTool annotationTool = _dicomViewerTool.DicomAnnotationTool;
+#if !REMOVE_ANNOTATION_PLUGIN
+            WpfDicomAnnotationTool annotationTool = _dicomAnnotatedViewerTool.DicomAnnotationTool;
             if (annotationTool.AnnotationDataCollection.Count > 0)
             {
                 MessageBoxResult result = MessageBox.Show(
@@ -565,10 +589,11 @@ namespace WpfDicomViewerDemo
                     }
 
                     images = imagesWithAnnotations;
-                    images.ImageCollectionSavingProgress += new EventHandler<ProgressEventArgs>(Images_ImageCollectionSavingProgress);
-                    images.ImageCollectionSavingFinished += new EventHandler(Images_ImageCollectionSavingFinished);
+                    SubscribeToImageCollectionEvents(images);
+                    _disposeImageCollectionAfterSave = true;
                 }
             }
+#endif
 
             bool multipage = images.Count > 1;
 
@@ -603,12 +628,27 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
+        /// Handles the Click event of burnAndSaveToDICOMFileMenuItem object.
+        /// </summary>
+        private void burnAndSaveToDICOMFileMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+#if !REMOVE_ANNOTATION_PLUGIN
+            _saveFileDialog.Filter = "DICOM files|*.dcm";
+
+            if (_saveFileDialog.ShowDialog() == true)
+            {
+                _dicomAnnotatedViewerTool.BurnAndSaveToDicomFile(_saveFileDialog.FileName);
+            }
+#endif
+        }
+
+        /// <summary>
         /// Handles the Click event of closeDicomSeriesMenuItem object.
         /// </summary>
         private void closeDicomSeriesMenuItem_Click(object sender, RoutedEventArgs e)
         {
             // close DICOM file
-            CloseDicomSeries();
+            CloseDicomFiles();
         }
 
         /// <summary>
@@ -685,22 +725,6 @@ namespace WpfDicomViewerDemo
 
         #region 'View' menu
 
-        #region Thumbnail viewer settings
-
-        /// <summary>
-        /// Handles the Click event of thumbnailViewerSettingsMenuItem object.
-        /// </summary>
-        private void thumbnailViewerSettingsMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            ThumbnailViewerSettingsWindow dlg = new ThumbnailViewerSettingsWindow(thumbnailViewer1, (Style)Resources["ThumbnailItemStyle"]);
-            dlg.Owner = this;
-            dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            dlg.ShowDialog();
-        }
-
-        #endregion
-
-
         #region Image viewer settings
 
         /// <summary>
@@ -741,8 +765,6 @@ namespace WpfDicomViewerDemo
                 // enable full screen mode
                 menu1.Visibility = Visibility.Collapsed;
                 toolBarTray1.Visibility = Visibility.Collapsed;
-                propertyGridPanel.Visibility = Visibility.Collapsed;
-                thumbnailViewer1.Background = Brushes.Black;
                 InfoPanel.Visibility = Visibility.Collapsed;
 
                 // update the form settings
@@ -757,8 +779,6 @@ namespace WpfDicomViewerDemo
                 // disable full screen mode
                 menu1.Visibility = Visibility.Visible;
                 toolBarTray1.Visibility = Visibility.Visible;
-                propertyGridPanel.Visibility = Visibility.Visible;
-                thumbnailViewer1.Background = null;
                 InfoPanel.Visibility = Visibility.Visible;
 
                 // update the form settings
@@ -795,7 +815,7 @@ namespace WpfDicomViewerDemo
             _dicomFrameDecodingSettings.ShowOverlayImages = showOverlayImagesMenuItem.IsChecked;
 
             // invalidates images and visual tool
-            _dicomViewerTool.DicomViewerTool.Refresh();
+            _dicomViewerTool.Refresh();
         }
 
         /// <summary>
@@ -817,7 +837,7 @@ namespace WpfDicomViewerDemo
                 _dicomFrameDecodingSettings.OverlayColor = new Rgb24Color(dlg.SelectedColor.R,
                     dlg.SelectedColor.G, dlg.SelectedColor.B);
 
-                _dicomViewerTool.DicomViewerTool.Refresh();
+                _dicomViewerTool.Refresh();
             }
         }
 
@@ -832,7 +852,7 @@ namespace WpfDicomViewerDemo
         private void showMetadataOnViewerMenuItem_Click(object sender, RoutedEventArgs e)
         {
             showMetadataInViewerMenuItem.IsChecked ^= true;
-            _dicomViewerTool.DicomViewerTool.IsTextOverlayVisible = showMetadataInViewerMenuItem.IsChecked;
+            _dicomViewerTool.IsTextOverlayVisible = showMetadataInViewerMenuItem.IsChecked;
         }
 
         /// <summary>
@@ -840,16 +860,16 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void textOverlaySettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            DicomOverlaySettingEditorWindow dlg = new DicomOverlaySettingEditorWindow(OVERLAY_OWNER_NAME, _dicomViewerTool.DicomViewerTool);
+            DicomOverlaySettingEditorWindow dlg = new DicomOverlaySettingEditorWindow(OVERLAY_OWNER_NAME, _dicomViewerTool);
             dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             dlg.Owner = this;
             // show dialog
             dlg.ShowDialog();
 
             // set text overlay for DICOM viewer tool
-            DicomOverlaySettingEditorWindow.SetTextOverlay(OVERLAY_OWNER_NAME, _dicomViewerTool.DicomViewerTool);
+            DicomOverlaySettingEditorWindow.SetTextOverlay(OVERLAY_OWNER_NAME, _dicomViewerTool);
             // refresh the DICOM viewer tool
-            _dicomViewerTool.DicomViewerTool.Refresh();
+            _dicomViewerTool.Refresh();
         }
 
         #endregion
@@ -863,7 +883,7 @@ namespace WpfDicomViewerDemo
         private void showRulersOnViewerMenuItem_Click(object sender, RoutedEventArgs e)
         {
             showRulersInViewerMenuItem.IsChecked ^= true;
-            _dicomViewerTool.DicomViewerTool.ShowRulers = showRulersInViewerMenuItem.IsChecked;
+            _dicomViewerTool.ShowRulers = showRulersInViewerMenuItem.IsChecked;
         }
 
         /// <summary>
@@ -871,7 +891,7 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void rulersColorMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Brush brush = _dicomViewerTool.DicomViewerTool.VerticalImageRuler.RulerPen.Brush;
+            Brush brush = _dicomViewerTool.VerticalImageRuler.RulerPen.Brush;
             SolidColorBrush solidColorBrush = (SolidColorBrush)brush;
             ColorPickerDialog dlg = new ColorPickerDialog();
             dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -882,13 +902,13 @@ namespace WpfDicomViewerDemo
             if (dlg.ShowDialog() == true)
             {
                 // update rulers
-                _dicomViewerTool.DicomViewerTool.VerticalImageRuler.RulerPen = new Pen(new SolidColorBrush(dlg.SelectedColor),
-                      _dicomViewerTool.DicomViewerTool.VerticalImageRuler.RulerPen.Thickness);
-                _dicomViewerTool.DicomViewerTool.HorizontalImageRuler.RulerPen = new Pen(new SolidColorBrush(dlg.SelectedColor),
-                      _dicomViewerTool.DicomViewerTool.HorizontalImageRuler.RulerPen.Thickness);
+                _dicomViewerTool.VerticalImageRuler.RulerPen = new Pen(new SolidColorBrush(dlg.SelectedColor),
+                      _dicomViewerTool.VerticalImageRuler.RulerPen.Thickness);
+                _dicomViewerTool.HorizontalImageRuler.RulerPen = new Pen(new SolidColorBrush(dlg.SelectedColor),
+                      _dicomViewerTool.HorizontalImageRuler.RulerPen.Thickness);
 
                 // refresh DICOM viewer tool
-                _dicomViewerTool.DicomViewerTool.Refresh();
+                _dicomViewerTool.Refresh();
             }
         }
 
@@ -899,7 +919,7 @@ namespace WpfDicomViewerDemo
         {
             _currentRulersUnitOfMeasureMenuItem.IsChecked = false;
             _currentRulersUnitOfMeasureMenuItem = (MenuItem)e.OriginalSource;
-            _dicomViewerTool.DicomViewerTool.RulersUnitOfMeasure =
+            _dicomViewerTool.RulersUnitOfMeasure =
                 _menuItemToRulersUnitOfMeasure[_currentRulersUnitOfMeasureMenuItem];
             _currentRulersUnitOfMeasureMenuItem.IsChecked = true;
         }
@@ -949,7 +969,7 @@ namespace WpfDicomViewerDemo
         private void negativeImageMenuItem_Click(object sender, RoutedEventArgs e)
         {
             negativeImageMenuItem.IsChecked ^= true;
-            _dicomViewerTool.DicomViewerTool.IsImageNegative = negativeImageMenuItem.IsChecked;
+            _dicomViewerTool.IsImageNegative = negativeImageMenuItem.IsChecked;
         }
 
         /// <summary>
@@ -964,7 +984,7 @@ namespace WpfDicomViewerDemo
                 _currentVoiLutMenuItem.IsChecked = false;
                 _currentVoiLutMenuItem = null;
             }
-            
+
             ItemCollection items = _voiLutsButton.Items;
             // for each VOI LUT menu item
             foreach (object item in items)
@@ -994,19 +1014,19 @@ namespace WpfDicomViewerDemo
 
             // the default VOI LUT
             DicomImageVoiLookupTable defaultVoiLut =
-                _dicomViewerTool.DicomViewerTool.DefaultDicomImageVoiLut;
+                _dicomViewerTool.DefaultDicomImageVoiLut;
 
             // if the default VOI LUT is equal to new VOI LUT
             if (defaultVoiLut.WindowCenter == e.WindowCenter &&
                 defaultVoiLut.WindowWidth == e.WindowWidth)
             {
                 // specify that DICOM viewer tool must use VOI LUT from DICOM image metadata for DICOM image
-                _dicomViewerTool.DicomViewerTool.AlwaysLoadVoiLutFromMetadataOfDicomFrame = true;
+                _dicomViewerTool.AlwaysLoadVoiLutFromMetadataOfDicomFrame = true;
             }
             else
             {
                 // specify that DICOM viewer tool must use the same VOI LUT for all DICOM images
-                _dicomViewerTool.DicomViewerTool.AlwaysLoadVoiLutFromMetadataOfDicomFrame = false;
+                _dicomViewerTool.AlwaysLoadVoiLutFromMetadataOfDicomFrame = false;
             }
         }
 
@@ -1019,8 +1039,8 @@ namespace WpfDicomViewerDemo
             widthHorizontalCenterVerticalMenuItem.IsChecked = false;
             widthVerticalCenterHorizontalMenuItem.IsChecked = false;
 
-            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutCenterDirection = DicomInteractionDirection.BottomToTop;
-            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutWidthDirection = DicomInteractionDirection.LeftToRight;
+            _dicomViewerTool.DicomImageVoiLutCenterDirection = DicomInteractionDirection.BottomToTop;
+            _dicomViewerTool.DicomImageVoiLutWidthDirection = DicomInteractionDirection.LeftToRight;
         }
 
         /// <summary>
@@ -1032,8 +1052,8 @@ namespace WpfDicomViewerDemo
             widthHorizontalCenterVerticalMenuItem.IsChecked = true;
             widthVerticalCenterHorizontalMenuItem.IsChecked = false;
 
-            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutCenterDirection = DicomInteractionDirection.BottomToTop;
-            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutWidthDirection = DicomInteractionDirection.RightToLeft;
+            _dicomViewerTool.DicomImageVoiLutCenterDirection = DicomInteractionDirection.BottomToTop;
+            _dicomViewerTool.DicomImageVoiLutWidthDirection = DicomInteractionDirection.RightToLeft;
         }
 
         /// <summary>
@@ -1045,8 +1065,8 @@ namespace WpfDicomViewerDemo
             widthHorizontalCenterVerticalMenuItem.IsChecked = false;
             widthVerticalCenterHorizontalMenuItem.IsChecked = true;
 
-            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutCenterDirection = DicomInteractionDirection.RightToLeft;
-            _dicomViewerTool.DicomViewerTool.DicomImageVoiLutWidthDirection = DicomInteractionDirection.BottomToTop;
+            _dicomViewerTool.DicomImageVoiLutCenterDirection = DicomInteractionDirection.RightToLeft;
+            _dicomViewerTool.DicomImageVoiLutWidthDirection = DicomInteractionDirection.BottomToTop;
         }
 
         #endregion
@@ -1137,9 +1157,12 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void saveAsGifFileToolStripMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ImageCollection images = imageViewer1.Images;
+            ImageCollection images = GetSeriesImages();
+            SubscribeToImageCollectionEvents(images);
+            _disposeImageCollectionAfterSave = false;
 
-            WpfDicomAnnotationTool annotationTool = _dicomViewerTool.DicomAnnotationTool;
+#if !REMOVE_ANNOTATION_PLUGIN
+            WpfDicomAnnotationTool annotationTool = _dicomAnnotatedViewerTool.DicomAnnotationTool;
             if (annotationTool.AnnotationDataCollection.Count > 0)
             {
                 MessageBoxResult result = MessageBox.Show(
@@ -1167,10 +1190,11 @@ namespace WpfDicomViewerDemo
                     }
 
                     images = imagesWithAnnotations;
-                    images.ImageCollectionSavingProgress += new EventHandler<ProgressEventArgs>(Images_ImageCollectionSavingProgress);
-                    images.ImageCollectionSavingFinished += new EventHandler(Images_ImageCollectionSavingFinished);
+                    SubscribeToImageCollectionEvents(images);
+                    _disposeImageCollectionAfterSave = true;
                 }
             }
+#endif
 
             if (_saveGifFileDialog.ShowDialog() == true)
             {
@@ -1226,10 +1250,12 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void infoMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            AnnotationsInfoWindow dialog = new AnnotationsInfoWindow(_dicomViewerTool.DicomAnnotationTool.AnnotationDataController);
+#if !REMOVE_ANNOTATION_PLUGIN
+            AnnotationsInfoWindow dialog = new AnnotationsInfoWindow(_dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataController);
             dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             dialog.Owner = this;
             dialog.ShowDialog();
+#endif
         }
 
         /// <summary>
@@ -1237,7 +1263,9 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void interactionModeNoneMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.None;
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.None;
+#endif
         }
 
         /// <summary>
@@ -1245,7 +1273,9 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void interactionModeViewMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.View;
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.View;
+#endif
         }
 
         /// <summary>
@@ -1253,7 +1283,9 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void interactionModeAuthorMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.Author;
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.Author;
+#endif
         }
 
         /// <summary>
@@ -1261,7 +1293,8 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void annotationsMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
         {
-            WpfAnnotationView focusedAnnotationView = _dicomViewerTool.DicomAnnotationTool.FocusedAnnotationView;
+#if !REMOVE_ANNOTATION_PLUGIN
+            WpfAnnotationView focusedAnnotationView = _dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationView;
             if (focusedAnnotationView != null &&
                (focusedAnnotationView is WpfDicomPolylineAnnotationView ||
                 focusedAnnotationView is WpfDicomMultilineAnnotationView ||
@@ -1278,16 +1311,19 @@ namespace WpfDicomViewerDemo
             {
                 transformationModeMenuItem.IsEnabled = false;
             }
+#endif
         }
-    
+
         /// <summary>
         /// Handles the Click event of transformationModeRectangularMenuItem object.
         /// </summary>
         private void transformationModeRectangularMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            WpfAnnotationView focusedAnnotationView = _dicomViewerTool.DicomAnnotationTool.FocusedAnnotationView;
+#if !REMOVE_ANNOTATION_PLUGIN
+            WpfAnnotationView focusedAnnotationView = _dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationView;
             SetGripMode(focusedAnnotationView, GripMode.Rectangular);
             UpdateTransformationMenu();
+#endif
         }
 
         /// <summary>
@@ -1295,9 +1331,11 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void transformationModePointsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            WpfAnnotationView focusedAnnotationView = _dicomViewerTool.DicomAnnotationTool.FocusedAnnotationView;
+#if !REMOVE_ANNOTATION_PLUGIN
+            WpfAnnotationView focusedAnnotationView = _dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationView;
             SetGripMode(focusedAnnotationView, GripMode.Points);
             UpdateTransformationMenu();
+#endif
         }
 
         /// <summary>
@@ -1307,9 +1345,11 @@ namespace WpfDicomViewerDemo
             object sender,
             RoutedEventArgs e)
         {
-            WpfAnnotationView focusedAnnotationView = _dicomViewerTool.DicomAnnotationTool.FocusedAnnotationView;
+#if !REMOVE_ANNOTATION_PLUGIN
+            WpfAnnotationView focusedAnnotationView = _dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationView;
             SetGripMode(focusedAnnotationView, GripMode.RectangularAndPoints);
             UpdateTransformationMenu();
+#endif
         }
 
 
@@ -1318,6 +1358,7 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void presentationStateLoadMenuItem_Click(object sender, RoutedEventArgs e)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             _openDicomAnnotationsFileDialog.FileName = null;
             _openDicomAnnotationsFileDialog.Filter = "Presentation State File(*.pre)|*.pre|All Formats(*.*)|*.*";
             _openDicomAnnotationsFileDialog.FilterIndex = 1;
@@ -1336,7 +1377,7 @@ namespace WpfDicomViewerDemo
                         presentationStateFile.Annotations != null)
                     {
                         _isAnnotationsLoadedForCurrentFrame = false;
-                        _dicomViewerTool.DicomAnnotationTool.AnnotationDataController.AddAnnotationDataSet(presentationStateFile.Annotations);
+                        _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataController.AddAnnotationDataSet(presentationStateFile.Annotations);
                         PresentationStateFileController.UpdatePresentationStateFile(DicomFile, presentationStateFile);
                     }
                     else
@@ -1355,6 +1396,7 @@ namespace WpfDicomViewerDemo
                     DemosTools.ShowErrorMessage(ex);
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -1362,10 +1404,12 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void presentationStateInfoMenuItem_Click(object sender, RoutedEventArgs e)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             PresentationStateInfoWindow dialog = new PresentationStateInfoWindow(PresentationStateFile);
             dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             dialog.Owner = this;
             dialog.ShowDialog();
+#endif
         }
 
         /// <summary>
@@ -1373,20 +1417,22 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void presentationStateSaveMenuItem_Click(object sender, RoutedEventArgs e)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             if (_isAnnotationsLoadedForCurrentFrame)
             {
                 DicomAnnotationCodec codec = new DicomAnnotationCodec();
                 DicomAnnotationDataCollection collection = (DicomAnnotationDataCollection)
-                    _dicomViewerTool.DicomAnnotationTool.AnnotationDataController.GetAnnotations(imageViewer1.Image);
+                    _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataController.GetAnnotations(imageViewer1.Image);
                 codec.Encode(PresentationStateFile.Annotations, collection);
                 PresentationStateFile.SaveChanges();
             }
             else
             {
-                _dicomViewerTool.DicomAnnotationTool.AnnotationDataController.UpdateAnnotationDataSets();
+                _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataController.UpdateAnnotationDataSets();
                 PresentationStateFile.SaveChanges();
             }
             MessageBox.Show("Presentation state file is saved.");
+#endif
         }
 
         /// <summary>
@@ -1394,7 +1440,8 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void presentationStateSaveToMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            string dicomFilePath = _dicomSeriesController.GetDicomFilePath(DicomFile);
+#if !REMOVE_ANNOTATION_PLUGIN
+            string dicomFilePath = imageViewer1.Image.SourceInfo.Filename;
             _saveDicomAnnotationsFileDialog.FileName = Path.GetFileNameWithoutExtension(dicomFilePath) + ".pre";
             _saveDicomAnnotationsFileDialog.Filter = "Presentation State File(*.pre)|*.pre";
             _saveDicomAnnotationsFileDialog.FilterIndex = 1;
@@ -1403,7 +1450,7 @@ namespace WpfDicomViewerDemo
             {
                 try
                 {
-                    _dicomViewerTool.DicomAnnotationTool.CancelAnnotationBuilding();
+                    _dicomAnnotatedViewerTool.DicomAnnotationTool.CancelAnnotationBuilding();
 
                     // get annotations of DICOM file
                     DicomAnnotationDataCollection[] annotations = GetAnnotationsAssociatedWithDicomFileImages(DicomFile);
@@ -1427,6 +1474,7 @@ namespace WpfDicomViewerDemo
                     DemosTools.ShowErrorMessage(ex);
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -1442,6 +1490,7 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void binaryFormatSaveToMenuItem_Click(object sender, RoutedEventArgs e)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             _saveDicomAnnotationsFileDialog.FileName = null;
             _saveDicomAnnotationsFileDialog.Filter = "Binary Annotations(*.vsab)|*.vsab";
             _saveDicomAnnotationsFileDialog.FilterIndex = 1;
@@ -1454,7 +1503,7 @@ namespace WpfDicomViewerDemo
                     {
                         AnnotationVintasoftBinaryFormatter annotationFormatter = new AnnotationVintasoftBinaryFormatter();
                         //
-                        AnnotationDataCollection annotations = _dicomViewerTool.DicomAnnotationTool.AnnotationDataController.GetAnnotations(
+                        AnnotationDataCollection annotations = _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataController.GetAnnotations(
                             imageViewer1.Image);
                         //
                         annotationFormatter.Serialize(fs, annotations);
@@ -1465,6 +1514,7 @@ namespace WpfDicomViewerDemo
                     DemosTools.ShowErrorMessage(ex);
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -1480,6 +1530,7 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void xmpFormatSaveToMenuItem_Click(object sender, RoutedEventArgs e)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             _saveDicomAnnotationsFileDialog.FileName = null;
             _saveDicomAnnotationsFileDialog.Filter = "XMP Annotations(*.xmp)|*.xmp";
             _saveDicomAnnotationsFileDialog.FilterIndex = 1;
@@ -1493,7 +1544,7 @@ namespace WpfDicomViewerDemo
                         AnnotationVintasoftXmpFormatter annotationFormatter = new AnnotationVintasoftXmpFormatter();
 
                         //
-                        AnnotationDataCollection annotations = _dicomViewerTool.DicomAnnotationTool.AnnotationDataController.GetAnnotations(
+                        AnnotationDataCollection annotations = _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataController.GetAnnotations(
                             imageViewer1.Image);
                         //
                         annotationFormatter.Serialize(fs, annotations);
@@ -1504,6 +1555,7 @@ namespace WpfDicomViewerDemo
                     DemosTools.ShowErrorMessage(ex);
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -1511,12 +1563,27 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void addMenuItem_Click(object sender, RoutedEventArgs e)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             MenuItem item = (MenuItem)sender;
-            if (_dicomViewerTool.DicomAnnotationTool.FocusedAnnotationView != null &&
-                _dicomViewerTool.DicomAnnotationTool.FocusedAnnotationView.InteractionController ==
-                _dicomViewerTool.DicomAnnotationTool.FocusedAnnotationView.Builder)
-                _dicomViewerTool.DicomAnnotationTool.CancelAnnotationBuilding();
+            if (_dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationView != null &&
+                _dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationView.InteractionController ==
+                _dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationView.Builder)
+                _dicomAnnotatedViewerTool.DicomAnnotationTool.CancelAnnotationBuilding();
             annotationsToolBar.BuildAnnotation(item.Header.ToString());
+#endif
+        }
+
+        /// <summary>
+        /// Handles the Click event of propertiesMenuItem object.
+        /// </summary>
+        private void propertiesMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+#if !REMOVE_ANNOTATION_PLUGIN
+            PropertyGridWindow window = new PropertyGridWindow(
+                _dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationView,
+                "Annotation Properties");
+            window.ShowDialog();
+#endif
         }
 
         #endregion
@@ -1566,7 +1633,7 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void imageViewerToolBar_OpenFile(object sender, EventArgs e)
         {
-            OpenDicomFile();
+            AddDicomFiles();
         }
 
         #endregion
@@ -1605,16 +1672,9 @@ namespace WpfDicomViewerDemo
                 // create information about focused image
                 info = string.Format("Size={0}x{1}; PixelFormat={2}; Resolution={3}",
                    image.Width, image.Height, image.PixelFormat, image.Resolution.ToString());
-
-                // get DICOM frame, which is associated with focused image
-                DicomFrame frame = DicomFrame.GetFrameAssociatedWithImage(image);
-                // if DICOM frame exists
-                if (frame != null)
-                {
-                    // save information about VOI LUT of DICOM frame
-                    _menuItemToVoiLut[_defaultVoiLutMenuItem] = frame.VoiLut;
-                }
             }
+
+            UpdateUIWithInformationAboutDicomFile();
 
             // update image info
             imageInfoStatusLabel.Content = info;
@@ -1637,8 +1697,6 @@ namespace WpfDicomViewerDemo
                         if (_voiLutParamsWindow != null)
                             _voiLutParamsWindow.DicomFrame = imageViewer1.Image;
                     }
-
-                    imageViewerToolBar.SelectedPageIndex = e.NewValue;
                 }
                 finally
                 {
@@ -1654,8 +1712,10 @@ namespace WpfDicomViewerDemo
         {
             // restore the DICOM viewer tool state
             dicomAnnotatedViewerToolBar.MainVisualTool.ActiveTool = dicomAnnotatedViewerToolBar.DicomAnnotatedViewerTool;
-            _dicomViewerTool.InteractionMode = _prevDicomViewerToolInteractionMode;
-            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode = _prevDicomAnnotationToolInteractionMode;
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool.InteractionMode = _prevDicomViewerToolInteractionMode;
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionMode = _prevDicomAnnotationToolInteractionMode;
+#endif
         }
 
         /// <summary>
@@ -1665,8 +1725,10 @@ namespace WpfDicomViewerDemo
         {
             // save the DICOM viewer tool state
 
-            _prevDicomViewerToolInteractionMode = _dicomViewerTool.InteractionMode;
-            _prevDicomAnnotationToolInteractionMode = _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode;
+#if !REMOVE_ANNOTATION_PLUGIN
+            _prevDicomViewerToolInteractionMode = _dicomAnnotatedViewerTool.InteractionMode;
+            _prevDicomAnnotationToolInteractionMode = _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionMode;
+#endif
         }
 
         /// <summary>
@@ -1674,11 +1736,12 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void imageMeasureToolAction_Activated(object sender, EventArgs e)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             _isVisualToolChanging = true;
             dicomAnnotatedViewerToolBar.MainVisualTool.ActiveTool = dicomAnnotatedViewerToolBar.DicomAnnotatedViewerTool;
-            _dicomViewerTool.InteractionMode = WpfDicomAnnotatedViewerToolInteractionMode.Measuring;
-            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.None;
+            _dicomAnnotatedViewerTool.ActiveTool = null;
             _isVisualToolChanging = false;
+#endif
         }
 
         /// <summary>
@@ -1689,29 +1752,56 @@ namespace WpfDicomViewerDemo
             _isVisualToolChanging = true;
             dicomAnnotatedViewerToolBar.MainVisualTool.ActiveTool =
                 dicomAnnotatedViewerToolBar.MainVisualTool.FindVisualTool<WpfMagnifierTool>();
-            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.None;
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.None;
+#endif
             _isVisualToolChanging = false;
         }
 
+        #endregion
+
+
+        #region DICOM Series Manager Control
+
         /// <summary>
-        /// Handles the Activated event of PanToolAction object.
+        /// Handles the AddedFileCountChanged event of dicomSeriesManagerControl1 object.
         /// </summary>
-        private void PanToolAction_Activated(object sender, EventArgs e)
+        private void dicomSeriesManagerControl1_AddedFileCountChanged(object sender, EventArgs e)
         {
-            _isVisualToolChanging = true;
-            dicomAnnotatedViewerToolBar.MainVisualTool.ActiveTool =
-                dicomAnnotatedViewerToolBar.MainVisualTool.FindVisualTool<WpfPanTool>();
-            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.None;
-            _isVisualToolChanging = false;
+            WpfDicomSeriesManagerControl control = (WpfDicomSeriesManagerControl)sender;
+
+            // if DICOM files loaded
+            if (control.AddedFileCount == control.AddingFileCount)
+            {
+                // hide action label and progress bar
+                progressBar1.Visibility = Visibility.Collapsed;
+                progressBar1.Maximum = 0;
+
+                // update the UI
+                IsDicomFileOpening = false;
+            }
+            else
+            {
+                // if DICOM files loading started
+                if (control.AddingFileCount != progressBar1.Maximum)
+                {
+                    progressBar1.Visibility = Visibility.Visible;
+                    progressBar1.Maximum = control.AddingFileCount;
+                    // update the UI
+                    IsDicomFileOpening = true;
+                }
+
+                progressBar1.Value = control.AddedFileCount;
+            }
         }
 
         /// <summary>
-        /// Handles the PageIndexChanged event of imageViewerToolBar object.
+        /// Handles the AddFilesException event of dicomSeriesManagerControl1 object.
         /// </summary>
-        private void imageViewerToolBar_PageIndexChanged(object sender, PageIndexChangedEventArgs e)
+        private void dicomSeriesManagerControl1_AddFilesException(object sender, ImageSourceExceptionEventArgs e)
         {
-            if (!IsAnimationStarted)
-                imageViewer1.FocusedIndex = e.SelectedPageIndex;
+            if (e.Exception.Message != "Image file does not contain pages (Dicom).")
+                DemosTools.ShowErrorMessage(e.SourceFilename + ":" + Environment.NewLine + e.Exception.Message);
         }
 
         #endregion
@@ -1720,34 +1810,17 @@ namespace WpfDicomViewerDemo
         #region Annotations UI
 
         /// <summary>
-        /// Handles the DropDownOpened event of annotationComboBox object.
-        /// </summary>
-        private void annotationComboBox_DropDownOpened(object sender, EventArgs e)
-        {
-            FillAnnotationComboBox();
-        }
-
-        /// <summary>
-        /// Handles the SelectionChanged event of annotationComboBox object.
-        /// </summary>
-        private void annotationComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (imageViewer1.FocusedIndex != -1 && annotationComboBox.SelectedIndex != -1)
-            {
-                _dicomViewerTool.DicomAnnotationTool.FocusedAnnotationData =
-                    _dicomViewerTool.DicomAnnotationTool.AnnotationDataCollection[annotationComboBox.SelectedIndex];
-            }
-        }
-
-        /// <summary>
         /// Handles the SelectionChanged event of annotationInteractionModeComboBox object.
         /// </summary>
-        private void annotationInteractionModeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void annotationInteractionModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode =
-                (AnnotationInteractionMode)annotationInteractionModeComboBox.SelectedItem;
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionMode =
+                   (AnnotationInteractionMode)annotationInteractionModeComboBox.SelectedItem;
+#endif
         }
 
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// Handles the AnnotationInteractionModeChanged event of annotationTool object.
         /// </summary>
@@ -1760,42 +1833,35 @@ namespace WpfDicomViewerDemo
             interactionModeViewMenuItem.IsChecked = false;
             interactionModeAuthorMenuItem.IsChecked = false;
 
-            WpfDicomAnnotatedViewerToolInteractionMode visualToolInteractionMode =
-                 _dicomViewerTool.InteractionMode;
-
             AnnotationInteractionMode annotationInteractionMode = e.NewValue;
             switch (annotationInteractionMode)
             {
                 case AnnotationInteractionMode.None:
                     interactionModeNoneMenuItem.IsChecked = true;
-                    visualToolInteractionMode = WpfDicomAnnotatedViewerToolInteractionMode.Dicom;
                     break;
 
                 case AnnotationInteractionMode.View:
                     interactionModeViewMenuItem.IsChecked = true;
-                    visualToolInteractionMode = WpfDicomAnnotatedViewerToolInteractionMode.Dicom;
                     break;
 
                 case AnnotationInteractionMode.Author:
                     interactionModeAuthorMenuItem.IsChecked = true;
-                    visualToolInteractionMode = WpfDicomAnnotatedViewerToolInteractionMode.Annotation;
                     break;
             }
-
-            if (!_isVisualToolChanging)
-                _dicomViewerTool.InteractionMode = visualToolInteractionMode;
 
             annotationInteractionModeComboBox.SelectedItem = annotationInteractionMode;
 
             // update the UI
             UpdateUI();
         }
+#endif
 
         #endregion
 
 
         #region Annotation visual tool
 
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// Handles the FocusedAnnotationViewChanged event of annotationTool object.
         /// </summary>
@@ -1806,37 +1872,10 @@ namespace WpfDicomViewerDemo
             if (e.NewValue != null)
                 e.NewValue.Data.PropertyChanging += new EventHandler<ObjectPropertyChangingEventArgs>(AnnotationdData_PropertyChanging);
 
-            FillAnnotationComboBox();
-            ShowAnnotationProperties(_dicomViewerTool.DicomAnnotationTool.FocusedAnnotationView);
-
             // update the UI
             UpdateUI();
         }
-
-        /// <summary>
-        /// Handles the AnnotationBuildingFinished event of annotationTool object.
-        /// </summary>
-        private void annotationTool_AnnotationBuildingFinished(object sender, WpfAnnotationViewEventArgs e)
-        {
-            ShowAnnotationProperties(_dicomViewerTool.DicomAnnotationTool.FocusedAnnotationView);
-        }
-
-        /// <summary>
-        /// Handles the AnnotationTransformingStarted event of annotationTool object.
-        /// </summary>
-        private void annotationTool_AnnotationTransformingStarted(object sender, WpfAnnotationViewEventArgs e)
-        {
-            _isAnnotationTransforming = true;
-        }
-
-        /// <summary>
-        /// Handles the AnnotationTransformingFinished event of annotationTool object.
-        /// </summary>
-        private void annotationTool_AnnotationTransformingFinished(object sender, WpfAnnotationViewEventArgs e)
-        {
-            _isAnnotationTransforming = false;
-            propertyGrid1.Refresh();
-        }
+#endif
 
         /// <summary>
         /// Handles the Changed event of SelectedAnnotations object.
@@ -1864,7 +1903,7 @@ namespace WpfDicomViewerDemo
 
                 _currentVoiLutMenuItem = (MenuItem)sender;
                 _currentVoiLutMenuItem.IsChecked = true;
-                _dicomViewerTool.DicomViewerTool.DicomImageVoiLut = _menuItemToVoiLut[_currentVoiLutMenuItem];
+                _dicomViewerTool.DicomImageVoiLut = _menuItemToVoiLut[_currentVoiLutMenuItem];
             }
         }
 
@@ -1906,8 +1945,11 @@ namespace WpfDicomViewerDemo
 
             ImageCollection images = (ImageCollection)sender;
 
-            if (images != imageViewer1.Images)
+            if (_disposeImageCollectionAfterSave)
+            {
                 images.ClearAndDisposeItems();
+                _disposeImageCollectionAfterSave = false;
+            }
         }
 
         #endregion
@@ -1938,20 +1980,33 @@ namespace WpfDicomViewerDemo
                 // exit
                 return;
 
+#if REMOVE_ANNOTATION_PLUGIN
+            if (_dicomViewerTool == null)
+                return;
+#else
+            if (_dicomAnnotatedViewerTool == null)
+                return;
+#endif
+
             bool hasImages = imageViewer1.Images.Count > 0;
             bool isDicomFileLoaded = hasImages || DicomFile != null;
             bool isDicomFileOpening = _isDicomFileOpening;
             bool isAnnotationsFileLoaded = PresentationStateFile != null;
             bool isFileSaving = _isFileSaving;
-            bool isMultipageFile = imageViewer1.Images.Count > 1;
+            ImageCollection seriesImages = GetSeriesImages();
+            bool isMultipageFile = seriesImages.Count > 1;
             bool isAnimationStarted = IsAnimationStarted;
             bool isImageSelected = imageViewer1.Image != null;
             bool isAnnotationEmpty = true;
+            bool isImageNegative = _dicomViewerTool.IsImageNegative;
+#if !REMOVE_ANNOTATION_PLUGIN
             if (isImageSelected)
-                isAnnotationEmpty = _dicomViewerTool.DicomAnnotationTool.AnnotationDataController[imageViewer1.FocusedIndex].Count <= 0;
+                isAnnotationEmpty = _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataController[imageViewer1.FocusedIndex].Count <= 0;
+#endif
             bool isAnnotationDataControllerEmpty = true;
-            DicomAnnotationDataController dataController = _dicomViewerTool.DicomAnnotationTool.AnnotationDataController;
-            foreach (VintasoftImage image in imageViewer1.Images)
+#if !REMOVE_ANNOTATION_PLUGIN
+            DicomAnnotationDataController dataController = _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataController;
+            foreach (VintasoftImage image in seriesImages)
             {
                 if (dataController.GetAnnotations(image).Count > 0)
                 {
@@ -1959,7 +2014,13 @@ namespace WpfDicomViewerDemo
                     break;
                 }
             }
-            bool isInteractionModeAuthor = _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode == AnnotationInteractionMode.Author;
+#endif
+            bool isInteractionModeAuthor = false;
+            bool isAnnotationFocused = false;
+#if !REMOVE_ANNOTATION_PLUGIN
+            isInteractionModeAuthor = _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionMode == AnnotationInteractionMode.Author;
+            isAnnotationFocused = _dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationData != null;
+#endif
 
 
             bool hasOverlayImages = false;
@@ -1977,7 +2038,8 @@ namespace WpfDicomViewerDemo
             //
             openDicomFilesMenuItem.IsEnabled = !isDicomFileOpening && !isFileSaving;
             saveDicomFileToImageFileMenuItem.IsEnabled = isDicomFileLoaded && !isDicomFileOpening && !isFileSaving;
-            closeDicomSeriesMenuItem.IsEnabled = isDicomFileLoaded && !isDicomFileOpening && !isFileSaving;
+            burnAndSaveToDICOMFileMenuItem.IsEnabled = isDicomFileLoaded && !isDicomFileOpening && !isFileSaving;
+            closeDicomSeriesMenuItem.IsEnabled = isDicomFileLoaded && !isFileSaving;
             imageViewerToolBar.IsEnabled = !isDicomFileOpening && !isFileSaving;
 
             // 'View' menu
@@ -1988,6 +2050,7 @@ namespace WpfDicomViewerDemo
             showRulersInViewerMenuItem.IsEnabled = !isAnimationStarted;
             rulersUnitOfMeasureMenuItem.IsEnabled = !isAnimationStarted;
             voiLutMainMenuItem.IsEnabled = !isAnimationStarted && isMonochromeImage;
+            negativeImageMenuItem.IsChecked = isImageNegative;
 
             // 'Metadata' menu
             //
@@ -2003,8 +2066,6 @@ namespace WpfDicomViewerDemo
             animationRepeatMenuItem.IsEnabled = isDicomFileLoaded && !isDicomFileOpening && !isFileSaving && isMultipageFile;
             animationDelayMenuItem.IsEnabled = animationRepeatMenuItem.IsEnabled;
             saveAsGifFileToolStripMenuItem.IsEnabled = isDicomFileLoaded && !isDicomFileOpening && !isFileSaving && isMultipageFile;
-
-            thumbnailViewer1.IsEnabled = isDicomFileLoaded && !isDicomFileOpening && !isFileSaving;
 
             _voiLutsButton.Visibility = (isMonochromeImage && _voiLutParamsWindow == null) ? Visibility.Visible : Visibility.Collapsed;
             voiLutToolBar.Visibility = _voiLutsButton.Visibility;
@@ -2033,8 +2094,7 @@ namespace WpfDicomViewerDemo
             // annotation tool strip 
             annotationsToolBar.IsEnabled = !isDicomFileOpening && !isFileSaving && isDicomFileLoaded;
 
-            annotationComboBox.IsEnabled = isInteractionModeAuthor;
-            propertyGrid1.Enabled = isInteractionModeAuthor;
+            propertiesMenuItem.IsEnabled = isInteractionModeAuthor && isAnnotationFocused;
         }
 
         /// <summary>
@@ -2140,7 +2200,7 @@ namespace WpfDicomViewerDemo
             if (voiLutMainMenuItem.IsChecked)
             {
                 // create window
-                _voiLutParamsWindow = new VoiLutParamsWindow(this, _dicomViewerTool.DicomViewerTool);
+                _voiLutParamsWindow = new VoiLutParamsWindow(this, _dicomViewerTool);
                 // set current DICOM frame
                 _voiLutParamsWindow.DicomFrame = imageViewer1.Image;
                 _voiLutParamsWindow.Closing += new CancelEventHandler(voiLutParamsWindow_Closing);
@@ -2168,19 +2228,14 @@ namespace WpfDicomViewerDemo
         /// <summary>
         /// Opens a DICOM file.
         /// </summary>
-        private void OpenDicomFile()
+        private void AddDicomFiles()
         {
             if (_openDicomFileDialog.ShowDialog() == true)
             {
                 if (_openDicomFileDialog.FileNames.Length > 0)
                 {
-                    // close the previously opened DICOM files
-                    ClosePreviouslyOpenedFiles();
-
                     // add DICOM files to the DICOM series
-                    AddDicomFilesToSeries(_openDicomFileDialog.FileNames);
-                    _dicomViewerTool.DicomViewerTool.DicomImageVoiLut =
-                        _dicomViewerTool.DicomViewerTool.DefaultDicomImageVoiLut;
+                    AddDicomFiles(_openDicomFileDialog.FileNames);
 
                     _openDicomFileDialog.InitialDirectory = null;
                 }
@@ -2188,259 +2243,39 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Adds the DICOM files to the series.
+        /// Adds the DICOM files.
         /// </summary>
         /// <param name="filesPath">Files path.</param>
-        private void AddDicomFilesToSeries(params string[] filesPath)
+        private void AddDicomFiles(params string[] filesPath)
         {
-            try
-            {
-                List<DicomFile> filesForLoadPresentationState = new List<DicomFile>();
-                string dirPath = null;
-
-                // show action label and progress bar
-                actionLabel.Visibility = Visibility.Visible;
-                progressBar1.Visibility = Visibility.Visible;
-                progressBar1.Maximum = filesPath.Length;
-                progressBar1.Value = 0;
-
-                bool skipCorruptedFiles = false;
-
-                foreach (string filePath in filesPath)
-                {
-                    if (dirPath == null)
-                        dirPath = Path.GetDirectoryName(filePath);
-
-                    // set action info
-                    actionLabel.Content = string.Format("Loading {0}", Path.GetFileName(filePath));
-                    // update progress bar
-                    progressBar1.Value++;
-                    DemosTools.DoEvents();
-
-                    DicomFile dicomFile = null;
-                    try
-                    {
-                        // if the series already contains the specified DICOM file
-                        if (_dicomSeriesController.Contains(filePath))
-                        {
-                            DemosTools.ShowInfoMessage(string.Format("The series already contains DICOM file \"{0}\".", Path.GetFileName(filePath)));
-                            return;
-                        }
-
-                        // instance number of new DICOM file
-                        int newDicomFileInstanceNumber = 0;
-                        // add DICOM file to the current series of DICOM images and get the DICOM images of new DICOM file
-                        ImageCollection newDicomImages =
-                            _dicomSeriesController.AddDicomFileToSeries(filePath, out dicomFile, out newDicomFileInstanceNumber);
-
-                        // if DICOM file represents the DICOM directory
-                        if (IsDicomDirectory(dicomFile))
-                        {
-                            // close the DICOM file
-                            _dicomSeriesController.CloseDicomFile(dicomFile);
-                            // show the error message
-                            DemosTools.ShowInfoMessage("The DICOM directory cannot be added to the series of DICOM images.");
-                            return;
-                        }
-
-                        IsDicomFileOpening = true;
-
-                        // if DICOM file does not contain images
-                        if (dicomFile.Pages.Count == 0)
-                        {
-                            // if image viewer contains images
-                            if (imageViewer1.Images.Count > 0)
-                            {
-                                DemosTools.ShowInfoMessage("The DICOM file cannot be added to the series of DICOM images because the DICOM file does not contain image.");
-                            }
-                            else
-                            {
-                                // save reference to the DICOM file
-                                _dicomFileWithoutImages = dicomFile;
-
-                                // show message for user
-                                DemosTools.ShowInfoMessage("DICOM file does not contain image.");
-                                // show metadata of DICOM file
-                                ShowCurrentFileMetadata();
-                            }
-                        }
-                        else
-                        {
-                            // get image index in image collection of current DICOM file
-                            int imageIndex = GetImageIndexInImageCollectionForNewImage(newDicomFileInstanceNumber);
-
-                            try
-                            {
-                                // insert images to the specified index
-                                imageViewer1.Images.InsertRange(imageIndex, newDicomImages.ToArray());
-
-                                // update frame count in series
-                                imageViewerToolBar.PageCount = imageViewer1.Images.Count;
-                            }
-                            catch
-                            {
-                                // remove new DICOM images from image collection of image viewer
-                                foreach (VintasoftImage newDicomImage in newDicomImages)
-                                    imageViewer1.Images.Remove(newDicomImage);
-
-                                // close new DICOM file
-                                _dicomSeriesController.CloseDicomFile(dicomFile);
-                                dicomFile = null;
-
-                                // update frame count in series
-                                imageViewerToolBar.PageCount = imageViewer1.Images.Count;
-
-                                throw;
-                            }
-
-                            // if DICOM presentation state file must be loaded automatically
-                            if (presentationState_loadAutomaticallyMenuItem.IsChecked)
-                            {
-                                filesForLoadPresentationState.Add(dicomFile);
-                            }
-
-                            // if image viewer shows the first image in series
-                            if (imageViewerToolBar.PageCount == dicomFile.Pages.Count)
-                                // update UI of DICOM file
-                                UpdateUIWithInformationAboutDicomFile();
-                        }
-
-                        // update header of form
-                        this.Title = string.Format(_titlePrefix, Path.GetFileName(filePath));
-                    }
-                    catch (Exception ex)
-                    {
-                        // close file
-                        if (dicomFile != null)
-                            _dicomSeriesController.CloseDicomFile(dicomFile);
-
-                        if (!skipCorruptedFiles)
-                        {
-                            if (filesPath.Length == 1)
-                            {
-                                DemosTools.ShowErrorMessage(ex);
-
-                                dirPath = null;
-                                CloseDicomSeries();
-                            }
-                            else
-                            {
-                                string exceptionMessage = string.Format(
-                                    "The file '{0}' can not be opened:\r\n\"{1}\"\r\nDo you want to continue anyway?",
-                                    Path.GetFileName(filePath), DemosTools.GetFullExceptionMessage(ex).Trim());
-                                if (MessageBox.Show(
-                                    exceptionMessage,
-                                    "Error",
-                                    MessageBoxButton.YesNo,
-                                    MessageBoxImage.Error) == MessageBoxResult.No)
-                                {
-                                    dirPath = null;
-                                    CloseDicomSeries();
-                                    break;
-                                }
-                            }
-
-                            skipCorruptedFiles = true;
-                        }
-                    }
-                }
-
-                // hide action label and progress bar
-                actionLabel.Content = string.Empty;
-                actionLabel.Visibility = Visibility.Collapsed;
-                progressBar1.Visibility = Visibility.Collapsed;
-
-                if (!string.IsNullOrEmpty(dirPath))
-                {
-                    // if DICOM presentation files must be loaded automatically
-                    if (presentationState_loadAutomaticallyMenuItem.IsChecked)
-                        // load presentation state file of DICOM file
-                        LoadAnnotationsFromPresentationStateFiles(dirPath, filesForLoadPresentationState.ToArray());
-                }
-
-                // update UI
-                UpdateUI();
-            }
-            finally
-            {
-                // hide action label and progress bar
-                actionLabel.Content = string.Empty;
-                actionLabel.Visibility = Visibility.Collapsed;
-                progressBar1.Visibility = Visibility.Collapsed;
-
-                if (!_isWindowClosing)
-                {
-                    // update the UI
-                    IsDicomFileOpening = false;
-                }
-            }
-        }        
-
-        /// <summary>
-        /// Returns the index, in image collection, where the new DICOM image must be inserted.
-        /// </summary>
-        /// <param name="dicomFileInstanceNumber">The DICOM file instance number of new image.</param>
-        /// <returns>
-        /// The image index of image collection.
-        /// </returns>
-        private int GetImageIndexInImageCollectionForNewImage(int newImageDicomFileInstanceNumber)
-        {
-            int imageIndex = imageViewer1.Images.Count;
-            while (imageIndex > 0)
-            {
-                // get DICOM file instance number for the image from image collection
-                int imageDicomFileInstanceNumber =
-                    _dicomSeriesController.GetDicomFileInstanceNumber(imageViewer1.Images[imageIndex - 1]);
-
-                // if new image must be inserted after the image from image collection
-                if (newImageDicomFileInstanceNumber > imageDicomFileInstanceNumber)
-                    break;
-
-                imageIndex--;
-            }
-            return imageIndex;
+            dicomSeriesManagerControl1.AddFiles(filesPath);
         }
 
         /// <summary>
-        /// Determines whether the specified DICOM file contains DICOM directory metadata.
+        /// Open a directory.
         /// </summary>
-        /// <param name="dicomFile">The DICOM file.</param>
-        /// <returns>
-        /// <returns><b>true</b> if the DICOM file contains DICOM directory metadata; 
-        /// otherwise, <b>false</b>.</returns>
-        /// </returns>
-        private bool IsDicomDirectory(DicomFile dicomFile)
+        private void OpenDirectory()
         {
-            if (dicomFile.DataSet.DataElements.Contains(DicomDataElementId.DirectoryRecordSequence))
-                return true;
-
-            return false;
+            _folderBrowserDialog.ShowNewFolderButton = false;
+            if (_folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                AddDicomFilesFromDirectory(_folderBrowserDialog.SelectedPath);
+            }
         }
 
         /// <summary>
-        /// Closes the previously opened DICOM files.
+        /// Adds the DICOM files from directory.
         /// </summary>
-        private void ClosePreviouslyOpenedFiles()
+        /// <param name="filesPath">Files path.</param>
+        private void AddDicomFilesFromDirectory(string filesPath)
         {
-            // if DICOM file without images is opened
-            if (_dicomFileWithoutImages != null)
-            {
-                // close the DICOM file without images
-                _dicomFileWithoutImages.Dispose();
-                _dicomFileWithoutImages = null;
-            }
-            // if DICOM series has files
-            if (_dicomSeriesController.FileCount > 0)
-            {
-                // close the previously opened DICOM file
-                CloseDicomSeries();
-            }
+            dicomSeriesManagerControl1.AddDirectory(filesPath, true);
         }
 
         /// <summary>
         /// Closes series of DICOM frames.
         /// </summary>
-        private void CloseDicomSeries()
+        private void CloseDicomFiles()
         {
             if (imageViewer1.Images.Count != 0)
                 CloseAllPresentationStateFiles();
@@ -2453,17 +2288,8 @@ namespace WpfDicomViewerDemo
                 showAnimationMenuItem.IsChecked = false;
             }
 
-            imageViewerToolBar.SelectedPageIndex = -1;
-            imageViewerToolBar.PageCount = 0;
-
             // clear image collection of image viewer and dispose all images
-            imageViewer1.Images.ClearAndDisposeItems();
-            thumbnailViewer1.Images.ClearAndDisposeItems();
-
-            _dicomSeriesController.CloseSeries();
-            _dicomFileWithoutImages = null;
-
-            this.Title = string.Format(_titlePrefix, "(Untitled)");
+            dicomSeriesManagerControl1.CloseAllSeries();
 
             // update the UI
             UpdateUI();
@@ -2475,6 +2301,7 @@ namespace WpfDicomViewerDemo
 
         #region Annotations
 
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// Returns an array of annotations, which are associated with images from DICOM file.
         /// </summary>
@@ -2488,11 +2315,9 @@ namespace WpfDicomViewerDemo
             List<DicomAnnotationDataCollection> result = new List<DicomAnnotationDataCollection>();
 
             // get data controller of annotation tool
-            DicomAnnotationDataController controller = _dicomViewerTool.DicomAnnotationTool.AnnotationDataController;
-            // get images of DICOM file
-            VintasoftImage[] dicomFileImages = _dicomSeriesController.GetImages(dicomFile);
+            DicomAnnotationDataController controller = _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataController;
             // for each image
-            foreach (VintasoftImage image in dicomFileImages)
+            foreach (VintasoftImage image in imageViewer1.Images)
             {
                 // get annotations of image
                 DicomAnnotationDataCollection annotations =
@@ -2506,12 +2331,14 @@ namespace WpfDicomViewerDemo
 
             return result.ToArray();
         }
+#endif
 
         /// <summary>
         /// Loads the annotation from binary or XMP packet.
         /// </summary>
         private void LoadAnnotationFromBinaryOrXmpFormat(bool binaryFormat)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             _openDicomAnnotationsFileDialog.FileName = null;
             if (binaryFormat)
                 _openDicomAnnotationsFileDialog.Filter = "Binary Annotations(*.vsab)|*.vsab";
@@ -2527,7 +2354,7 @@ namespace WpfDicomViewerDemo
                     using (FileStream fs = new FileStream(_openDicomAnnotationsFileDialog.FileName, FileMode.Open, FileAccess.Read))
                     {
                         // get the annotation collection
-                        AnnotationDataCollection annotations = _dicomViewerTool.DicomAnnotationTool.AnnotationDataCollection;
+                        AnnotationDataCollection annotations = _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataCollection;
                         // clear the annotation collection
                         annotations.ClearAndDisposeItems();
                         // add annotations from stream to the annotation collection
@@ -2539,8 +2366,10 @@ namespace WpfDicomViewerDemo
                     DemosTools.ShowErrorMessage(ex);
                 }
             }
+#endif
         }
 
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// Sets the grip mode for annotation.
         /// </summary>
@@ -2563,6 +2392,7 @@ namespace WpfDicomViewerDemo
             else if (view is WpfDicomMultilineAnnotationView)
                 ((WpfDicomMultilineAnnotationView)view).GripMode = mode;
         }
+#endif
 
         #endregion
 
@@ -2570,48 +2400,12 @@ namespace WpfDicomViewerDemo
         #region Annotations UI
 
         /// <summary>
-        /// Fills combobox with information about annotations of image.
-        /// </summary>
-        private void FillAnnotationComboBox()
-        {
-            annotationComboBox.BeginInit();
-            annotationComboBox.Items.Clear();
-            annotationComboBox.SelectedIndex = -1;
-
-            if (imageViewer1.FocusedIndex >= 0)
-            {
-                AnnotationDataCollection annotations = _dicomViewerTool.DicomAnnotationTool.AnnotationDataController[imageViewer1.FocusedIndex];
-                for (int i = 0; i < annotations.Count; i++)
-                {
-                    annotationComboBox.Items.Add(string.Format("[{0}] {1}", i, annotations[i].GetType().Name));
-                    if (_dicomViewerTool.DicomAnnotationTool.FocusedAnnotationData == annotations[i])
-                        annotationComboBox.SelectedIndex = i;
-                }
-            }
-            annotationComboBox.EndInit();
-        }
-
-        /// <summary>
-        /// Shows information about annotation in property grid.
-        /// </summary>
-        private void ShowAnnotationProperties(WpfAnnotationView annotation)
-        {
-            AnnotationData annotationData = null;
-            if (annotation != null)
-                annotationData = annotation.Data;
-
-            if (propertyGrid1.SelectedObject != annotationData)
-                propertyGrid1.SelectedObject = annotationData;
-            else if (!_isAnnotationTransforming)
-                propertyGrid1.Refresh();
-        }
-
-        /// <summary>
         /// Updates the transformation mode menu.
         /// </summary>
         private void UpdateTransformationMenu()
         {
-            WpfAnnotationView view = _dicomViewerTool.DicomAnnotationTool.FocusedAnnotationView;
+#if !REMOVE_ANNOTATION_PLUGIN
+            WpfAnnotationView view = _dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationView;
 
             GripMode mode = GripMode.Rectangular;
             if (view is WpfDicomPolylineAnnotationView)
@@ -2641,6 +2435,7 @@ namespace WpfDicomViewerDemo
                 transformationModeRectangularAndPointsMenuItem.IsChecked = true;
             else
                 transformationModeRectangularAndPointsMenuItem.IsChecked = false;
+#endif
         }
 
         #endregion
@@ -2653,6 +2448,7 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void AnnotationdData_PropertyChanging(object sender, ObjectPropertyChangingEventArgs e)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             if (e.PropertyName == "UnitOfMeasure")
             {
                 if (_isAnnotationPropertyChanging)
@@ -2664,6 +2460,7 @@ namespace WpfDicomViewerDemo
                 data.ChangeUnitOfMeasure((DicomUnitOfMeasure)e.NewValue, imageViewer1.Image);
                 _isAnnotationPropertyChanging = false;
             }
+#endif
         }
 
 
@@ -2672,205 +2469,7 @@ namespace WpfDicomViewerDemo
 
         #region Presentation state file
 
-        /// <summary>
-        /// Loads the annotations from DICOM presentation state files.
-        /// </summary>
-        /// <param name="presentationStateFileDirectoryPath">A path to a directory,
-        /// where DICOM presentation files must be searched.</param>
-        /// <param name="sourceDicomFiles">The source DICOM files.</param>
-        private void LoadAnnotationsFromPresentationStateFiles(
-           string presentationStateFileDirectoryPath,
-           params DicomFile[] sourceDicomFiles)
-        {
-            // if directory does NOT exist
-            if (!Directory.Exists(presentationStateFileDirectoryPath))
-                // exit
-                return;
-
-            // get paths to the files in directory
-            string[] filePaths = Directory.GetFiles(presentationStateFileDirectoryPath);
-
-            // show action label and progress bar
-            actionLabel.Visibility = Visibility.Visible;
-            progressBar1.Visibility = Visibility.Visible;
-            progressBar1.Maximum = filePaths.Length;
-            progressBar1.Value = 0;
-
-            try
-            {
-                // dictionary: DICOM file => path to the DICOM presentation state files, which are referenced to the DICOM file
-                Dictionary<DicomFile, List<string>> dicomFileToPresentationStateFilePaths =
-                    new Dictionary<DicomFile, List<string>>();
-
-                List<string> dicomFilePaths = new List<string>();
-                foreach (DicomFile dicomFile in sourceDicomFiles)
-                    dicomFilePaths.Add(_dicomSeriesController.GetDicomFilePath(dicomFile));
-
-                // for each file path in directory
-                foreach (string filePath in filePaths)
-                {
-                    // if file path is NOT a path to a DICOM file
-                    if (IsDicomFilePath(filePath, dicomFilePaths))
-                        // skip the file
-                        continue;
-
-                    // if file path is NOT a path to a DICOM presentation state file
-                    if (!IsDicomPresentationStateFilePath(filePath))
-                        // skip the file
-                        continue;
-
-                    // set action info
-                    actionLabel.Content = string.Format("Scanning {0}", Path.GetFileName(filePath));
-                    // update progress bar
-                    progressBar1.Value++;
-                    DemosTools.DoEvents();
-
-                    DicomFile dicomFile = null;
-                    try
-                    {
-                        // open new DICOM file in read-only mode
-                        dicomFile = new DicomFile(filePath, true);
-                        // if DICOM file has annotations
-                        if (dicomFile.Annotations != null)
-                        {
-                            // for each source DICOM file
-                            foreach (DicomFile sourceDicomFile in sourceDicomFiles)
-                            {
-                                // if DICOM file references to the source DICOM file
-                                if (dicomFile.IsReferencedTo(sourceDicomFile))
-                                {
-                                    // if presentation state file paths for DICOM file are NOT found
-                                    if (!dicomFileToPresentationStateFilePaths.ContainsKey(sourceDicomFile))
-                                        // create an empty list
-                                        dicomFileToPresentationStateFilePaths.Add(sourceDicomFile, new List<string>());
-                                    // add file path to a list of presentation state file paths
-                                    dicomFileToPresentationStateFilePaths[sourceDicomFile].Add(Path.GetFullPath(filePath));
-
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    catch
-                    {
-                    }
-                    finally
-                    {
-                        if (dicomFile != null)
-                            dicomFile.Dispose();
-                    }
-                }
-
-                // hide action label and progress bar
-                actionLabel.Content = string.Empty;
-                actionLabel.Visibility = Visibility.Collapsed;
-                progressBar1.Visibility = Visibility.Collapsed;
-
-                // if presentation state files is searched
-                if (dicomFileToPresentationStateFilePaths.Count > 0)
-                {
-                    foreach (DicomFile sourceDicomFile in dicomFileToPresentationStateFilePaths.Keys)
-                    {
-                        // load DICOM annotations from DICOM presentation state file
-                        SelectDicomPresentationStateFileAndLoadAnnotations(
-                            sourceDicomFile,
-                            dicomFileToPresentationStateFilePaths[sourceDicomFile].ToArray(),
-                            _dicomViewerTool.DicomAnnotationTool.AnnotationDataController);
-                    }
-                }
-            }
-            finally
-            {
-                // hide action label and progress bar
-                actionLabel.Content = string.Empty;
-                actionLabel.Visibility = Visibility.Collapsed;
-                progressBar1.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        /// <summary>
-        /// Selects the DICOM presentation state file and loads annotations from the selected file.
-        /// </summary>
-        /// <param name="dicomFile">DICOM file.</param>
-        /// <param name="presentationStateFilePaths">An array with paths to the DICOM presentation files,
-        /// which are associated with <i>dicomFile</i>.</param>
-        /// <param name="annotationDataController">The annotation data controller, where information
-        /// about annotations must be added.</param>
-        private void SelectDicomPresentationStateFileAndLoadAnnotations(
-            DicomFile dicomFile,
-            string[] presentationStateFilePaths,
-            DicomAnnotationDataController annotationDataController)
-        {
-            // create dialog
-            SelectPresentationStateFile dlg =
-                new SelectPresentationStateFile(presentationStateFilePaths);
-
-            string dicomFilePath = _dicomSeriesController.GetDicomFilePath(dicomFile);
-            dlg.Title += ": " + Path.GetFileName(dicomFilePath);
-            dlg.Owner = this;
-
-            string selectedPresentationStateFileName = null;
-            if (presentationStateFilePaths.Length > 0)
-            {
-                string selectedPresentationStateFilePath = presentationStateFilePaths[presentationStateFilePaths.Length - 1];
-                selectedPresentationStateFileName = Path.GetFileNameWithoutExtension(selectedPresentationStateFilePath);
-            }
-            if (selectedPresentationStateFileName != null)
-                dlg.SelectedPresentationStateFilename = selectedPresentationStateFileName;
-
-            // show dialog
-            if (dlg.ShowDialog() == true)
-            {
-                // get name of selected presentation state file
-                string presentationStateFilename = dlg.SelectedPresentationStateFilename;
-                // if name is not empty
-                if (!string.IsNullOrEmpty(presentationStateFilename))
-                {
-                    // create DICOM presentation state file
-                    DicomFile presentationStateFile =
-                        PresentationStateFileController.LoadPresentationStateFile(
-                        dicomFile, presentationStateFilename);
-                    // add annotations from DICOM presentation state file to the annotation data controller
-                    annotationDataController.AddAnnotationDataSet(presentationStateFile.Annotations);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Determines that file path is a path to a DICOM file.
-        /// </summary>
-        /// <param name="filePath">A file path.</param>
-        /// <param name="dicomFilePaths">A list with paths to the DICOM files.</param>
-        private bool IsDicomFilePath(string filePath, List<string> dicomFilePaths)
-        {
-            // for each DICOM file path
-            foreach (string dicomFilePath in dicomFilePaths)
-            {
-                // if file path and DICOM file path are equals
-                if (filePath.ToUpperInvariant() == dicomFilePath.ToUpperInvariant())
-                    return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Determines that file path is a path to a DICOM presentation state file.
-        /// </summary>
-        /// <param name="filePath">A file path.</param>
-        private bool IsDicomPresentationStateFilePath(string filePath)
-        {
-            // get file extension
-            string fileExtension = Path.GetExtension(filePath);
-            // for each supported presentation file extension
-            for (int i = 0; i < _presentationStateFileExtensions.Length; i++)
-            {
-                // if file has presentation file extension
-                if (string.Equals(fileExtension, _presentationStateFileExtensions[i], StringComparison.CurrentCultureIgnoreCase))
-                    return true;
-            }
-            return false;
-        }
-
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// Creates the DICOM presentation state file.
         /// </summary>
@@ -2896,13 +2495,14 @@ namespace WpfDicomViewerDemo
 
             return presentationStateFile;
         }
+#endif
 
         /// <summary>
         /// Closes the DICOM presentation state file of focused DICOM file.
         /// </summary>
         private void CloseCurrentPresentationStateFile()
         {
-            ClosePresentationStateFile(DicomFile);
+            ClosePresentationStateFileOfFile(DicomFile);
         }
 
         /// <summary>
@@ -2910,18 +2510,18 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void CloseAllPresentationStateFiles()
         {
-            DicomFile[] dicomFiles = _dicomSeriesController.GetFilesOfSeries();
-
+            DicomFile[] dicomFiles = DicomFile.GetFilesAssociatedWithImages(imageViewer1.Images.ToArray());
             foreach (DicomFile dicomFile in dicomFiles)
-                ClosePresentationStateFile(dicomFile);
+                ClosePresentationStateFileOfFile(dicomFile);
         }
 
         /// <summary>
         /// Closes the DICOM presentation state file of specified DICOM file.
         /// </summary>
         /// <param name="dicomFile">The DICOM file.</param>
-        private void ClosePresentationStateFile(DicomFile dicomFile)
+        private void ClosePresentationStateFileOfFile(DicomFile dicomFile)
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             // get the presentation state file of source DICOM file
             DicomFile presentationStateFile = PresentationStateFileController.GetPresentationStateFile(dicomFile);
 
@@ -2929,13 +2529,14 @@ namespace WpfDicomViewerDemo
                 return;
 
             // get controller of DicomAnnotationTool
-            DicomAnnotationDataController controller = _dicomViewerTool.DicomAnnotationTool.AnnotationDataController;
+            DicomAnnotationDataController controller = _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationDataController;
 
             // remove annotations from controller
             controller.RemoveAnnotationDataSet(presentationStateFile.Annotations);
 
             // close the presentation state file of source DICOM file
             PresentationStateFileController.ClosePresentationStateFile(dicomFile);
+#endif
         }
 
         #endregion
@@ -2965,12 +2566,11 @@ namespace WpfDicomViewerDemo
             MenuItem menuItem = null;
             _menuItemToVoiLut.Clear();
 
-            DicomFrameMetadata metadata = GetFocusedImageMetadata();
-            DicomImageVoiLookupTable defaultVoiLut = metadata.VoiLut;
-            if (defaultVoiLut.IsEmpty)
-                defaultVoiLut = _dicomViewerTool.DicomViewerTool.DicomImageVoiLut;
-            _menuItemToVoiLut.Add(_defaultVoiLutMenuItem, defaultVoiLut);
+            _menuItemToVoiLut.Add(
+                _defaultVoiLutMenuItem,
+                new DicomImageVoiLookupTable(double.NaN, double.NaN));
 
+            DicomFrameMetadata metadata = GetFocusedImageMetadata();
             if (metadata == null)
                 return;
 
@@ -3131,7 +2731,7 @@ namespace WpfDicomViewerDemo
                 border.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Transparent);
         }
 
-        
+
 
         #endregion
 
@@ -3150,11 +2750,11 @@ namespace WpfDicomViewerDemo
             window.Owner = this;
 
             // get metadata of DICOM image
-            DicomFrameMetadata metadata = GetFocusedImageMetadata();
+            DicomPageMetadata metadata = GetFocusedPageMetadata();
             // if DICOM image does not have metadata
             if (metadata == null)
                 // get metadata of DICOM file
-                metadata = new DicomFrameMetadata(DicomFile);
+                metadata = new DicomPageMetadata(DicomFile);
             window.RootMetadataNode = metadata;
 
             // show dialog
@@ -3166,7 +2766,7 @@ namespace WpfDicomViewerDemo
                 // update the UI with information about DICOM file
                 UpdateUIWithInformationAboutDicomFile();
                 // refresh the DICOM viewer tool
-                _dicomViewerTool.DicomViewerTool.Refresh();
+                _dicomViewerTool.Refresh();
             }
 
             UpdateUI();
@@ -3175,14 +2775,22 @@ namespace WpfDicomViewerDemo
         /// <summary>
         /// Returns the metadata of focused image.
         /// </summary>
-        private DicomFrameMetadata GetFocusedImageMetadata()
+        private DicomPageMetadata GetFocusedPageMetadata()
         {
             if (imageViewer1.Image == null)
                 return null;
 
-            DicomFrameMetadata metadata = imageViewer1.Image.Metadata.MetadataTree as DicomFrameMetadata;
+            DicomPageMetadata metadata = imageViewer1.Image.Metadata.MetadataTree as DicomPageMetadata;
 
             return metadata;
+        }
+
+        /// <summary>
+        /// Returns the metadata of focused image.
+        /// </summary>
+        private DicomFrameMetadata GetFocusedImageMetadata()
+        {
+            return GetFocusedPageMetadata() as DicomFrameMetadata;
         }
 
         #endregion
@@ -3201,9 +2809,11 @@ namespace WpfDicomViewerDemo
             _animationThread.IsBackground = true;
 
             // disable visual tool
-            _dicomViewerTool.Enabled = false;
-            _dicomViewerTool.DicomViewerTool.IsTextOverlayVisible = false;
-            _dicomViewerTool.DicomViewerTool.ShowRulers = false;
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool.Enabled = false;
+#endif
+            _dicomViewerTool.IsTextOverlayVisible = false;
+            _dicomViewerTool.ShowRulers = false;
             // disable tool strip
             imageViewerToolBar.IsEnabled = false;
             annotationsToolBar.IsEnabled = false;
@@ -3269,9 +2879,11 @@ namespace WpfDicomViewerDemo
             dicomAnnotatedViewerToolBar.IsEnabled = true;
             dicomAnnotatedViewerToolBar.FindAction<MagnifierToolAction>().VisualTool.Enabled = true;
             // enable visual tool
-            _dicomViewerTool.DicomViewerTool.IsTextOverlayVisible = showMetadataInViewerMenuItem.IsChecked;
-            _dicomViewerTool.DicomViewerTool.ShowRulers = showRulersInViewerMenuItem.IsChecked;
-            _dicomViewerTool.Enabled = true;
+            _dicomViewerTool.IsTextOverlayVisible = showMetadataInViewerMenuItem.IsChecked;
+            _dicomViewerTool.ShowRulers = showRulersInViewerMenuItem.IsChecked;
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool.Enabled = true;
+#endif
         }
 
         /// <summary>
@@ -3281,13 +2893,19 @@ namespace WpfDicomViewerDemo
         {
             Thread currentThread = Thread.CurrentThread;
             _currentAnimatedFrameIndex = imageViewer1.FocusedIndex;
-            int count = imageViewer1.Images.Count;
+
+            VintasoftImage[] seriesImages = dicomSeriesManagerControl1.SeriesManager.GetSeriesImages(
+                dicomSeriesManagerControl1.SeriesManager.GetSeriesIdentifierByImage(imageViewer1.Image));
+            int index = Array.IndexOf(seriesImages, imageViewer1.Image);
+            int count = seriesImages.Length;
+
             for (; _currentAnimatedFrameIndex < count || _isAnimationCycled;)
             {
                 if (_animationThread != currentThread)
                     break;
 
                 _isFocusedIndexChanging = true;
+                _currentAnimatedFrameIndex = imageViewer1.Images.IndexOf(seriesImages[index]);
                 // change focused image in image viewer
 
                 _canStopAnimation = false;
@@ -3297,12 +2915,15 @@ namespace WpfDicomViewerDemo
                 _isFocusedIndexChanging = false;
                 Thread.Sleep(_animationDelay);
 
-                _currentAnimatedFrameIndex++;
-                if (_isAnimationCycled && _currentAnimatedFrameIndex >= count)
-                    _currentAnimatedFrameIndex = 0;
+                index++;
+                if (_isAnimationCycled && index >= count)
+                    index = 0;
             }
 
-            _currentAnimatedFrameIndex--;
+            if (index == 0)
+                _currentAnimatedFrameIndex = 0;
+            else
+                _currentAnimatedFrameIndex = imageViewer1.Images.IndexOf(seriesImages[index - 1]);
             Dispatcher.Invoke(new ThreadStart(StopAnimation));
         }
 
@@ -3403,12 +3024,10 @@ namespace WpfDicomViewerDemo
             if (imageViewer1.ImageRotationAngle != 270)
             {
                 imageViewer1.ImageRotationAngle += 90;
-                thumbnailViewer1.ImageRotationAngle += 90;
             }
             else
             {
                 imageViewer1.ImageRotationAngle = 0;
-                thumbnailViewer1.ImageRotationAngle = 0;
             }
         }
 
@@ -3420,12 +3039,10 @@ namespace WpfDicomViewerDemo
             if (imageViewer1.ImageRotationAngle != 0)
             {
                 imageViewer1.ImageRotationAngle -= 90;
-                thumbnailViewer1.ImageRotationAngle -= 90;
             }
             else
             {
                 imageViewer1.ImageRotationAngle = 270;
-                thumbnailViewer1.ImageRotationAngle = 270;
             }
         }
 
@@ -3433,19 +3050,6 @@ namespace WpfDicomViewerDemo
 
 
         #region Init
-
-        /// <summary>
-        /// Initializes the image viewer tool bar.
-        /// </summary>
-        private void InitImageViewerToolBar()
-        {
-            _voiLutsButton = FindVoiLutsButton();
-
-            imageViewerToolBar.ImageViewer = imageViewer1;
-            imageViewerToolBar.SelectedPageIndex = -1;
-            imageViewerToolBar.UseImageViewerImages = false;
-            imageViewerToolBar.PageIndexChanged += new ImageViewerToolBar.PageIndexChangedEventHandler(imageViewerToolBar_PageIndexChanged);
-        }
 
         /// <summary>
         /// Finds the VOI LUT menu item button in toolbar.
@@ -3478,26 +3082,22 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void InitDicomAnnotationTool()
         {
-            _dicomViewerTool.DicomAnnotationTool.MultiSelect = false;
-            _dicomViewerTool.DicomAnnotationTool.FocusedAnnotationViewChanged +=
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.MultiSelect = false;
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.FocusedAnnotationViewChanged +=
                 new EventHandler<WpfAnnotationViewChangedEventArgs>(annotationTool_FocusedAnnotationViewChanged);
-            _dicomViewerTool.DicomAnnotationTool.SelectedAnnotations.Changed += new EventHandler(SelectedAnnotations_Changed);
-            _dicomViewerTool.DicomAnnotationTool.AnnotationBuildingFinished +=
-                new EventHandler<WpfAnnotationViewEventArgs>(annotationTool_AnnotationBuildingFinished);
-            _dicomViewerTool.DicomAnnotationTool.AnnotationTransformingStarted +=
-                new EventHandler<WpfAnnotationViewEventArgs>(annotationTool_AnnotationTransformingStarted);
-            _dicomViewerTool.DicomAnnotationTool.AnnotationTransformingFinished +=
-                new EventHandler<WpfAnnotationViewEventArgs>(annotationTool_AnnotationTransformingFinished);
-            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionModeChanged +=
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.SelectedAnnotations.Changed += new EventHandler(SelectedAnnotations_Changed);
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionModeChanged +=
                 new EventHandler<AnnotationInteractionModeChangedEventArgs>(annotationTool_AnnotationInteractionModeChanged);
 
-            _dicomViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.None;
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.None;
 
             annotationInteractionModeComboBox.Items.Add(AnnotationInteractionMode.None);
             annotationInteractionModeComboBox.Items.Add(AnnotationInteractionMode.View);
             annotationInteractionModeComboBox.Items.Add(AnnotationInteractionMode.Author);
             // set interaction mode to the View 
             annotationInteractionModeComboBox.SelectedItem = AnnotationInteractionMode.None;
+#endif
         }
 
         /// <summary>
@@ -3520,7 +3120,7 @@ namespace WpfDicomViewerDemo
                 menuItem.Header = unit.ToString();
                 _menuItemToRulersUnitOfMeasure.Add(menuItem, unit);
                 menuItem.Click += new RoutedEventHandler(rulersUnitOfMeasureMenuItem_Click);
-                if (unit == _dicomViewerTool.DicomViewerTool.RulersUnitOfMeasure)
+                if (unit == _dicomViewerTool.RulersUnitOfMeasure)
                 {
                     menuItem.IsChecked = true;
                     _currentRulersUnitOfMeasureMenuItem = menuItem;
@@ -3549,6 +3149,16 @@ namespace WpfDicomViewerDemo
         }
 
         #endregion
+
+        /// <summary>
+        /// Subscribes to the event of image collection.
+        /// </summary>
+        /// <param name="images">Image collection.</param>
+        private void SubscribeToImageCollectionEvents(ImageCollection images)
+        {
+            images.ImageCollectionSavingProgress += new EventHandler<ProgressEventArgs>(Images_ImageCollectionSavingProgress);
+            images.ImageCollectionSavingFinished += new EventHandler(Images_ImageCollectionSavingFinished);
+        }
 
         /// <summary>
         /// Moves the DICOM codec to the first position in <see cref="AvailableCodecs"/>.
@@ -3683,7 +3293,7 @@ namespace WpfDicomViewerDemo
             }
             e.Handled = true;
         }
-       
+
         /// <summary>
         /// Handles the Drop event of imageViewer1 object.
         /// </summary>
@@ -3696,7 +3306,7 @@ namespace WpfDicomViewerDemo
                 string[] filenames = (string[])e.Data.GetData("FileDrop");
 
                 // close the previously opened DICOM files
-                ClosePreviouslyOpenedFiles();
+                CloseDicomFiles();
 
                 // if is single directory
                 if (filenames.Length == 1 && Directory.Exists(filenames[0]))
@@ -3706,11 +3316,26 @@ namespace WpfDicomViewerDemo
                 }
 
                 // add DICOM files to the DICOM series
-                AddDicomFilesToSeries(filenames);
-                _dicomViewerTool.DicomViewerTool.DicomImageVoiLut = _dicomViewerTool.DicomViewerTool.DefaultDicomImageVoiLut;
+                AddDicomFiles(filenames);
+                _dicomViewerTool.DicomImageVoiLut = _dicomViewerTool.DefaultDicomImageVoiLut;
             }
         }
-    
+
+        /// <summary>
+        /// Returns images for DICOM series that contains focused image.
+        /// </summary>
+        /// <returns>
+        /// The collection of DICOM images.
+        /// </returns>
+        private ImageCollection GetSeriesImages()
+        {
+            string seriesIdentifier = dicomSeriesManagerControl1.SeriesManager.GetSeriesIdentifierByImage(imageViewer1.Image);
+            VintasoftImage[] seriesImages = dicomSeriesManagerControl1.SeriesManager.GetSeriesImages(seriesIdentifier);
+            ImageCollection images = new ImageCollection();
+            images.AddRange(seriesImages);
+            return images;
+        }
+
         #endregion
 
         #endregion

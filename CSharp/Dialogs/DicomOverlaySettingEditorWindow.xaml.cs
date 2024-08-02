@@ -253,6 +253,7 @@ namespace WpfDicomViewerDemo
             _supportedItems.Add(new WpfDicomImageVoiLutTextOverlay());
             _supportedItems.Add(new WpfPatientOrientationTextOverlay());
             _supportedItems.Add(new WpfCompressionInfoTextOverlay());
+            _supportedItems.Add(new WpfRuntimeInfoTextOverlay("Im: {SeriesImageNumber}/{SeriesImageCount}"));
 
             _supportedItems.Sort(TextOverlayComparer);
             foreach (WpfTextOverlay textOverlay in _supportedItems)

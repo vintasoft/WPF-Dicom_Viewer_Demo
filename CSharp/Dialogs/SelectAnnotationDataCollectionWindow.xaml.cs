@@ -2,8 +2,10 @@
 using System.Windows;
 using System.Windows.Controls;
 
+#if !REMOVE_ANNOTATION_PLUGIN
 using Vintasoft.Imaging.Annotation;
-using Vintasoft.Imaging.Annotation.Dicom;
+using Vintasoft.Imaging.Annotation.Dicom; 
+#endif
 using Vintasoft.Imaging.Codecs.ImageFiles.Dicom;
 
 
@@ -22,6 +24,7 @@ namespace WpfDicomViewerDemo
         /// </summary>
         class DicomAnnotationDataView
         {
+#if !REMOVE_ANNOTATION_PLUGIN
             /// <summary>
             /// Initializes a new instance of the <see cref="DicomAnnotationDataView"/> class.
             /// </summary>
@@ -31,7 +34,8 @@ namespace WpfDicomViewerDemo
             {
                 _annotationType = annotationData.GetType().ToString();
                 _location = annotationData.Location.ToString();
-            }
+            } 
+#endif
 
             string _annotationType;
             /// <summary>
@@ -64,10 +68,12 @@ namespace WpfDicomViewerDemo
 
         #region Fields
 
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// An array of annotation collections.
         /// </summary>
-        DicomAnnotationDataCollection[] _collections = null;
+        DicomAnnotationDataCollection[] _collections = null; 
+#endif
 
         #endregion
 
@@ -75,6 +81,7 @@ namespace WpfDicomViewerDemo
 
         #region Constructors
 
+#if !REMOVE_ANNOTATION_PLUGIN
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectAnnotationDataCollectionWindow"/> class.
         /// </summary>
@@ -98,7 +105,8 @@ namespace WpfDicomViewerDemo
 
                 SelectedAnnotationDataCollection = _collections[0];
             }
-        }
+        } 
+#endif
 
         #endregion
 
@@ -106,6 +114,7 @@ namespace WpfDicomViewerDemo
 
         #region Properties
 
+#if !REMOVE_ANNOTATION_PLUGIN
         DicomAnnotationDataCollection _selectedAnnotationDataCollection = null;
         /// <summary>
         /// Gets or sets the selected annotation data collection.
@@ -144,7 +153,8 @@ namespace WpfDicomViewerDemo
                         annoInfoListView.Items.Add(new DicomAnnotationDataView(_selectedAnnotationDataCollection[i]));
                 }
             }
-        }
+        } 
+#endif
 
         #endregion
 
@@ -157,7 +167,9 @@ namespace WpfDicomViewerDemo
         /// </summary>
         private void selectedAnnotationDataCollectionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedAnnotationDataCollection = _collections[selectedAnnotationDataCollectionComboBox.SelectedIndex];
+#if !REMOVE_ANNOTATION_PLUGIN
+            SelectedAnnotationDataCollection = _collections[selectedAnnotationDataCollectionComboBox.SelectedIndex]; 
+#endif
         }
 
         /// <summary>

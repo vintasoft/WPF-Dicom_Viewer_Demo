@@ -99,15 +99,15 @@
 
     <!-- Zoom buttons -->
     
-    <Button Name="ZoomOutButton" ToolTip="Zoom out" Click="ZoomOutButton_Click">
+    <Button Name="ZoomOutButton" ToolTip="Zoom out" Click="ZoomOutButton_Click" IsEnabled="False">
         <Image Source="{StaticResource ZoomOutIcon}" Stretch="None" Width="16" Height="16" />
     </Button>
     
     <TextBox Name="ZoomValueTextBox" Width="45" Keyboard.LostKeyboardFocus="ZoomValueTextBox_LostKeyboardFocus"
-             KeyDown="ZoomTextBox_KeyDown" TextAlignment="Center" />
+             KeyDown="ZoomTextBox_KeyDown" TextAlignment="Center" IsEnabled="False" />
                  
     <Menu Background="Transparent" VerticalAlignment="Center">
-        <MenuItem Name="ZoomModesButton">            
+        <MenuItem Name="ZoomModesButton" IsEnabled="False">            
             <MenuItem.Header>
                 <Path Fill="Black" Data="M 0 0 L 4 4 L 8 0 Z"/>
             </MenuItem.Header>
@@ -126,7 +126,7 @@
         </MenuItem>
     </Menu>
     
-    <Button Name="ZoomInButton" ToolTip="Zoom in" Click="ZoomInButton_Click">
+    <Button Name="ZoomInButton" ToolTip="Zoom in" Click="ZoomInButton_Click" IsEnabled="False">
         <Image Source="{StaticResource ZoomInIcon}" Stretch="None" Width="16" Height="16" />
     </Button>    
 </ToolBar>

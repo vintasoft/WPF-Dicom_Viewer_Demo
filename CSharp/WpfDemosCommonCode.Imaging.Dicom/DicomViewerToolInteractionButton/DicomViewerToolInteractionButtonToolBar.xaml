@@ -1,0 +1,51 @@
+﻿<ToolBar x:Class="WpfDicomViewerDemo.DicomViewerToolInteractionButtonToolBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Height="31" Width="Auto" Background="Transparent" SnapsToDevicePixels="True">
+    <ToolBar.Resources>
+        <BitmapImage x:Key="BrowseIcon" UriSource="Icons\Browse.png" />
+        <BitmapImage x:Key="Browse_000Icon" UriSource="Icons\Browse_000.png" />
+        <BitmapImage x:Key="Browse_001Icon" UriSource="Icons\Browse_001.png" />
+        <BitmapImage x:Key="Browse_010Icon" UriSource="Icons\Browse_010.png" />
+        <BitmapImage x:Key="Browse_011Icon" UriSource="Icons\Browse_011.png" />
+        <BitmapImage x:Key="Browse_100Icon" UriSource="Icons\Browse_100.png" />
+        <BitmapImage x:Key="Browse_101Icon" UriSource="Icons\Browse_101.png" />
+        <BitmapImage x:Key="Browse_110Icon" UriSource="Icons\Browse_110.png" />
+        <BitmapImage x:Key="Browse_111Icon" UriSource="Icons\Browse_111.png" />
+
+        <BitmapImage x:Key="MouseWheelIcon" UriSource="Icons\MouseWheel.png" />
+
+        <BitmapImage x:Key="PanIcon" UriSource="Icons\Pan.png" />
+        <BitmapImage x:Key="Pan_000Icon" UriSource="Icons\Pan_000.png" />
+        <BitmapImage x:Key="Pan_001Icon" UriSource="Icons\Pan_001.png" />
+        <BitmapImage x:Key="Pan_010Icon" UriSource="Icons\Pan_010.png" />
+        <BitmapImage x:Key="Pan_011Icon" UriSource="Icons\Pan_011.png" />
+        <BitmapImage x:Key="Pan_100Icon" UriSource="Icons\Pan_100.png" />
+        <BitmapImage x:Key="Pan_101Icon" UriSource="Icons\Pan_101.png" />
+        <BitmapImage x:Key="Pan_110Icon" UriSource="Icons\Pan_110.png" />
+        <BitmapImage x:Key="Pan_111Icon" UriSource="Icons\Pan_111.png" />
+
+        <BitmapImage x:Key="WindowLevelIcon" UriSource="Icons\WindowLevel.png" />
+        <BitmapImage x:Key="WindowLevel_000Icon" UriSource="Icons\WindowLevel_000.png" />
+        <BitmapImage x:Key="WindowLevel_001Icon" UriSource="Icons\WindowLevel_001.png" />
+        <BitmapImage x:Key="WindowLevel_010Icon" UriSource="Icons\WindowLevel_010.png" />
+        <BitmapImage x:Key="WindowLevel_011Icon" UriSource="Icons\WindowLevel_011.png" />
+        <BitmapImage x:Key="WindowLevel_100Icon" UriSource="Icons\WindowLevel_100.png" />
+        <BitmapImage x:Key="WindowLevel_101Icon" UriSource="Icons\WindowLevel_101.png" />
+        <BitmapImage x:Key="WindowLevel_110Icon" UriSource="Icons\WindowLevel_110.png" />
+        <BitmapImage x:Key="WindowLevel_111Icon" UriSource="Icons\WindowLevel_111.png" />
+
+        <BitmapImage x:Key="ZoomIcon" UriSource="Icons\Zoom.png" />
+        <BitmapImage x:Key="Zoom_000Icon" UriSource="Icons\Zoom_000.png" />
+        <BitmapImage x:Key="Zoom_001Icon" UriSource="Icons\Zoom_001.png" />
+        <BitmapImage x:Key="Zoom_010Icon" UriSource="Icons\Zoom_010.png" />
+        <BitmapImage x:Key="Zoom_011Icon" UriSource="Icons\Zoom_011.png" />
+        <BitmapImage x:Key="Zoom_100Icon" UriSource="Icons\Zoom_100.png" />
+        <BitmapImage x:Key="Zoom_101Icon" UriSource="Icons\Zoom_101.png" />
+        <BitmapImage x:Key="Zoom_110Icon" UriSource="Icons\Zoom_110.png" />
+        <BitmapImage x:Key="Zoom_111Icon" UriSource="Icons\Zoom_111.png" />
+    </ToolBar.Resources>
+</ToolBar>

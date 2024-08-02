@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 
-using Vintasoft.Imaging.Annotation.Dicom.Wpf.UI.VisualTools;
+#if !REMOVE_ANNOTATION_PLUGIN
+using Vintasoft.Imaging.Annotation.Dicom.Wpf.UI.VisualTools; 
+#endif
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 
 namespace WpfDemosCommonCode.Imaging
@@ -72,6 +74,41 @@ namespace WpfDemosCommonCode.Imaging
             }
         }
 
+#if REMOVE_ANNOTATION_PLUGIN
+        Vintasoft.Imaging.Dicom.Wpf.UI.VisualTools.WpfDicomViewerTool _dicomAnnotatedViewerTool = null;
+        /// <summary>
+        /// Gets or sets the <see cref="DicomAnnotatedViewerTool"/>.
+        /// </summary>
+        /// <value>
+        /// Default value is <b></b>.
+        /// </value>
+        public Vintasoft.Imaging.Dicom.Wpf.UI.VisualTools.WpfDicomViewerTool DicomAnnotatedViewerTool
+        {
+            get
+            {
+                return _dicomAnnotatedViewerTool;
+            }
+            set
+            {
+                if (_dicomAnnotatedViewerTool != value)
+                {
+                    _dicomAnnotatedViewerTool = value;
+
+                    if (_mainVisualTool == null)
+                    {
+                        _mainVisualTool = _dicomAnnotatedViewerTool;
+                    }
+                    else
+                    {
+                        // update main visual tool
+                        List<WpfVisualTool> tools = new List<WpfVisualTool>(_additionalVisualTools);
+                        tools.Add(_dicomAnnotatedViewerTool);
+                        _mainVisualTool = new WpfCompositeVisualTool(tools.ToArray());
+                    }
+                }
+            }
+        }
+#else
         WpfDicomAnnotatedViewerTool _dicomAnnotatedViewerTool = null;
         /// <summary>
         /// Gets or sets the <see cref="DicomAnnotatedViewerTool"/>.
@@ -104,7 +141,8 @@ namespace WpfDemosCommonCode.Imaging
                     }
                 }
             }
-        }
+        } 
+#endif
 
         #endregion
 
