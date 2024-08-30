@@ -32,6 +32,7 @@ using Vintasoft.Imaging.ImageColors;
 using Vintasoft.Imaging.Metadata;
 using Vintasoft.Imaging.UIActions;
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
+using Vintasoft.Primitives;
 
 using WpfDemosCommonCode;
 using WpfDemosCommonCode.CustomControls;
@@ -368,6 +369,14 @@ namespace WpfDicomViewerDemo
             annotationsToolBar.Viewer = imageViewer1;
             imageViewer1.IsFastScrollingEnabled = false;
             imageViewer1.ImageDecodingSettings = (DecodingSettings)_dicomFrameDecodingSettings.Clone();
+
+
+            DicomSrRenderingSettings dicomSrRenderingSettings = new DicomSrRenderingSettings();
+            dicomSrRenderingSettings.BackgroundColor = VintasoftColor.Black;
+            dicomSrRenderingSettings.ReportHeaderTextColor = VintasoftColor.White;
+            dicomSrRenderingSettings.ItemTextColor = VintasoftColor.White;
+            imageViewer1.ImageRenderingSettings = dicomSrRenderingSettings;
+
 
             dicomSeriesManagerControl1.DicomViewer = imageViewer1;
             dicomSeriesManagerControl1.AddedFileCountChanged += dicomSeriesManagerControl1_AddedFileCountChanged;
