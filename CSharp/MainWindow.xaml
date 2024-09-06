@@ -192,6 +192,7 @@
                 <Separator />
                 <MenuItem Header="Save DICOM File To Image File..." Name="saveDicomFileToImageFileMenuItem" Click="saveDicomFileToImageFileMenuItem_Click" />
                 <MenuItem Header="Burn And Save To DICOM file..." Name="burnAndSaveToDICOMFileMenuItem" Click="burnAndSaveToDICOMFileMenuItem_Click"/>
+                <MenuItem Header="Save Viewer Screenshot..." Name="saveViewerScreenshotMenuItem" Click="saveViewerScreenshotMenuItem_Click"/>
                 <Separator />
                 <MenuItem HeaderStringFormat="{}{0} (Ctrl+ W)" Header="Close DICOM File" Name="closeDicomSeriesMenuItem" Click="closeDicomSeriesMenuItem_Click" />
                 <Separator />
@@ -371,7 +372,12 @@
                 <ColumnDefinition Width="*" MinWidth="10" />
             </Grid.ColumnDefinitions>
 
-            <vsdui:WpfDicomSeriesManagerControl Grid.Column="0" x:Name="dicomSeriesManagerControl1"/>
+            <vsdui:WpfDicomSeriesManagerControl Grid.Column="0" 
+                                                x:Name="dicomSeriesManagerControl1"
+                                                AllowDrop="True"
+                                                Drop="imageViewer1_Drop"
+                                                DragOver="imageViewer1_Dragging"
+                                                DragEnter="imageViewer1_Dragging"/>
 
             <GridSplitter Grid.Column="0" 
                           HorizontalAlignment="Right"
