@@ -93,7 +93,7 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
             waveletTransformCheckBox_Click(waveletTransformCheckBox, null);
             qualityLayersNumericUpDown.Value = _encoderSettings.QualityLayers.Length;
             progressionOrderComboBox.SelectedItem = _encoderSettings.ProgressionOrder;
-            useTilesCheckBox.IsChecked = _encoderSettings.TileWidth != 0 && _encoderSettings.TileHeight != 0;
+            useTilesCheckBox.IsChecked = _encoderSettings.TileWidth != 0 || _encoderSettings.TileHeight != 0;
             lossyCompressionCheckBox.IsChecked = _encoderSettings.CompressionType == Jpeg2000CompressionType.Lossy;
             if (useTilesCheckBox.IsChecked.Value == true)
             {

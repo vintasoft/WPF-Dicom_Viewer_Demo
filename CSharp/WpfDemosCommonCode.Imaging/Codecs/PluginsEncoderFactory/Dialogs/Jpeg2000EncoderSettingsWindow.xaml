@@ -35,9 +35,9 @@
 
                 <CheckBox Name="useTilesCheckBox" VerticalAlignment="Center" Margin="3" Grid.Column="0" Grid.Row="3" Click="useTilesCheckBox_Click">Use Tiles</CheckBox>
 
-                <CustomControls:NumericUpDown x:Name="tileWidthNumericUpDown" Grid.Column="1" Grid.Row="3" Width="68" Margin="3,0,0,0" Minimum="32" Maximum="65536" Value="512" HorizontalAlignment="Left"/>
+                <CustomControls:NumericUpDown x:Name="tileWidthNumericUpDown" Grid.Column="1" Grid.Row="3" Width="68" Margin="3,0,0,0" Minimum="0" Maximum="65536" Value="512" HorizontalAlignment="Left"/>
                 <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center">X</Label>
-                <CustomControls:NumericUpDown x:Name="tileHeightNumericUpDown" Grid.Column="1" Grid.Row="3" Width="68" Margin="0,0,3,0" Minimum="32" Maximum="65536" Value="512" HorizontalAlignment="Right"/>
+                <CustomControls:NumericUpDown x:Name="tileHeightNumericUpDown" Grid.Column="1" Grid.Row="3" Width="68" Margin="0,0,3,0" Minimum="0" Maximum="65536" Value="512" HorizontalAlignment="Right"/>
             </Grid>
         </GroupBox>
 
