@@ -9,9 +9,9 @@ using System.Windows;
 [assembly: AssemblyTitle("VintaSoft WPF DICOM Viewer Demo")]
 [assembly: AssemblyDescription("Shows how to view and annotate DICOM files.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("VintaSoft Ltd.")]
+[assembly: AssemblyCompany("VintaSoft Llc.")]
 [assembly: AssemblyProduct("VintaSoft Imaging .NET SDK")]
-[assembly: AssemblyCopyright("Copyright VintaSoft Ltd. 2024")]
+[assembly: AssemblyCopyright("Copyright VintaSoft Llc. 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
