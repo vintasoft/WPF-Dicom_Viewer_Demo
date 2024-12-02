@@ -354,6 +354,8 @@ namespace WpfDicomViewerDemo
             magnifierToolAction.Activated += new EventHandler(magnifierToolAction_Activated);
 
             _dicomViewerTool.NavigateBySeries = true;
+            _dicomViewerTool.ScrollProperties.IsVisible = true;
+            _dicomViewerTool.ScrollProperties.Anchor = AnchorType.Left;
 
             _openDicomFileDialog.Multiselect = true;
             DemosTools.SetTestFilesFolder(_openDicomFileDialog);

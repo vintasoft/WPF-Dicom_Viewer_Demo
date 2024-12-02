@@ -107,6 +107,36 @@ namespace WpfDemosCommonCode.Imaging.Codecs
         /// </summary>
         const string SVG_FILE_DIALOG_FILTER = "SVG Files|" + SVG_FILE_EXTENSIONS;
 
+        /// <summary>
+        /// The DOCX file extensions.
+        /// </summary>
+        const string Filters_Doc = "*.doc";
+
+        /// <summary>
+        /// The file filter for DOC files.
+        /// </summary>
+        const string Filters_DocFiles = "DOC Files|" + Filters_Doc;
+
+        /// <summary>
+        /// The RTF file extensions.
+        /// </summary>
+        const string Filters_Rtf = "*.rtf";
+
+        /// <summary>
+        /// The file filter for RTF files.
+        /// </summary>
+        const string Filters_RtfFiles = "RTF Files|" + Filters_Rtf;
+
+        /// <summary>
+        /// The HTML file extensions.
+        /// </summary>
+        const string Filters_Html = "*.html;*.htm";
+
+        /// <summary>
+        /// The file filter for HTML files.
+        /// </summary>
+        const string Filters_HtmlFiles = "HTML Files|" + Filters_Html;
+
         #endregion
 
 
@@ -268,6 +298,25 @@ namespace WpfDemosCommonCode.Imaging.Codecs
                 filter2 += Filters_Docx + ";";
                 _decoderFiltersDefaultFilterIndex++;
 
+                filter1 += "|" + Filters_DocFiles;
+                filter2 += Filters_Doc + ";";
+                _decoderFiltersDefaultFilterIndex++;
+
+                filter1 += "|" + Filters_RtfFiles;
+                filter2 += Filters_Rtf + ";";
+                _decoderFiltersDefaultFilterIndex++;
+
+                filter1 += "|" + Filters_HtmlFiles;
+                filter2 += Filters_Html + ";";
+                _decoderFiltersDefaultFilterIndex++;
+            }
+
+            if (AvailableDecoders.IsDecoderAvailable("Xlsx"))
+            {
+                filter1 += "|" + Filters_XlsxFiles;
+                filter2 += Filters_Xlsx + ";";
+                _decoderFiltersDefaultFilterIndex++;
+
                 filter1 += "|" + Filters_XlsFiles;
                 filter2 += Filters_Xls + ";";
                 _decoderFiltersDefaultFilterIndex++;
@@ -278,13 +327,6 @@ namespace WpfDemosCommonCode.Imaging.Codecs
 
                 filter1 += "|" + Filters_CsvFiles;
                 filter2 += Filters_Csv + ";";
-                _decoderFiltersDefaultFilterIndex++;
-            }
-
-            if (AvailableDecoders.IsDecoderAvailable("Xlsx"))
-            {
-                filter1 += "|" + Filters_XlsxFiles;
-                filter2 += Filters_Xlsx + ";";
                 _decoderFiltersDefaultFilterIndex++;
             }
 
