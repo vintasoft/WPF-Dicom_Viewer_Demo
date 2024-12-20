@@ -140,7 +140,7 @@
         <CommandBinding x:Name="exitCommandBinding" Command="{x:Static cc:MainWindow._exitCommand}" CanExecute="exitCommandBinding_CanExecute" Executed="exitMenuItem_Click"/>
 
         <CommandBinding x:Name="fullScreenCommandBinding" Command="{x:Static cc:MainWindow._fullScreenCommand}" Executed="fullScreenMenuItem_Click" />
-        <CommandBinding x:Name="showScrollbarsCommandBinding" Command="{x:Static cc:MainWindow._showScrollbarsCommand}" Executed="showScrollbarsMenuItem_Click" />
+        <CommandBinding x:Name="showScrollbarsCommandBinding" Command="{x:Static cc:MainWindow._showScrollbarsCommand}" Executed="showViewerScrollbarsMenuItem_Click" />
         <CommandBinding x:Name="isNegativeCommandBinding" Command="{x:Static cc:MainWindow._isNegativeCommand}" CanExecute="isNegativeCommandBinding_CanExecute" Executed="negativeImageMenuItem_Click"/>
 
         <CommandBinding x:Name="cutCommandBinding" Command="{x:Static cc:MainWindow._cutCommand}" CanExecute="cutCommandBinding_CanExecute" Executed="cutMenuItem_Click"/>
@@ -215,7 +215,8 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem HeaderStringFormat="{}{0} (F5)" Header="Full Screen" Name="fullScreenMenuItem" Click="fullScreenMenuItem_Click"/>
-                <MenuItem HeaderStringFormat="{}{0} (F6)" Header="Show Scrollbars" Name="showScrollbarsMenuItem" IsChecked="True" Click="showScrollbarsMenuItem_Click"/>
+                <MenuItem HeaderStringFormat="{}{0} (F6)" Header="Show Viewer Scrollbars" Name="showViewerScrollbarsMenuItem" IsChecked="True" Click="showViewerScrollbarsMenuItem_Click"/>
+                <MenuItem Header="Show Browse Scrollbar" Name="showBrowseScrollbarMenuItem" IsChecked="True" Click="showBrowseScrollbarMenuItem_Click"/>
                 <Separator />
                 <MenuItem Header="Show Overlay Images" Name="showOverlayImagesMenuItem" IsCheckable="True" Click="showOverlayImagesMenuItem_Click" />
                 <MenuItem Header="Overlay Color..." Name="overlayColorMenuItem" Click="overlayColorMenuItem_Click" />

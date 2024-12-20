@@ -894,14 +894,24 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of showScrollbarsMenuItem object.
+        /// Handles the Click event of showViewerScrollbarsMenuItem object.
         /// </summary>
-        private void showScrollbarsMenuItem_Click(object sender, RoutedEventArgs e)
+        private void showViewerScrollbarsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            showScrollbarsMenuItem.IsChecked ^= true;
+            showViewerScrollbarsMenuItem.IsChecked ^= true;
 
             // show/hide scrollbars in image viewer
-            imageViewer1.AutoScroll = showScrollbarsMenuItem.IsChecked;
+            imageViewer1.AutoScroll = showViewerScrollbarsMenuItem.IsChecked;
+        }
+
+        /// <summary>
+        /// Handles the Click event of showBrowseScrollbarMenuItem object.
+        /// </summary>
+        private void showBrowseScrollbarMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            showBrowseScrollbarMenuItem.IsChecked ^= true;
+
+            _dicomViewerTool.ScrollProperties.IsVisible = showBrowseScrollbarMenuItem.IsChecked;
         }
 
         #endregion
