@@ -91,19 +91,19 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="UIAutomationProvider" />
-    <PackageReference Include="Vintasoft.Imaging" Version="14.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Gdi" Version="14.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation" Version="14.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom" Version="14.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom.Wpf.UI" Version="14.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.UI" Version="14.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Annotation.Wpf.UI" Version="14.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Dicom" Version="7.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Dicom.Wpf.UI" Version="7.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Jpeg2000Codec" Version="10.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.UI" Version="14.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Wpf" Version="14.0.5.1" />
-    <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="14.0.5.1" />
+    <PackageReference Include="Vintasoft.Imaging" Version="14.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Gdi" Version="14.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation" Version="14.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom" Version="14.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Dicom.Wpf.UI" Version="14.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.UI" Version="14.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Annotation.Wpf.UI" Version="14.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Dicom" Version="7.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Dicom.Wpf.UI" Version="7.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Jpeg2000Codec" Version="10.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.UI" Version="14.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Wpf" Version="14.0.6.1" />
+    <PackageReference Include="Vintasoft.Imaging.Wpf.UI" Version="14.0.6.1" />
     <PackageReference Include="Vintasoft.Shared" Version="4.4.0.1" />
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
@@ -233,6 +233,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="WpfDemosCommonCode.Imaging\VisualTools\UserInteraction\WpfInteractionAreaAppearanceManagerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WpfDemosCommonCode.Imaging\VisualTools\WpfMagnifierToolSettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -295,6 +299,8 @@
     <Compile Include="CustomControls\ColorPickerDialog\HsvColor.cs">
     </Compile>
     <Compile Include="CustomControls\ColorPickerDialog\SpectrumSlider.cs">
+    </Compile>
+    <Compile Include="CustomControls\CursorPanelControl\CursorPanelControl.cs">
     </Compile>
     <Compile Include="CustomControls\FontFamilySelector.xaml.cs">
       <DependentUpon>FontFamilySelector.xaml</DependentUpon>
@@ -409,6 +415,8 @@
     <Compile Include="WpfDemosCommonCode.Imaging\VisualToolsToolBar\VisualTools\MeasurementVisualTools\MeasurementVisualToolActionFactory.cs">
     </Compile>
     <Compile Include="WpfDemosCommonCode.Imaging\VisualToolsToolBar\VisualTools\ZoomVisualTools\Actions\MagnifierToolAction.cs">
+    </Compile>
+    <Compile Include="WpfDemosCommonCode.Imaging\VisualTools\UserInteraction\WpfInteractionAreaAppearanceManagerWindow.xaml.cs">
     </Compile>
     <Compile Include="WpfDemosCommonCode.Imaging\VisualTools\WpfMagnifierToolSettingsWindow.xaml.cs">
       <DependentUpon>WpfMagnifierToolSettingsWindow.xaml</DependentUpon>

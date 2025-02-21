@@ -1,0 +1,230 @@
+﻿<Window x:Class="WpfDemosCommonCode.Imaging.WpfInteractionAreaAppearanceManagerWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:WpfDemosCommonCode.CustomControls"
+    Title="Interaction Area Settings" 
+    Width="526" Height="352"
+    ResizeMode="NoResize" 
+    WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Width" Value="105" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="cc:CursorPanelControl">
+            <Setter Property="Height" Value="23" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Name="tabControl">
+            <TabItem  Header="Resize points" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0">Radius</Label>
+                    <cc:NumericUpDown x:Name="resizePointsRadiusNumericUpDown" Grid.Row="0" Grid.Column="1" />
+
+                    <Label Grid.Row="1" Grid.Column="0">Interaction radius</Label>
+                    <cc:NumericUpDown x:Name="resizePointsInteractionRadiusNumericUpDown" Grid.Row="1" Grid.Column="1" />
+
+                    <Label Grid.Row="2" Grid.Column="0">Background color</Label>
+                    <cc:ColorPanelControl x:Name="resizePointsBackgroundColorPanelControl" Grid.Row="2" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="3" Grid.Column="0">Border color</Label>
+                    <cc:ColorPanelControl x:Name="resizePointsBorderColorPanelControl" Grid.Row="3" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="4" Grid.Column="0">Border pen width</Label>
+                    <cc:NumericUpDown x:Name="resizePointsBorderPenWidthNumericUpDown" Grid.Row="4" Grid.Column="1" />
+
+                    <Label Grid.Row="5" Grid.Column="0">Cursor NWSE</Label>
+                    <cc:CursorPanelControl x:Name="resizePointsNwseCursorPanelControl" Grid.Row="5" Grid.Column="1" />
+
+                    <Label Grid.Row="6" Grid.Column="0">Cursor NESW</Label>
+                    <cc:CursorPanelControl x:Name="resizePointsNeswCursorPanelControl" Grid.Row="6" Grid.Column="1" />
+
+                    <Label Grid.Row="7" Grid.Column="0">Cursor NS</Label>
+                    <cc:CursorPanelControl x:Name="resizePointsNsCursorPanelControl" Grid.Row="7" Grid.Column="1" />
+
+                    <Label Grid.Row="8" Grid.Column="0">Cursor WE</Label>
+                    <cc:CursorPanelControl x:Name="resizePointsWeCursorPanelControl" Grid.Row="8" Grid.Column="1" />
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Polygon point">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0">Radius</Label>
+                    <cc:NumericUpDown x:Name="polygonPointRadiusNumericUpDown" Grid.Row="0" Grid.Column="1" />
+
+                    <Label Grid.Row="1" Grid.Column="0">Interaction radius</Label>
+                    <cc:NumericUpDown x:Name="polygonPointInteractionRadiusNumericUpDown" Grid.Row="1" Grid.Column="1" />
+
+                    <Label Grid.Row="2" Grid.Column="0">Background color</Label>
+                    <cc:ColorPanelControl x:Name="polygonPointBackgroundColorPanelControl" Grid.Row="2" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="3" Grid.Column="0">Selected color</Label>
+                    <cc:ColorPanelControl x:Name="selectedPointBackgroundColorPanelControl" Grid.Row="3" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="4" Grid.Column="0">Border color</Label>
+                    <cc:ColorPanelControl x:Name="polygonPointBorderColorPanelControl" Grid.Row="4" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="5" Grid.Column="0">Border pen width</Label>
+                    <cc:NumericUpDown x:Name="polygonPointBorderPenWidthNumericUpDown" Grid.Row="5" Grid.Column="1" />
+
+                    <Label Grid.Row="6" Grid.Column="0">Cursor</Label>
+                    <cc:CursorPanelControl x:Name="polygonPointCursorPanelControl" Grid.Row="6" Grid.Column="1" />
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Move area">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0">Cursor</Label>
+                    <cc:CursorPanelControl x:Name="moveAreaCursorPanelControl" Grid.Row="0" Grid.Column="1" />
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Rotation assistant">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0">Radius</Label>
+                    <cc:NumericUpDown x:Name="rotationAssistantRadiusNumericUpDown" Grid.Row="0" Grid.Column="1" Maximum="10000" />
+
+                    <Label Grid.Row="1" Grid.Column="0">Background color</Label>
+                    <cc:ColorPanelControl x:Name="rotationAssistantBackgroundColorPanelControl" Grid.Row="1" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="2" Grid.Column="0">Border color</Label>
+                    <cc:ColorPanelControl x:Name="rotationAssistantBorderColorPanelControl" Grid.Row="2" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="3" Grid.Column="0">Border pen width</Label>
+                    <cc:NumericUpDown x:Name="rotationAssistantBorderPenWidthNumericUpDown" Grid.Row="3" Grid.Column="1" />
+
+                    <Label Grid.Row="4" Grid.Column="0">Discrete angle</Label>
+                    <cc:NumericUpDown x:Name="rotationAssistantDiscreteAngleNumericUpDown" Grid.Row="4" Grid.Column="1" Maximum="180" Increment="10" Minimum="1" />
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Rotation point">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Radius</Label>
+                    <cc:NumericUpDown x:Name="rotationPointRadiusNumericUpDown" Grid.Row="0" Grid.Column="1" />
+
+                    <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Interaction radius</Label>
+                    <cc:NumericUpDown x:Name="rotationPointInteractionRadiusNumericUpDown" Grid.Row="1" Grid.Column="1" />
+
+                    <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Background color</Label>
+                    <cc:ColorPanelControl x:Name="rotationPointBackgroundColorPanelControl" Grid.Row="2" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Border color</Label>
+                    <cc:ColorPanelControl x:Name="rotationPointBorderColorPanelControl" Grid.Row="3" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Border pen width</Label>
+                    <cc:NumericUpDown x:Name="rotationPointBorderPenWidthNumericUpDown" Grid.Row="4" Grid.Column="1" />
+
+                    <Label Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Distance</Label>
+                    <cc:NumericUpDown x:Name="rotationPointDistanceNumericUpDown" Grid.Row="5" Grid.Column="1" Maximum="10000" />
+
+                    <Label Grid.Row="6" Grid.Column="0">Cursor</Label>
+                    <cc:CursorPanelControl x:Name="rotationPointCursorPanelControl" Grid.Row="6" Grid.Column="1" />
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Text box">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="45*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="28" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">Text font</Label>
+                    <cc:FontFamilySelector Grid.Row="0" Grid.Column="1" Width="Auto" x:Name="fontFamilySelector"/>
+
+                    <Label Grid.Row="1" Grid.Column="0">Text font size</Label>
+                    <cc:NumericUpDown x:Name="textBoxFontSizeNumericUpDown" Grid.Row="1" Grid.Column="1" />
+
+                    <Label Grid.Row="2" Grid.Column="0">Text color</Label>
+                    <cc:ColorPanelControl x:Name="textBoxForeColorPanelControl" Grid.Row="2" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="3" Grid.Column="0">Background color</Label>
+                    <cc:ColorPanelControl x:Name="textBoxBackColorPanelControl" Grid.Row="3" Grid.Column="1" Height="22" Color="White" ColorButtonWidth="30" />
+
+                    <Label Grid.Row="4" Grid.Column="0">Cursor</Label>
+                    <cc:CursorPanelControl x:Name="textBoxCursorPanelControl" Grid.Row="4" Grid.Column="1" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name="okButton" Height="23" Width="75" Margin="0,0,3,0" Click="okButton_Click">OK</Button>
+            <Button Name="buttonCancel" Height="23" Width="75" Margin="3,0" Click="buttonCancel_Click">Cancel</Button>
+        </StackPanel>
+    </Grid>
+</Window>

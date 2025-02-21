@@ -21,6 +21,8 @@ using Vintasoft.Imaging.Annotation.Dicom.Wpf.UI.VisualTools;
 using Vintasoft.Imaging.Annotation.Formatters;
 using Vintasoft.Imaging.Annotation.UI;
 using Vintasoft.Imaging.Annotation.Wpf.UI;
+using Vintasoft.Imaging.Annotation.Wpf.UI.VisualTools;
+
 #endif
 using Vintasoft.Imaging.Codecs;
 using Vintasoft.Imaging.Codecs.Decoders;
@@ -30,9 +32,11 @@ using Vintasoft.Imaging.Dicom.Wpf.UI;
 using Vintasoft.Imaging.Dicom.Wpf.UI.VisualTools;
 using Vintasoft.Imaging.ImageColors;
 using Vintasoft.Imaging.Metadata;
+using Vintasoft.Imaging.UI.VisualTools.UserInteraction;
 using Vintasoft.Imaging.UIActions;
 using Vintasoft.Imaging.Wpf.UI;
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
+using Vintasoft.Imaging.Wpf.UI.VisualTools.UserInteraction;
 using Vintasoft.Primitives;
 
 using WpfDemosCommonCode;
@@ -82,6 +86,11 @@ namespace WpfDicomViewerDemo
         /// The previous interaction mode in DICOM annotation tool.
         /// </summary>
         AnnotationInteractionMode _prevDicomAnnotationToolInteractionMode;
+
+        /// <summary>
+        /// Manager of interaction areas.
+        /// </summary>
+        WpfAnnotationInteractionAreaAppearanceManager _interactionAreaAppearanceManager;
 #endif
 
         /// <summary>
@@ -336,6 +345,9 @@ namespace WpfDicomViewerDemo
                  new WpfDicomAnnotationTool(),
                  (Vintasoft.Imaging.Annotation.Wpf.UI.Measurements.WpfImageMeasureTool)imageMeasureToolAction.VisualTool);
             _dicomAnnotatedViewerTool.InteractionMode = WpfDicomAnnotatedViewerToolInteractionMode.None;
+
+            _interactionAreaAppearanceManager = new WpfAnnotationInteractionAreaAppearanceManager();
+            _interactionAreaAppearanceManager.VisualTool = _dicomAnnotatedViewerTool.DicomAnnotationTool;
 #endif
 
             // add visual tools to tool strip
@@ -2329,6 +2341,26 @@ namespace WpfDicomViewerDemo
                 _voiLutParamsWindow.Close();
                 _voiLutParamsWindow = null;
             }
+        }
+
+        #endregion
+
+
+        #region Interaction Points
+
+        /// <summary>
+        /// Changes settings of annotation interaction points.
+        /// </summary>
+        private void interactionPointsAppearanceMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+#if !REMOVE_ANNOTATION_PLUGIN
+            WpfInteractionAreaAppearanceManagerWindow window = new WpfInteractionAreaAppearanceManagerWindow();
+            window.InteractionAreaSettings = _interactionAreaAppearanceManager;
+            window.Owner = this;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+            window.ShowDialog();
+#endif
         }
 
         #endregion

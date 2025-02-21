@@ -213,6 +213,7 @@
                     <MenuItem Header="Clockwise (Shift+Ctrl+Plus)" Name="rotateClockwiseMenuItem" Click="rotateClockwiseMenuItem_Click"/>
                     <MenuItem Header="Counterclockwise (Shift+Ctrl+Minus)" Name="rotateCounterclockwiseMenuItem" Click="rotateCounterclockwiseMenuItem_Click"/>
                 </MenuItem>
+                <MenuItem Header="Interaction Points Settings..." Name="interactionPointsAppearanceMenuItem" Click="interactionPointsAppearanceMenuItem_Click"/>
                 <Separator />
                 <MenuItem HeaderStringFormat="{}{0} (F5)" Header="Full Screen" Name="fullScreenMenuItem" Click="fullScreenMenuItem_Click"/>
                 <MenuItem HeaderStringFormat="{}{0} (F6)" Header="Show Viewer Scrollbars" Name="showViewerScrollbarsMenuItem" IsChecked="True" Click="showViewerScrollbarsMenuItem_Click"/>
