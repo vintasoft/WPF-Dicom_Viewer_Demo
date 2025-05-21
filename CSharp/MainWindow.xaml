@@ -190,7 +190,8 @@
                 <MenuItem HeaderStringFormat="{}{0} (Ctrl+ O)" Header="Open DICOM File(s) ..." Name="openDicomFilesMenuItem" Click="openDicomFilesMenuItem_Click" />
                 <MenuItem Header="Open Directory..." Name="openDirectoryMenuItem" Click="openDirectoryMenuItem_Click" />
                 <Separator />
-                <MenuItem Header="Save DICOM File To Image File..." Name="saveDicomFileToImageFileMenuItem" Click="saveDicomFileToImageFileMenuItem_Click" />
+                <MenuItem Header="Save Images As..." Name="saveDicomFileToImageFileMenuItem" Click="saveImagesAsMenuItem_Click" />
+                <MenuItem Header="Save Displayed Image..." Name="saveImageAsCurrentVOILUTMenuItem" Click="saveDisplayedImageMenuItem_Click"/>
                 <MenuItem Header="Burn And Save To DICOM file..." Name="burnAndSaveToDICOMFileMenuItem" Click="burnAndSaveToDICOMFileMenuItem_Click"/>
                 <MenuItem Header="Save Viewer Screenshot..." Name="saveViewerScreenshotMenuItem" Click="saveViewerScreenshotMenuItem_Click"/>
                 <Separator />
@@ -273,6 +274,7 @@
                     <MenuItem Header="None" Name="interactionModeNoneMenuItem" Click="interactionModeNoneMenuItem_Click" />
                     <MenuItem Header="View" Name="interactionModeViewMenuItem" Click="interactionModeViewMenuItem_Click" />
                     <MenuItem Header="Author" Name="interactionModeAuthorMenuItem" Click="interactionModeAuthorMenuItem_Click" />
+                    <MenuItem Header="Annotation eraser" Name="interactionModeAnnotationEraserMenuItem" Click="interactionModeAnnotationEraserMenuItem_Click" />
                 </MenuItem>
                 <MenuItem Header="Transformation Mode" Name="transformationModeMenuItem" >
                     <MenuItem Header="Rectangular" Name="transformationModeRectangularMenuItem" Click="transformationModeRectangularMenuItem_Click"/>

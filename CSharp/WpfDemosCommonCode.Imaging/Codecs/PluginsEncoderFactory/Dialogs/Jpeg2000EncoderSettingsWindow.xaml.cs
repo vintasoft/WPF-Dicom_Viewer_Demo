@@ -52,6 +52,24 @@ namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
             }
         }
 
+        public bool EditAnnotationSettings
+        {
+            get
+            {
+                return tabControl1.Items.Contains(annotationsTabPage);
+            }
+            set
+            {
+                if (EditAnnotationSettings != value)
+                {
+                    if (value)
+                        tabControl1.Items.Add(annotationsTabPage);
+                    else
+                        tabControl1.Items.Remove(annotationsTabPage);
+                }
+            }
+        }
+
         #endregion
 
 

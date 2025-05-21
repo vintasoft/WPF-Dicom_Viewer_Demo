@@ -9,13 +9,13 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="29" />
         </Grid.RowDefinitions>
-        
+
         <TabControl Name="tabControl1" Grid.Row="0" SelectedIndex="0">
             <TabItem Header="Compression" Name="compressionTabPage">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="63*" />
-                        <ColumnDefinition Width="137*" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="154.81" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
@@ -27,10 +27,10 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    
+
                     <Label Grid.Column="0" Grid.Row="0">Quality</Label>
                     <CustomControls:NumericUpDown x:Name="jpegQualityNumericUpDown" Grid.Column="1" Grid.Row="0" Minimum="5" Maximum="100" Value="90" Width="65" HorizontalAlignment="Left"/>
-                    
+
                     <CheckBox Name="jpegGrayscaleCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Center">Grayscale (8 bpp)</CheckBox>
                     <CheckBox Name="disableSubsamplingCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Center">Disable subsampling</CheckBox>
                     <CheckBox Name="optimizeHuffmanTablesCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Center">Optimize Huffman tables</CheckBox>
@@ -40,7 +40,7 @@
                     <CheckBox Name="copyUnkwonwnApplicationMetadataCheckBox" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" VerticalAlignment="Center">Copy unknown application metadata</CheckBox>
                 </Grid>
             </TabItem>
-            
+
             <TabItem Header="Annotations Format" Name="annotationsTabPage">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -48,14 +48,14 @@
                         <RowDefinition Height="23" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    
+
                     <CheckBox Name="annotationsBinaryCheckBox" Grid.Row="0" Margin="3">Vintasoft Binary</CheckBox>
                     <CheckBox Name="annotationXmpCheckBox" Grid.Row="1" Margin="3">Vintasoft XMP</CheckBox>
                 </Grid>
             </TabItem>
         </TabControl>
 
-        <Button Name="buttonOk" Margin="0,0,85,0" Grid.Row="2" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Center" Click="buttonOk_Click">OK</Button>
-        <Button Name="buttonCancel" Margin="85,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Center" Click="buttonCancel_Click">Cancel</Button>
+        <Button Name="buttonOk" Margin="0,0,85,0" Grid.Row="2" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Center" Click="buttonOk_Click" IsDefault="True">OK</Button>
+        <Button Name="buttonCancel" Margin="85,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Center" Click="buttonCancel_Click" IsCancel="True">Cancel</Button>
     </Grid>
 </Window>

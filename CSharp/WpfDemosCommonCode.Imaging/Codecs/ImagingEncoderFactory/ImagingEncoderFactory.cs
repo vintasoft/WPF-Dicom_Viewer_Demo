@@ -313,6 +313,8 @@ namespace WpfDemosCommonCode.Imaging.Codecs
                     tiffEncoder.CreateNewFile = !tiffEncoderSettingsWindow.AddImagesToExistingFile;
                     return true;
 
+                case "Psd":
+                    return true;
 #if NETCOREAPP
                 case "Webp":
                     WebpEncoderSettingsWindow webpEncoderSettingsWindow = new WebpEncoderSettingsWindow();

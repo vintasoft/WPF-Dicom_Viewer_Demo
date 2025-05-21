@@ -79,7 +79,7 @@
             <ComboBox Name="createPageMethodComboBox" />
         </GroupBox>
 
-        <Button Name="buttonOk" Margin="0,0,80,0" Grid.Row="4" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Center" Click="buttonOk_Click">OK</Button>
-        <Button Name="buttonCancel" Margin="80,0,0,0" Grid.Row="4" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Center" Click="buttonCancel_Click">Cancel</Button>
+        <Button Name="buttonOk" Margin="0,0,80,0" Grid.Row="4" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Center" Click="buttonOk_Click" IsDefault="True">OK</Button>
+        <Button Name="buttonCancel" Margin="80,0,0,0" Grid.Row="4" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Center" Click="buttonCancel_Click" IsCancel="True">Cancel</Button>
     </Grid>
 </Window>

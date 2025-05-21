@@ -45,8 +45,8 @@
         <CheckBox Grid.Row="2" Name="allowExternalFontsCheckBox" VerticalAlignment="Center">Allow External Fonts</CheckBox>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,8,7" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="162">
-            <Button Name="buttonOk" HorizontalAlignment="Right"  Margin="3" Height="23" Width="75" Click="buttonOk_Click">OK</Button>
-            <Button Name="buttonCancel" HorizontalAlignment="Left" Margin="3" Height="23" Width="75" Click="buttonCancel_Click">Cancel</Button>
+            <Button Name="buttonOk" HorizontalAlignment="Right"  Margin="3" Height="23" Width="75" Click="buttonOk_Click" IsDefault="True">OK</Button>
+            <Button Name="buttonCancel" HorizontalAlignment="Left" Margin="3" Height="23" Width="75" Click="buttonCancel_Click" IsCancel="True">Cancel</Button>
         </StackPanel>
 
     </Grid>

@@ -2,86 +2,109 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
-    Title="JPEG 2000 Encoder Settings" Height="319" Width="294" Topmost="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+    Title="JPEG 2000 Encoder Settings" Height="350" Width="294" Topmost="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
     Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="124*" />
-            <RowDefinition Height="120*" />
-            <RowDefinition Height="29*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="29" />
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Structure" Grid.Row="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="105" />
-                    <ColumnDefinition Width="127*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+        <TabControl Name="tabControl1" Grid.Row="0" SelectedIndex="0">
+            <TabItem Header="Compression" Name="compressionTabPage">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="140*" />
+                        <RowDefinition Height="140*" />
+                    </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="0">Format</Label>
-                <ComboBox Name="formatComboBox" Grid.Column="1" Grid.Row="0" Margin="3" />
+                    <GroupBox Header="Structure" Grid.Row="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="150*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="1">Quality Layers</Label>
-                <CustomControls:NumericUpDown x:Name="qualityLayersNumericUpDown" Grid.Column="1" Grid.Row="1" Width="160" Margin="3,0" Minimum="1" Maximum="32" HorizontalAlignment="Left" />
+                            <Label Grid.Column="0" Grid.Row="0">Format</Label>
+                            <ComboBox Name="formatComboBox" Grid.Column="1" Grid.Row="0" Margin="3" />
 
-                <Label Grid.Column="0" Grid.Row="2">Progression Order</Label>
-                <ComboBox Name="progressionOrderComboBox" Grid.Column="1" Grid.Row="2" Margin="3" />
+                            <Label Grid.Column="0" Grid.Row="1">Quality Layers</Label>
+                            <CustomControls:NumericUpDown x:Name="qualityLayersNumericUpDown" Grid.Column="1" Grid.Row="1" Width="145" Margin="3,0" Minimum="1" Maximum="32" HorizontalAlignment="Left" />
 
-                <CheckBox Name="useTilesCheckBox" VerticalAlignment="Center" Margin="3" Grid.Column="0" Grid.Row="3" Click="useTilesCheckBox_Click">Use Tiles</CheckBox>
+                            <Label Grid.Column="0" Grid.Row="2">Progression Order</Label>
+                            <ComboBox Name="progressionOrderComboBox" Grid.Column="1" Grid.Row="2" Margin="3" />
 
-                <CustomControls:NumericUpDown x:Name="tileWidthNumericUpDown" Grid.Column="1" Grid.Row="3" Width="68" Margin="3,0,0,0" Minimum="0" Maximum="65536" Value="512" HorizontalAlignment="Left"/>
-                <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center">X</Label>
-                <CustomControls:NumericUpDown x:Name="tileHeightNumericUpDown" Grid.Column="1" Grid.Row="3" Width="68" Margin="0,0,3,0" Minimum="0" Maximum="65536" Value="512" HorizontalAlignment="Right"/>
-            </Grid>
-        </GroupBox>
+                            <CheckBox Name="useTilesCheckBox" VerticalAlignment="Center" Margin="3" Grid.Column="0" Grid.Row="3" Click="useTilesCheckBox_Click">Use Tiles</CheckBox>
 
-        <GroupBox Header="Compression" Grid.Row="1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="132*" />
-                    <ColumnDefinition Width="75" />
-                    <ColumnDefinition Width="53" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+                            <CustomControls:NumericUpDown x:Name="tileWidthNumericUpDown" Grid.Column="1" Grid.Row="3" Width="68" Margin="3,0,0,0" Minimum="0" Maximum="65536" Value="512" HorizontalAlignment="Left"/>
+                            <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center">X</Label>
+                            <CustomControls:NumericUpDown x:Name="tileHeightNumericUpDown" Grid.Column="1" Grid.Row="3" Width="68" Margin="0,0,3,0" Minimum="0" Maximum="65536" Value="512" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </GroupBox>
 
-                <CheckBox Name="waveletTransformCheckBox" Margin="3,0" VerticalAlignment="Center" Grid.Column="0" Click="waveletTransformCheckBox_Click">Wavelet Transform</CheckBox>
-                <CustomControls:NumericUpDown x:Name="waveletLevelsNumericUpDown" Grid.Column="1" Minimum="1" Maximum="32" Width="75" Grid.Row="0" Value="1" />
-                <Label Grid.Column="2">Levels</Label>
+                    <GroupBox Header="Compression" Grid.Row="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130*" />
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="50" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                <GroupBox Margin="3,6,3,0" Name="lossyGroupBox" Grid.Row="1" Grid.ColumnSpan="3">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130*" />
-                            <ColumnDefinition Width="75" />
-                            <ColumnDefinition Width="44" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="10" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                            <CheckBox Name="waveletTransformCheckBox" Margin="3,0" VerticalAlignment="Center" Grid.Column="0" Click="waveletTransformCheckBox_Click">Wavelet Transform</CheckBox>
+                            <CustomControls:NumericUpDown x:Name="waveletLevelsNumericUpDown" Grid.Column="1" Minimum="1" Maximum="32" Width="75" Grid.Row="0" Value="1" />
+                            <Label Grid.Column="2">Levels</Label>
 
-                        <RadioButton Name="imageDataSizeRadioButton" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Click="useTilesCheckBox_Click">Image Data Size</RadioButton>
-                        <CustomControls:NumericUpDown x:Name="imageDataSizeNumericUpDown" Grid.Column="1" Minimum="1" Maximum="65536" Value="100" Width="75" Grid.Row="1"/>
-                        <Label Grid.Column="3" Grid.Row="1">KBytes</Label>
+                            <GroupBox Margin="3,6,3,0" Name="lossyGroupBox" Grid.Row="1" Grid.ColumnSpan="3">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130*" />
+                                        <ColumnDefinition Width="75" />
+                                        <ColumnDefinition Width="50" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
 
-                        <RadioButton Name="compressionRatioRadioButton" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Click="useTilesCheckBox_Click">Compression Ratio</RadioButton>
-                        <Label Name="compressionRatioLabel" Grid.Column="3" Grid.Row="2">(1 : 1)</Label>
-                        <CustomControls:NumericUpDown x:Name="compressionRatioNumericUpDown" ValueChanged="compressionRatioNumericUpDown_ValueChanged" Maximum="100000" Grid.Column="1" Width="75" Grid.Row="2" Minimum="1" Value="1" />
-                    </Grid>
-                </GroupBox>
-                <CheckBox VerticalAlignment="Top" Margin="3,0" Name="lossyCompressionCheckBox" Grid.Row="1" Grid.ColumnSpan="3" Height="15.96"  Click="useTilesCheckBox_Click">Lossy</CheckBox>
-            </Grid>
-        </GroupBox>
+                                    <RadioButton Name="imageDataSizeRadioButton" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Click="useTilesCheckBox_Click">Image Data Size</RadioButton>
+                                    <CustomControls:NumericUpDown x:Name="imageDataSizeNumericUpDown" Grid.Column="1" Minimum="1" Maximum="65536" Value="100" Width="75" Grid.Row="1"/>
+                                    <Label Grid.Column="3" Grid.Row="1">KBytes</Label>
+
+                                    <RadioButton Name="compressionRatioRadioButton" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Click="useTilesCheckBox_Click">Compression Ratio</RadioButton>
+                                    <Label Name="compressionRatioLabel" Grid.Column="3" Grid.Row="2">(1 : 1)</Label>
+                                    <CustomControls:NumericUpDown x:Name="compressionRatioNumericUpDown" ValueChanged="compressionRatioNumericUpDown_ValueChanged" Maximum="100000" Grid.Column="1" Width="75" Grid.Row="2" Minimum="1" Value="1" />
+                                </Grid>
+                            </GroupBox>
+                            <CheckBox VerticalAlignment="Top" Margin="3,0" Name="lossyCompressionCheckBox" Grid.Row="1" Grid.ColumnSpan="3" Height="15.96"  Click="useTilesCheckBox_Click">Lossy</CheckBox>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Annotations Format" Name="annotationsTabPage">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="23" />
+                        <RowDefinition Height="23" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <CheckBox Name="annotationsBinaryCheckBox" Grid.Row="0" Margin="3">Vintasoft Binary</CheckBox>
+                    <CheckBox Name="annotationXmpCheckBox" Grid.Row="1" Margin="3">Vintasoft XMP</CheckBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
 
         <Button Name="buttonOk" Margin="55,0,0,0" Grid.Row="2" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Left" Click="buttonOk_Click">OK</Button>
         <Button Name="buttonCancel" Margin="0,0,55,0" Grid.Row="2" VerticalAlignment="Center" Height="23" Width="75" HorizontalAlignment="Right" Click="buttonCancel_Click">Cancel</Button>

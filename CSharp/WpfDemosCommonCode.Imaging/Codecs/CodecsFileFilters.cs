@@ -13,49 +13,123 @@ namespace WpfDemosCommonCode.Imaging.Codecs
 
         #region Constants
 
-#if NETCOREAPP
-        const string Filters_ImagesFiles = "BMP Files|*.bmp|JPEG Files|*.jpg;*.jpeg;*.jfif|PBM/PGM/PPM files|*.pbm;*.pgm;*.ppm|PNG Files|*.png|TGA files|*.tga|TIFF Files|*.tif;*.tiff|GIF Files|*.gif|PCX Files|*.pcx|WEBP files|*.webp";
-        const string Filters_AllImageFiles = "All Image Files|*.bmp;*.jpg;*.jpeg;*.jfif;*.pbm;*.pgm;*.ppm;*.png;*.tga;*.tif;*.tiff;*.gif;*.pcx;*.webp;";
-#else
-        const string Filters_ImagesFiles = "BMP Files|*.bmp|JPEG Files|*.jpg;*.jpeg;*.jfif|PBM/PGM/PPM files|*.pbm;*.pgm;*.ppm|PNG Files|*.png|TGA files|*.tga|TIFF Files|*.tif;*.tiff|GIF Files|*.gif|PCX Files|*.pcx";
-        const string Filters_AllImageFiles = "All Image Files|*.bmp;*.jpg;*.jpeg;*.jfif;*.pbm;*.pgm;*.ppm;*.png;*.tga;*.tif;*.tiff;*.gif;*.pcx";
-#endif
+        /// <summary>
+        /// The file filter for image files.
+        /// </summary>
+        const string IMAGE_FILES_DIALOG_FILTER =
+            "BMP Files|*.bmp|" +
+            "JPEG Files|*.jpg;*.jpeg;*.jfif|" +
+            "PBM/PGM/PPM files|*.pbm;*.pgm;*.ppm|" +
+            "PNG Files|*.png|" +
+            "PSD Files|*.psd|" +
+            "SVG Files|*.svg|" +
+            "TGA files|*.tga|" +
+            "TIFF Files|*.tif;*.tiff|" +
+            "GIF Files|*.gif|" +
+            "PCX Files|*.pcx";
 
-        const string Filters_Extended = "*.wmf;*.emf;*.ico;*.cur;*.jls;";
-        const string Filters_ExtendedFiles = "EMF Files|*.emf|WMF Files|*.wmf|Icon Files|*.ico|Cursor Files|*.cur|JPEG-LS Files|*.jls";
+        /// <summary>
+        /// The file filter for all image files.
+        /// </summary>
+        const string ALL_IMAGE_FILES_DIALOG_FILTER = "All Image Files|*.bmp;*.gif;*.jpg;*.jpeg;*.jfif;*.pbm;*.pgm;*.ppm;*.pcx;*.png;*.psd;*.svg;*.tga;*.tif;*.tiff;";
 
-        const string Filters_TiffFiles = "TIFF Files|*.tif;*.tiff";
-        const string Filters_JpegFiles = "JPEG Files|*.jpg;*.jpeg;*.jfif";
+        /// <summary>
+        /// The other image files extensions.
+        /// </summary>
+        const string OTHER_IMAGE_FILES_EXTENSIONS = "*.psd;*.cur;*.emf;*.ico;*.jls;*.wmf;";
 
-        const string Filters_Pdf = "*.pdf";
-        const string Filters_PdfFiles = "PDF Files|" + Filters_Pdf;
+        /// <summary>
+        /// The file filter for other image files.
+        /// </summary>
+        const string OTHER_IMAGE_FILES_DIALOG_FILTER =
+            "PSD Files|*.psd|" +
+            "Cursor Files|*.cur|" +
+            "EMF Files|*.emf|" +
+            "Icon Files|*.ico|" +
+            "JPEG-LS Files|*.jls|" +
+            "WMF Files|*.wmf";
 
-        const string Filters_Gif = "*.gif";
-        const string Filters_GifFiles = "GIF Files|" + Filters_Gif;
+        /// <summary>
+        /// The file filter for TIFF files.
+        /// </summary>
+        const string TIFF_FILE_DIALOG_FILTER = "TIFF Files|*.tif;*.tiff";
 
-        const string Filters_Png = "*.png";
-        const string Filters_PngFiles = "PNG Files|" + Filters_Png;
+        /// <summary>
+        /// The file filter for JPEG files.
+        /// </summary>
+        const string JPEG_FILE_DIALOG_FILTER = "JPEG Files|*.jpg;*.jpeg;*.jfif";
 
-        const string Filters_Jbig2 = "*.jb2;*.jbig2";
-        const string Filters_Jbig2Files = "JBIG2 Files|" + Filters_Jbig2;
+        /// <summary>
+        /// The PDF file extensions.
+        /// </summary>
+        const string PDF_FILE_EXTENSIONS = "*.pdf";
+        /// <summary>
+        /// The file filter for PDF files.
+        /// </summary>
+        const string PDF_FILE_DIALOG_FILTER = "PDF Files|" + PDF_FILE_EXTENSIONS;
 
-        const string Filters_Svg = "*.svg";
-        const string Filters_SvgFiles = "SVG Files|" + Filters_Svg;
+        /// <summary>
+        /// The GIF files extension.
+        /// </summary>
+        const string GIF_FILE_EXTENSIONS = "*.gif";
+        /// <summary>
+        /// The file filter for GIF files.
+        /// </summary>
+        const string GIF_FILE_DIALOG_FILTER = "GIF Files|" + GIF_FILE_EXTENSIONS;
 
-        const string Filters_Jpeg2000 = "*.jp2;*.j2k;*.j2c;*.jpc";
-        const string Filters_Jpeg2000Files = "JPEG 2000 Files|" + Filters_Jpeg2000;
+        /// <summary>
+        /// The PNG file extensions.
+        /// </summary>
+        const string PNG_FILE_EXTENSIONS = "*.png";
+        /// <summary>
+        /// The file filter for PNG files.
+        /// </summary>
+        const string PNG_FILE_DIALOG_FILTER = "PNG Files|" + PNG_FILE_EXTENSIONS;
 
-        const string Filters_Raw = "*.cr2;*.crw;*.nef;*.nrw;*.dng";
-        const string Filters_RawFiles = "RAW Image Files|" + Filters_Raw;
+        /// <summary>
+        /// The JBIG2 file extensions.
+        /// </summary>
+        const string JBIG2_FILE_EXTENSIONS = "*.jb2;*.jbig2";
+        /// <summary>
+        /// The file filter for JBIG2 files.
+        /// </summary>
+        const string JBIG2_FILE_DIALOG_FILTER = "JBIG2 Files|" + JBIG2_FILE_EXTENSIONS;
 
-        const string Filters_Dicom = "*.dcm;*.dic;*.acr";
-        const string Filters_DicomFiles = "DICOM files|" + Filters_Dicom;
+        /// <summary>
+        /// The JPEG2000 file extensions.
+        /// </summary>
+        const string JPEG2000_FILE_EXTENSIONS = "*.jp2;*.j2k;*.j2c;*.jpc";
+        /// <summary>
+        /// The file filter for JPEG2000 files.
+        /// </summary>
+        const string JPEG2000_FILE_DIALOG_FILTER = "JPEG 2000 Files|" + JPEG2000_FILE_EXTENSIONS;
 
-        const string Filters_Docx = "*.docx";
-        const string Filters_DocxFiles = "DOCX files|" + Filters_Docx;
+        /// <summary>
+        /// The RAW file extensions.
+        /// </summary>
+        const string RAW_FILE_EXTENSIONS = "*.cr2;*.crw;*.nef;*.nrw;*.dng;*.arw";
+        /// <summary>
+        /// The file filter for RAW files.
+        /// </summary>
+        const string RAW_FILE_DIALOG_FILTER = "RAW Image Files|" + RAW_FILE_EXTENSIONS;
 
-        const string Filters_Xlsx = "*.xlsx";
-        const string Filters_XlsxFiles = "XLSX files|" + Filters_Xlsx;
+        /// <summary>
+        /// The WEBP file extensions.
+        /// </summary>
+        const string WEBP_FILE_EXTENSIONS = "*.webp";
+        /// <summary>
+        /// The file filter for WEBP files.
+        /// </summary>
+        const string WEBP_FILE_DIALOG_FILTER = "WEBP Image Files|" + WEBP_FILE_EXTENSIONS;
+
+        /// <summary>
+        /// The XPS file extensions.
+        /// </summary>
+        const string XPS_FILE_EXTENSIONS = "*.xps";
+        /// <summary>
+        /// The file filter for XPS files.
+        /// </summary>
+        const string XPS_FILE_DIALOG_FILTER = "XPS Files|" + XPS_FILE_EXTENSIONS;
 
         /// <summary>
         /// The WSI file extensions.
@@ -68,34 +142,67 @@ namespace WpfDemosCommonCode.Imaging.Codecs
 
 
         /// <summary>
-        /// The XLS file extensions.
+        /// The DICOM file extensions.
         /// </summary>
-        const string Filters_Xls = "*.xls";
+        const string DICOM_FILE_EXTENSIONS = "*.dcm;*.dic;*.acr";
+        /// <summary>
+        /// The file filter for DICOM files.
+        /// </summary>
+        const string DICOM_FILE_DIALOG_FILTER = "DICOM files|" + DICOM_FILE_EXTENSIONS;
+
+        /// <summary>
+        /// The DOCX file extensions.
+        /// </summary>
+        const string DOCX_FILE_EXTENSIONS = "*.docx";
+        /// <summary>
+        /// The file filter for DOCX files.
+        /// </summary>
+        const string DOCX_FILE_DIALOG_FILTER = "DOCX files|" + DOCX_FILE_EXTENSIONS;
+
+        /// <summary>
+        /// The DOCX file extensions.
+        /// </summary>
+        const string DOC_FILE_EXTENSIONS = "*.doc";
+        /// <summary>
+        /// The file filter for DOC files.
+        /// </summary>
+        const string DOC_FILE_DIALOG_FILTER = "DOC files|" + DOC_FILE_EXTENSIONS;
+
+        /// <summary>
+        /// The XLSX file extensions.
+        /// </summary>
+        const string XLSX_FILE_EXTENSIONS = "*.xlsx";
         /// <summary>
         /// The file filter for XLSX files.
         /// </summary>
-        const string Filters_XlsFiles = "XLS files|" + Filters_Xls;
+        const string XLSX_FILE_DIALOG_FILTER = "XLSX files|" + XLSX_FILE_EXTENSIONS;
+
+        /// <summary>
+        /// The XLS file extensions.
+        /// </summary>
+        const string XLS_FILE_EXTENSIONS = "*.xls";
+        /// <summary>
+        /// The file filter for XLSX files.
+        /// </summary>
+        const string XLS_FILE_DIALOG_FILTER = "XLS files|" + XLS_FILE_EXTENSIONS;
 
         /// <summary>
         /// The TSV file extensions.
         /// </summary>
-        const string Filters_Tsv = "*.tsv;*.tab";
+        const string TSV_FILE_EXTENSIONS = "*.tsv;*.tab";
         /// <summary>
         /// The file filter for TSV files.
         /// </summary>
-        const string Filters_TsvFiles = "TSV files|" + Filters_Tsv;
+        const string TSV_FILE_DIALOG_FILTER = "TSV files|" + TSV_FILE_EXTENSIONS;
 
         /// <summary>
         /// The CSV file extensions.
         /// </summary>
-        const string Filters_Csv = "*.csv";
+        const string CSV_FILE_EXTENSIONS = "*.csv";
         /// <summary>
         /// The file filter for CSV files.
         /// </summary>
-        const string Filters_CsvFiles = "CSV files|" + Filters_Csv;
-
-        const string Filters_Xps = "*.xps";
-        const string Filters_XpsFiles = "XPS files|" + Filters_Xps;
+        const string CSV_FILE_DIALOG_FILTER = "CSV files|" + CSV_FILE_EXTENSIONS;
 
         /// <summary>
         /// The SVG file extensions.
@@ -108,34 +215,44 @@ namespace WpfDemosCommonCode.Imaging.Codecs
         const string SVG_FILE_DIALOG_FILTER = "SVG Files|" + SVG_FILE_EXTENSIONS;
 
         /// <summary>
-        /// The DOCX file extensions.
-        /// </summary>
-        const string Filters_Doc = "*.doc";
-
-        /// <summary>
-        /// The file filter for DOC files.
-        /// </summary>
-        const string Filters_DocFiles = "DOC Files|" + Filters_Doc;
-
-        /// <summary>
         /// The RTF file extensions.
         /// </summary>
-        const string Filters_Rtf = "*.rtf";
+        const string RTF_FILE_EXTENSIONS = "*.rtf";
 
         /// <summary>
         /// The file filter for RTF files.
         /// </summary>
-        const string Filters_RtfFiles = "RTF Files|" + Filters_Rtf;
+        const string RTF_FILE_DIALOG_FILTER = "RTF Files|" + RTF_FILE_EXTENSIONS;
 
         /// <summary>
         /// The HTML file extensions.
         /// </summary>
-        const string Filters_Html = "*.html;*.htm";
+        const string HTML_FILE_EXTENSIONS = "*.html;*.htm";
 
         /// <summary>
         /// The file filter for HTML files.
         /// </summary>
-        const string Filters_HtmlFiles = "HTML Files|" + Filters_Html;
+        const string HTML_FILE_DIALOG_FILTER = "HTML Files|" + HTML_FILE_EXTENSIONS;
+
+        /// <summary>
+        /// The ODT file extensions.
+        /// </summary>
+        const string ODT_FILE_EXTENSIONS = "*.odt";
+
+        /// <summary>
+        /// The file filter for ODT files.
+        /// </summary>
+        const string ODT_FILE_DIALOG_FILTER = "ODT Files|" + ODT_FILE_EXTENSIONS;
+
+        /// <summary>
+        /// The ODT file extensions.
+        /// </summary>
+        const string ODS_FILE_EXTENSIONS = "*.ods";
+
+        /// <summary>
+        /// The file filter for ODT files.
+        /// </summary>
+        const string ODS_FILE_DIALOG_FILTER = "ODS Files|" + ODS_FILE_EXTENSIONS;
 
         #endregion
 
@@ -143,122 +260,152 @@ namespace WpfDemosCommonCode.Imaging.Codecs
 
         #region Properties
 
-        #region Decoder
+        #region Decoders
 
-        static string _decoderFilters = null;
-        public static string DecoderFilters
+        static string _imageDecoderFilter = null;
+        /// <summary>
+        /// Gets the file filter for image file decoders.
+        /// </summary>
+        public static string ImageDecoderFilter
         {
             get
             {
-                if (_decoderFilters == null)
-                    SetDecoderFilters();
-                return _decoderFilters;
+                if (_imageDecoderFilter == null)
+                    InitImageDecoderFilter();
+                return _imageDecoderFilter;
             }
         }
 
-        static int _decoderFiltersDefaultFilterIndex = -1;
-        public static int DecoderFiltersDefaultFilterIndex
+        static int _imageDecoderFilterDefaultIndex = -1;
+        /// <summary>
+        /// Gets the default index in file filter for image file decoders.
+        /// </summary>
+        public static int ImageDecoderFilterDefaultIndex
         {
             get
             {
-                if (_decoderFiltersDefaultFilterIndex == -1)
-                    SetDecoderFilters();
-                return _decoderFiltersDefaultFilterIndex;
+                if (_imageDecoderFilterDefaultIndex == -1)
+                    InitImageDecoderFilter();
+                return _imageDecoderFilterDefaultIndex;
             }
         }
 
         #endregion
 
 
-        #region Encoder
+        #region Encoders
 
-        static string _encoderFilters = null;
-        public static string EncoderFilters
+        static string _imageEncoderFilter = null;
+        /// <summary>
+        /// Gets the file filter for image file encoders.
+        /// </summary>
+        public static string ImageEncoderFilter
         {
             get
             {
-                if (_encoderFilters == null)
-                    SetEncoderFilters();
-                return _encoderFilters;
+                if (_imageEncoderFilter == null)
+                    InitImageEncoderFilter();
+                return _imageEncoderFilter;
             }
         }
 
-        static int _encoderFiltersDefaultFilterIndex = -1;
-        public static int EncoderFiltersDefaultFilterIndex
+        static int _imageEncoderFilterDefaultIndex = -1;
+        /// <summary>
+        /// Gets the default index in file filter for image file encoders.
+        /// </summary>
+        public static int ImageEncoderFilterDefaultIndex
         {
             get
             {
-                if (_encoderFiltersDefaultFilterIndex == -1)
-                    SetEncoderFilters();
-                return _encoderFiltersDefaultFilterIndex;
+                if (_imageEncoderFilterDefaultIndex == -1)
+                    InitImageEncoderFilter();
+                return _imageEncoderFilterDefaultIndex;
             }
         }
 
-        static string _multiPageEncoderFilters = null;
-        public static string MultipageEncoderFilters
+        static string _multipageImageEncoderFilter = null;
+        /// <summary>
+        /// Gets the file filter for multipage image file encoders.
+        /// </summary>
+        public static string MultipageImageEncoderFilter
         {
             get
             {
-                if (_multiPageEncoderFilters == null)
-                    SetMultiPageEncoderFilters();
-                return _multiPageEncoderFilters;
+                if (_multipageImageEncoderFilter == null)
+                    InitMultipageImageEncoderFilter();
+                return _multipageImageEncoderFilter;
             }
         }
 
 
-        static int _multiPageEncoderFiltersDefaultFilterIndex = -1;
-        public static int MultipageEncoderFiltersDefaultFilterIndex
+        static int _multipageImageEncoderFilterDefaultIndex = -1;
+        /// <summary>
+        /// Gets the default index in file filter for multipage image file encoders.
+        /// </summary>
+        public static int MultipageImageEncoderFilterDefaultIndex
         {
             get
             {
-                if (_multiPageEncoderFiltersDefaultFilterIndex == -1)
-                    SetMultiPageEncoderFilters();
-                return _multiPageEncoderFiltersDefaultFilterIndex;
+                if (_multipageImageEncoderFilterDefaultIndex == -1)
+                    InitMultipageImageEncoderFilter();
+                return _multipageImageEncoderFilterDefaultIndex;
             }
         }
 
 
-        static string _encoderFiltersWithAnnotations = null;
-        public static string EncoderFiltersWithAnnotations
+        static string _imageEncoderWithAnnotationsFilter = null;
+        /// <summary>
+        /// Gets the file filter for image file encoders with annotation support.
+        /// </summary>
+        public static string ImageEncoderWithAnnotationsFilter
         {
             get
             {
-                if (_encoderFiltersWithAnnotations == null)
-                    SetEncoderFiltersWithAnnotations();
-                return _encoderFiltersWithAnnotations;
+                if (_imageEncoderWithAnnotationsFilter == null)
+                    InitImageEncoderWithAnnotationsFilter();
+                return _imageEncoderWithAnnotationsFilter;
             }
         }
 
-        static int _encoderFiltersWithAnnotationsDefaultFilterIndex = -1;
-        public static int EncoderFiltersWithAnnotationsDefaultFilterIndex
+        static int _imageEncoderWithAnnotationsFilterDefaultIndex = -1;
+        /// <summary>
+        /// Gets the default index in file filter for image file encoders with annotation support.
+        /// </summary>
+        public static int ImageEncoderWithAnnotationsFilterDefaultIndex
         {
             get
             {
-                if (_encoderFiltersWithAnnotationsDefaultFilterIndex == -1)
-                    SetEncoderFiltersWithAnnotations();
-                return _encoderFiltersWithAnnotationsDefaultFilterIndex;
+                if (_imageEncoderWithAnnotationsFilterDefaultIndex == -1)
+                    InitImageEncoderWithAnnotationsFilter();
+                return _imageEncoderWithAnnotationsFilterDefaultIndex;
             }
         }
 
-        static string _multiPageEncoderFiltersWithAnnotations = null;
+        static string _multipageImageEncoderWithAnnotationsFilter = null;
+        /// <summary>
+        /// Gets the file filter for multipage image file encoders with annotation support.
+        /// </summary>
         public static string MultipageEncoderFiltersWithAnnotations
         {
             get
             {
-                if (_multiPageEncoderFiltersWithAnnotations == null)
-                    SetMultiPageEncoderFiltersWithAnnotations();
-                return _multiPageEncoderFiltersWithAnnotations;
+                if (_multipageImageEncoderWithAnnotationsFilter == null)
+                    InitMultipageImageEncoderWithAnnotationsFilter();
+                return _multipageImageEncoderWithAnnotationsFilter;
             }
         }
 
-        static int _multiPageEncoderFiltersWithAnnotationsDefaultFilterIndex = -1;
-        public static int MultipageEncoderFiltersWithAnnotationsDefaultFilterIndex
+        static int _multipageImageEncoderWithAnnotationsFilterDefaultIndex = -1;
+        /// <summary>
+        /// Gets the default index in file filter for multipage image file encoders with annotation support.
+        /// </summary>
+        public static int MultipageEncoderWithAnnotationsFilterDefaultIndex
         {
             get
             {
-                if (_multiPageEncoderFiltersWithAnnotationsDefaultFilterIndex == -1)
-                    SetMultiPageEncoderFiltersWithAnnotations();
-                return _multiPageEncoderFiltersWithAnnotationsDefaultFilterIndex;
+                if (_multipageImageEncoderWithAnnotationsFilterDefaultIndex == -1)
+                    InitMultipageImageEncoderWithAnnotationsFilter();
+                return _multipageImageEncoderWithAnnotationsFilterDefaultIndex;
             }
         }
 
@@ -270,124 +417,26 @@ namespace WpfDemosCommonCode.Imaging.Codecs
 
         #region Methods
 
-        #region Decoder
-
-        static void SetDecoderFilters()
-        {
-            string filter1 = string.Format("{0}|{1}", Filters_ImagesFiles, Filters_ExtendedFiles);
-            string filter2 = Filters_AllImageFiles + Filters_Extended;
-            _decoderFiltersDefaultFilterIndex = 15;
-
-            if (AvailableDecoders.IsDecoderAvailable("Jbig2"))
-            {
-                filter1 += "|" + Filters_Jbig2Files;
-                filter2 += Filters_Jbig2 + ";";
-                _decoderFiltersDefaultFilterIndex++;
-            }
-
-            if (AvailableDecoders.IsDecoderAvailable("Pdf"))
-            {
-                filter1 += "|" + Filters_PdfFiles;
-                filter2 += Filters_Pdf + ";";
-                _decoderFiltersDefaultFilterIndex++;
-            }
-
-            if (AvailableDecoders.IsDecoderAvailable("Docx"))
-            {
-                filter1 += "|" + Filters_DocxFiles;
-                filter2 += Filters_Docx + ";";
-                _decoderFiltersDefaultFilterIndex++;
-
-                filter1 += "|" + Filters_DocFiles;
-                filter2 += Filters_Doc + ";";
-                _decoderFiltersDefaultFilterIndex++;
-
-                filter1 += "|" + Filters_RtfFiles;
-                filter2 += Filters_Rtf + ";";
-                _decoderFiltersDefaultFilterIndex++;
-
-                filter1 += "|" + Filters_HtmlFiles;
-                filter2 += Filters_Html + ";";
-                _decoderFiltersDefaultFilterIndex++;
-            }
-
-            if (AvailableDecoders.IsDecoderAvailable("Xlsx"))
-            {
-                filter1 += "|" + Filters_XlsxFiles;
-                filter2 += Filters_Xlsx + ";";
-                _decoderFiltersDefaultFilterIndex++;
-
-                filter1 += "|" + Filters_XlsFiles;
-                filter2 += Filters_Xls + ";";
-                _decoderFiltersDefaultFilterIndex++;
-
-                filter1 += "|" + Filters_TsvFiles;
-                filter2 += Filters_Tsv + ";";
-                _decoderFiltersDefaultFilterIndex++;
-
-                filter1 += "|" + Filters_CsvFiles;
-                filter2 += Filters_Csv + ";";
-                _decoderFiltersDefaultFilterIndex++;
-            }
-
-            if (AvailableDecoders.IsDecoderAvailable("Jpeg2000"))
-            {
-                filter1 += "|" + Filters_Jpeg2000Files;
-                filter2 += Filters_Jpeg2000 + ";";
-                _decoderFiltersDefaultFilterIndex++;
-            }
-
-            if (AvailableDecoders.IsDecoderAvailable("Raw"))
-            {
-                filter1 += "|" + Filters_RawFiles;
-                filter2 += Filters_Raw + ";";
-                _decoderFiltersDefaultFilterIndex++;
-            }
-
-            if (AvailableDecoders.IsDecoderAvailable("Dicom"))
-            {
-                filter1 += "|" + Filters_DicomFiles;
-                filter2 += Filters_Dicom + ";";
-                _decoderFiltersDefaultFilterIndex++;
-            }
-
-            if (AvailableDecoders.IsDecoderAvailable("Xps"))
-            {
-                filter1 += "|" + Filters_XpsFiles;
-                filter2 += Filters_Xps + ";";
-                _decoderFiltersDefaultFilterIndex++;
-            }
-
-            // if WSI decoders (NDPI) is available
-            if (AvailableDecoders.IsDecoderAvailable("Ndpi"))
-            {
-                filter1 += "|" + WSI_FILE_DIALOG_FILTER;
-                filter2 += WSI_FILE_EXTENSIONS + ";";
-                _decoderFiltersDefaultFilterIndex++;
-            }
-
-            _decoderFilters = string.Format("{0}|{1}", filter1, filter2);
-        }
-
+        #region PUBLIC
 
         public static void SetFilters(OpenFileDialog dialog)
         {
-            dialog.Filter = DecoderFilters;
-            dialog.FilterIndex = DecoderFiltersDefaultFilterIndex;
+            dialog.Filter = ImageDecoderFilter;
+            dialog.FilterIndex = ImageDecoderFilterDefaultIndex;
         }
 
         public static void SetFilters(SaveFileDialog dialog, bool multipageOnly)
         {
             if (multipageOnly)
             {
-                dialog.Filter = MultipageEncoderFilters;
-                dialog.FilterIndex = MultipageEncoderFiltersDefaultFilterIndex;
+                dialog.Filter = MultipageImageEncoderFilter;
+                dialog.FilterIndex = MultipageImageEncoderFilterDefaultIndex;
                 dialog.DefaultExt = ".tif";
             }
             else
             {
-                dialog.Filter = EncoderFilters;
-                dialog.FilterIndex = EncoderFiltersDefaultFilterIndex;
+                dialog.Filter = ImageEncoderFilter;
+                dialog.FilterIndex = ImageDecoderFilterDefaultIndex;
                 dialog.DefaultExt = ".png";
             }
             dialog.OverwritePrompt = false;
@@ -398,12 +447,12 @@ namespace WpfDemosCommonCode.Imaging.Codecs
             if (multipageOnly)
             {
                 dialog.Filter = MultipageEncoderFiltersWithAnnotations;
-                dialog.FilterIndex = MultipageEncoderFiltersWithAnnotationsDefaultFilterIndex;
+                dialog.FilterIndex = MultipageEncoderWithAnnotationsFilterDefaultIndex;
             }
             else
             {
-                dialog.Filter = EncoderFiltersWithAnnotations;
-                dialog.FilterIndex = EncoderFiltersWithAnnotationsDefaultFilterIndex;
+                dialog.Filter = ImageEncoderWithAnnotationsFilter;
+                dialog.FilterIndex = ImageEncoderWithAnnotationsFilterDefaultIndex;
             }
             dialog.OverwritePrompt = false;
             dialog.DefaultExt = ".tif";
@@ -412,69 +461,222 @@ namespace WpfDemosCommonCode.Imaging.Codecs
         #endregion
 
 
-        #region Encoder
+        #region PRIVATE
 
-        static void SetEncoderFilters()
+        #region Decoders
+
+        /// <summary>
+        /// Inits the image decoder filter.
+        /// </summary>
+        static void InitImageDecoderFilter()
         {
-            string filter1 = Filters_ImagesFiles;
-            _encoderFiltersDefaultFilterIndex = 4;
+            string filter1 = string.Format("{0}|{1}", IMAGE_FILES_DIALOG_FILTER, OTHER_IMAGE_FILES_DIALOG_FILTER);
+            string filter2 = ALL_IMAGE_FILES_DIALOG_FILTER + OTHER_IMAGE_FILES_EXTENSIONS;
+            _imageDecoderFilterDefaultIndex = 17;
+
+            // if JBIG2 decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Jbig2"))
+            {
+                filter1 += "|" + JBIG2_FILE_DIALOG_FILTER;
+                filter2 += JBIG2_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            // if PDF decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Pdf"))
+            {
+                filter1 += "|" + PDF_FILE_DIALOG_FILTER;
+                filter2 += PDF_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            // if DOCX decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Docx"))
+            {
+                filter1 += "|" + DOCX_FILE_DIALOG_FILTER;
+                filter2 += DOCX_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+
+                filter1 += "|" + DOC_FILE_DIALOG_FILTER;
+                filter2 += DOC_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+
+                filter1 += "|" + RTF_FILE_DIALOG_FILTER;
+                filter2 += RTF_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+
+                filter1 += "|" + HTML_FILE_DIALOG_FILTER;
+                filter2 += HTML_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+
+                filter1 += "|" + ODT_FILE_DIALOG_FILTER;
+                filter2 += ODT_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            // if XLSX decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Xlsx"))
+            {
+                filter1 += "|" + XLSX_FILE_DIALOG_FILTER;
+                filter2 += XLSX_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+
+                filter1 += "|" + XLS_FILE_DIALOG_FILTER;
+                filter2 += XLS_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+
+                filter1 += "|" + TSV_FILE_DIALOG_FILTER;
+                filter2 += TSV_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+
+                filter1 += "|" + CSV_FILE_DIALOG_FILTER;
+                filter2 += CSV_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+
+                filter1 += "|" + ODS_FILE_DIALOG_FILTER;
+                filter2 += ODS_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            // if JPEG2000 decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Jpeg2000"))
+            {
+                filter1 += "|" + JPEG2000_FILE_DIALOG_FILTER;
+                filter2 += JPEG2000_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            // if RAW decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Raw"))
+            {
+                filter1 += "|" + RAW_FILE_DIALOG_FILTER;
+                filter2 += RAW_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            // if WEBP decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Webp"))
+            {
+                filter1 += "|" + WEBP_FILE_DIALOG_FILTER;
+                filter2 += WEBP_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            // if XPS decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Xps"))
+            {
+                filter1 += "|" + XPS_FILE_DIALOG_FILTER;
+                filter2 += XPS_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            // if DICOM decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Dicom"))
+            {
+                filter1 += "|" + DICOM_FILE_DIALOG_FILTER;
+                filter2 += DICOM_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            // if WSI decoders (NDPI) is available
+            if (AvailableDecoders.IsDecoderAvailable("Ndpi"))
+            {
+                filter1 += "|" + WSI_FILE_DIALOG_FILTER;
+                filter2 += WSI_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            _imageDecoderFilter = string.Format("{0}|{1}", filter1, filter2);
+        }
+
+        #endregion
+
+
+        #region Encoders
+
+        /// <summary>
+        /// Inits the image encoder filter.
+        /// </summary>
+        static void InitImageEncoderFilter()
+        {
+            string filter1 = IMAGE_FILES_DIALOG_FILTER;
+            _imageEncoderFilterDefaultIndex = 4;
 
             filter1 += "|" + SVG_FILE_DIALOG_FILTER;
 
+            // if JBIG2 encoder is available
             if (AvailableEncoders.IsEncoderAvailable("Jbig2"))
-                filter1 += "|" + Filters_Jbig2Files;
+                filter1 += "|" + JBIG2_FILE_DIALOG_FILTER;
 
+            // if PDF encoder is available
             if (AvailableEncoders.IsEncoderAvailable("Pdf"))
-                filter1 += "|" + Filters_PdfFiles;
+                filter1 += "|" + PDF_FILE_DIALOG_FILTER;
 
+            // if JPEG encoder is available
             if (AvailableEncoders.IsEncoderAvailable("Jpeg2000"))
-                filter1 += "|" + Filters_Jpeg2000Files;
+                filter1 += "|" + JPEG2000_FILE_DIALOG_FILTER;
 
-            _encoderFilters = filter1;
+            _imageEncoderFilter = filter1;
         }
 
-        static void SetMultiPageEncoderFilters()
+        /// <summary>
+        /// Inits the multipage image encoder filter.
+        /// </summary>
+        static void InitMultipageImageEncoderFilter()
         {
             string filter1 = "TIFF Files|*.tif;*.tiff";
-            _multiPageEncoderFiltersDefaultFilterIndex = 0;
+            _multipageImageEncoderFilterDefaultIndex = 0;
 
+            // if JBIG2 encoder is available
             if (AvailableEncoders.IsEncoderAvailable("Jbig2"))
-                filter1 += "|" + Filters_Jbig2Files;
+                filter1 += "|" + JBIG2_FILE_DIALOG_FILTER;
 
+            // if PDF encoder is available
             if (AvailableEncoders.IsEncoderAvailable("Pdf"))
-                filter1 += "|" + Filters_PdfFiles;
+                filter1 += "|" + PDF_FILE_DIALOG_FILTER;
 
-            filter1 += "|" + Filters_GifFiles;
+            filter1 += "|" + GIF_FILE_DIALOG_FILTER;
 
-            _multiPageEncoderFilters = filter1;
+            _multipageImageEncoderFilter = filter1;
         }
 
-
-        static void SetEncoderFiltersWithAnnotations()
+        /// <summary>
+        /// Inits the image encoder with annotations filter.
+        /// </summary>
+        static void InitImageEncoderWithAnnotationsFilter()
         {
-            string filter1 = Filters_TiffFiles;
-            _encoderFiltersWithAnnotationsDefaultFilterIndex = 0;
+            string filter1 = TIFF_FILE_DIALOG_FILTER;
+            _imageEncoderWithAnnotationsFilterDefaultIndex = 0;
 
+            // if PDF encoder is available
             if (AvailableEncoders.IsEncoderAvailable("Pdf"))
-                filter1 += "|" + Filters_PdfFiles;
+                filter1 += "|" + PDF_FILE_DIALOG_FILTER;
 
-            filter1 += "|" + Filters_JpegFiles;
+            filter1 += "|" + JPEG_FILE_DIALOG_FILTER;
 
-            filter1 += "|" + Filters_PngFiles;
+            filter1 += "|" + JPEG2000_FILE_DIALOG_FILTER;
 
-            _encoderFiltersWithAnnotations = filter1;
+            filter1 += "|" + PNG_FILE_DIALOG_FILTER;
+
+            _imageEncoderWithAnnotationsFilter = filter1;
         }
 
-        static void SetMultiPageEncoderFiltersWithAnnotations()
+        /// <summary>
+        /// Inits the multipage image encoder with annotations filter.
+        /// </summary>
+        static void InitMultipageImageEncoderWithAnnotationsFilter()
         {
-            string filter1 = Filters_TiffFiles;
-            _multiPageEncoderFiltersWithAnnotationsDefaultFilterIndex = 0;
+            string filter1 = TIFF_FILE_DIALOG_FILTER;
+            _multipageImageEncoderWithAnnotationsFilterDefaultIndex = 0;
 
+            // if PDF encoder is available
             if (AvailableEncoders.IsEncoderAvailable("Pdf"))
-                filter1 += "|" + Filters_PdfFiles;
+                filter1 += "|" + PDF_FILE_DIALOG_FILTER;
 
-            _multiPageEncoderFiltersWithAnnotations = filter1;
+            _multipageImageEncoderWithAnnotationsFilter = filter1;
         }
+
+        #endregion
 
         #endregion
 

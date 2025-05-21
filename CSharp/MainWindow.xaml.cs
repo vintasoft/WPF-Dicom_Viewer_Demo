@@ -575,9 +575,9 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
-        /// Handles the Click event of saveDicomFileToImageFileMenuItem object.
+        /// Handles the Click event of saveImagesAsMenuItem object.
         /// </summary>
-        private void saveDicomFileToImageFileMenuItem_Click(object sender, RoutedEventArgs e)
+        private void saveImagesAsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             ImageCollection images = GetSeriesImages();
             SubscribeToImageCollectionEvents(images);
@@ -649,6 +649,48 @@ namespace WpfDicomViewerDemo
                     IsFileSaving = false;
                 }
             }
+        }
+
+        /// <summary>
+        /// Handles the Click event of saveDisplayedImageMenuItem object.
+        /// </summary>
+        private void saveDisplayedImageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            CodecsFileFilters.SetFilters(_saveFileDialog, false);
+            // if file is selected in "Save file" dialog
+            if (_saveFileDialog.ShowDialog() == true)
+            {
+                string saveFilename = Path.GetFullPath(_saveFileDialog.FileName);
+
+                using (EncoderBase imageEncoder = GetEncoder(saveFilename))
+                {
+                    if (imageEncoder != null)
+                    {
+                        VintasoftImage image = _dicomViewerTool.GetDisplayedImage();
+                        if (image == null)
+                            image = imageViewer1.Image;
+
+                        IsFileSaving = true;
+                        try
+                        {
+                            // save images to a file
+                            image.Save(saveFilename, imageEncoder);
+                        }
+                        catch (Exception ex)
+                        {
+                            DemosTools.ShowErrorMessage(ex);
+                        }
+                        finally
+                        {
+                            IsFileSaving = false;
+
+                            if (image != imageViewer1.Image)
+                                image.Dispose();
+                        }
+                    }
+                }
+            }
+
         }
 
         /// <summary>
@@ -1414,6 +1456,16 @@ namespace WpfDicomViewerDemo
         }
 
         /// <summary>
+        /// Handles the Click event of interactionModeAnnotationEraserMenuItem object.
+        /// </summary>
+        private void interactionModeAnnotationEraserMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+#if !REMOVE_ANNOTATION_PLUGIN
+            _dicomAnnotatedViewerTool.DicomAnnotationTool.AnnotationInteractionMode = AnnotationInteractionMode.AnnotationEraser;
+#endif
+        }
+
+        /// <summary>
         /// Handles the SubmenuOpened event of annotationsMenuItem object.
         /// </summary>
         private void annotationsMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
@@ -1957,6 +2009,7 @@ namespace WpfDicomViewerDemo
             interactionModeNoneMenuItem.IsChecked = false;
             interactionModeViewMenuItem.IsChecked = false;
             interactionModeAuthorMenuItem.IsChecked = false;
+            interactionModeAnnotationEraserMenuItem.IsChecked = false;
 
             AnnotationInteractionMode annotationInteractionMode = e.NewValue;
             switch (annotationInteractionMode)
@@ -1971,6 +2024,10 @@ namespace WpfDicomViewerDemo
 
                 case AnnotationInteractionMode.Author:
                     interactionModeAuthorMenuItem.IsChecked = true;
+                    break;
+
+                case AnnotationInteractionMode.AnnotationEraser:
+                    interactionModeAnnotationEraserMenuItem.IsChecked = true;
                     break;
             }
 
@@ -2163,7 +2220,9 @@ namespace WpfDicomViewerDemo
             //
             openDicomFilesMenuItem.IsEnabled = !isDicomFileOpening && !isFileSaving;
             saveDicomFileToImageFileMenuItem.IsEnabled = isDicomFileLoaded && !isDicomFileOpening && !isFileSaving;
+            saveImageAsCurrentVOILUTMenuItem.IsEnabled = isDicomFileLoaded && !isDicomFileOpening && !isFileSaving;
             burnAndSaveToDICOMFileMenuItem.IsEnabled = isDicomFileLoaded && !isDicomFileOpening && !isFileSaving;
+            saveViewerScreenshotMenuItem.IsEnabled = isDicomFileLoaded && !isDicomFileOpening && !isFileSaving;
             closeDicomSeriesMenuItem.IsEnabled = isDicomFileLoaded && !isFileSaving;
             imageViewerToolBar.IsEnabled = !isDicomFileOpening && !isFileSaving;
 
@@ -3226,6 +3285,7 @@ namespace WpfDicomViewerDemo
             annotationInteractionModeComboBox.Items.Add(AnnotationInteractionMode.None);
             annotationInteractionModeComboBox.Items.Add(AnnotationInteractionMode.View);
             annotationInteractionModeComboBox.Items.Add(AnnotationInteractionMode.Author);
+            annotationInteractionModeComboBox.Items.Add(AnnotationInteractionMode.AnnotationEraser);
             // set interaction mode to the View 
             annotationInteractionModeComboBox.SelectedItem = AnnotationInteractionMode.None;
 #endif
