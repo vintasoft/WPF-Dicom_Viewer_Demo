@@ -238,6 +238,10 @@
                     <MenuItem Header="Width Vertical, Center Horizontal" Name="widthVerticalCenterHorizontalMenuItem" Click="widthVerticalCenterHorizontalMenuItem_Click" />
                 </MenuItem>
                 <Separator />
+                <MenuItem Header="Processing" Name="processingMenuItem">
+                    <ComboBox Name="processingComboBox" SelectionChanged="processingComboBox_SelectionChanged" Width="120" />
+                </MenuItem>
+                <Separator />
                 <MenuItem Header="Magnifier Settings..." Name="magnifierSettings" Click="magnifierSettings_Click">
                 </MenuItem>
             </MenuItem>
@@ -331,7 +335,7 @@
             <DicomViewerImaging:DicomAnnotatedViewerToolBar 
                 Grid.Row="1"
                 x:Name="dicomAnnotatedViewerToolBar" />
-            
+
             <ToolBar Grid.Row="1" Background="Transparent" Name="voiLutToolBar" ToolBarTray.IsLocked="True">
                 <Menu VerticalAlignment="Center" Background="Transparent">
                     <MenuItem Width="52">

@@ -47,5 +47,14 @@
         <BitmapImage x:Key="Zoom_101Icon" UriSource="Icons\Zoom_101.png" />
         <BitmapImage x:Key="Zoom_110Icon" UriSource="Icons\Zoom_110.png" />
         <BitmapImage x:Key="Zoom_111Icon" UriSource="Icons\Zoom_111.png" />
+        
+        <BitmapImage x:Key="ViewProcessing_000Icon" UriSource="Icons\ViewProcessing_000.png" />
+        <BitmapImage x:Key="ViewProcessing_001Icon" UriSource="Icons\ViewProcessing_001.png" />
+        <BitmapImage x:Key="ViewProcessing_010Icon" UriSource="Icons\ViewProcessing_010.png" />
+        <BitmapImage x:Key="ViewProcessing_011Icon" UriSource="Icons\ViewProcessing_011.png" />
+        <BitmapImage x:Key="ViewProcessing_100Icon" UriSource="Icons\ViewProcessing_100.png" />
+        <BitmapImage x:Key="ViewProcessing_101Icon" UriSource="Icons\ViewProcessing_101.png" />
+        <BitmapImage x:Key="ViewProcessing_110Icon" UriSource="Icons\ViewProcessing_110.png" />
+        <BitmapImage x:Key="ViewProcessing_111Icon" UriSource="Icons\ViewProcessing_111.png" />
     </ToolBar.Resources>
 </ToolBar>

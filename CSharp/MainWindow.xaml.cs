@@ -31,7 +31,11 @@ using Vintasoft.Imaging.Codecs.ImageFiles.Dicom;
 using Vintasoft.Imaging.Dicom.Wpf.UI;
 using Vintasoft.Imaging.Dicom.Wpf.UI.VisualTools;
 using Vintasoft.Imaging.ImageColors;
+using Vintasoft.Imaging.ImageProcessing;
+using Vintasoft.Imaging.ImageProcessing.Color;
+using Vintasoft.Imaging.ImageProcessing.Filters;
 using Vintasoft.Imaging.Metadata;
+using Vintasoft.Imaging.UI;
 using Vintasoft.Imaging.UI.VisualTools.UserInteraction;
 using Vintasoft.Imaging.UIActions;
 using Vintasoft.Imaging.Wpf.UI;
@@ -141,6 +145,17 @@ namespace WpfDicomViewerDemo
         /// </summary>
         bool _disposeImageCollectionAfterSave = false;
 
+        /// <summary>
+        /// The processing commands, which can be applied to an image region of DICOM viewer.
+        /// </summary>
+        ProcessingCommandBase[] _processingCommands = new ProcessingCommandBase[]
+        {
+            null,
+            new InvertCommand(),
+            new BlurCommand(7),
+            new SharpenCommand(),
+            new Vintasoft.Imaging.ImageProcessing.Fft.Filters.ImageSharpeningCommand()
+        };
 
         #region File Dialogs
 
@@ -416,6 +431,19 @@ namespace WpfDicomViewerDemo
             _defaultVoiLutMenuItem.Click += new RoutedEventHandler(voiLutMenuItem_Click);
 
             Title = "VintaSoft WPF DICOM Viewer Demo v" + ImagingGlobalSettings.ProductVersion;
+
+
+            foreach (ProcessingCommandBase processingCommand in _processingCommands)
+            {
+                string processingCommandName = "None";
+
+                if (processingCommand != null)
+                    processingCommandName = processingCommand.Name;
+
+                processingComboBox.Items.Add(processingCommandName);
+            }
+            processingComboBox.SelectedIndex = 0;
+
 
             // update the UI
             UpdateUI();
@@ -2372,6 +2400,25 @@ namespace WpfDicomViewerDemo
 
         #region 'View' menu
 
+        /// <summary>
+        /// Handles the SelectionChanged event of processingComboBox object.
+        /// </summary>
+        private void processingComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_dicomViewerTool == null)
+                return;
+
+            ProcessingCommandBase command = _processingCommands[processingComboBox.SelectedIndex];
+
+            if (_dicomViewerTool.ViewProcessingCommand == command)
+                return;
+
+            if (_dicomViewerTool.GetMouseButtonsForInteractionMode(DicomViewerToolInteractionMode.ViewProcessing) == VintasoftMouseButtons.None)
+                _dicomViewerTool.SetInteractionMode(VintasoftMouseButtons.Left, DicomViewerToolInteractionMode.ViewProcessing);
+
+            _dicomViewerTool.ViewProcessingCommand = command;
+        }
+
         #region VOI LUT
 
         /// <summary>
@@ -3370,7 +3417,6 @@ namespace WpfDicomViewerDemo
                 }
             }
         }
-
 
         #region Hot keys
 

@@ -73,7 +73,8 @@ namespace WpfDicomViewerDemo
                         DicomViewerToolInteractionMode.Browse,
                         DicomViewerToolInteractionMode.Pan,
                         DicomViewerToolInteractionMode.Zoom,
-                        DicomViewerToolInteractionMode.WindowLevel};
+                        DicomViewerToolInteractionMode.WindowLevel,
+                        DicomViewerToolInteractionMode.ViewProcessing,};
 
             // initilize name of icons
 
@@ -87,6 +88,8 @@ namespace WpfDicomViewerDemo
                 "WindowLevel_{0}{1}{2}Icon");
             _interactionModeToIconNameFormat.Add(DicomViewerToolInteractionMode.Zoom,
                 "Zoom_{0}{1}{2}Icon");
+            _interactionModeToIconNameFormat.Add(DicomViewerToolInteractionMode.ViewProcessing,
+                "ViewProcessing_{0}{1}{2}Icon");
 
             // initialize buttons
             InitButtons();
@@ -595,21 +598,11 @@ namespace WpfDicomViewerDemo
         private VintasoftMouseButtons GetMouseButtonsForInteractionMode(
             DicomViewerToolInteractionMode interactionMode)
         {
-            // the result mouse buttons
-            VintasoftMouseButtons resultMouseButton = VintasoftMouseButtons.None;
+            // if tool exists
+            if (Tool != null)
+                return Tool.GetMouseButtonsForInteractionMode(interactionMode);
 
-            // for each available mouse button
-            foreach (VintasoftMouseButtons button in _availableMouseButtons)
-            {
-                // get an interaction mode for mouse button
-                DicomViewerToolInteractionMode mouseButtonInteractionMode = Tool.GetInteractionMode(button);
-                // if interaction mode for mouse button equals to the analyzing interaction mode
-                if (mouseButtonInteractionMode == interactionMode)
-                    // add mouse button to the result
-                    resultMouseButton |= button;
-            }
-
-            return resultMouseButton;
+            return VintasoftMouseButtons.None;
         }
 
         /// <summary>
