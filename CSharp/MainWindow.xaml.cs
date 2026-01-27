@@ -440,9 +440,11 @@ namespace WpfDicomViewerDemo
                 if (processingCommand != null)
                     processingCommandName = processingCommand.Name;
 
-                processingComboBox.Items.Add(processingCommandName);
+                viewProcessingComboBox.Items.Add(processingCommandName);
+                viewerProcessingComboBox.Items.Add(processingCommandName);
             }
-            processingComboBox.SelectedIndex = 0;
+            viewProcessingComboBox.SelectedIndex = 0;
+            viewerProcessingComboBox.SelectedIndex = 0;
 
 
             // update the UI
@@ -2401,14 +2403,14 @@ namespace WpfDicomViewerDemo
         #region 'View' menu
 
         /// <summary>
-        /// Handles the SelectionChanged event of processingComboBox object.
+        /// Handles the SelectionChanged event of viewProcessingComboBox object.
         /// </summary>
-        private void processingComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void viewProcessingComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_dicomViewerTool == null)
                 return;
 
-            ProcessingCommandBase command = _processingCommands[processingComboBox.SelectedIndex];
+            ProcessingCommandBase command = _processingCommands[viewProcessingComboBox.SelectedIndex];
 
             if (_dicomViewerTool.ViewProcessingCommand == command)
                 return;
@@ -2417,6 +2419,22 @@ namespace WpfDicomViewerDemo
                 _dicomViewerTool.SetInteractionMode(VintasoftMouseButtons.Left, DicomViewerToolInteractionMode.ViewProcessing);
 
             _dicomViewerTool.ViewProcessingCommand = command;
+        }
+
+        /// <summary>
+        /// Handles the SelectionChanged event of viewerProcessingComboBox object.
+        /// </summary>
+        private void viewerProcessingComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_dicomViewerTool == null)
+                return;
+
+            ProcessingCommandBase command = _processingCommands[viewerProcessingComboBox.SelectedIndex];
+
+            if (_dicomViewerTool.DisplayedImageProcessing == command)
+                return;
+
+            _dicomViewerTool.DisplayedImageProcessing = command;
         }
 
         #region VOI LUT
