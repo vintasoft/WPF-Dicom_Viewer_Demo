@@ -1,4 +1,4 @@
-﻿namespace WpfDemosCommonCode.Imaging
+﻿namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Stores information about a <see cref="System.Windows.Controls.Separator"/> action.

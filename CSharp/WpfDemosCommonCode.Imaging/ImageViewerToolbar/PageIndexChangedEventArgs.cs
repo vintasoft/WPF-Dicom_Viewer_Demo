@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Provides data for the <see cref="ImageViewerToolbar.PageIndexChanged"/> event.

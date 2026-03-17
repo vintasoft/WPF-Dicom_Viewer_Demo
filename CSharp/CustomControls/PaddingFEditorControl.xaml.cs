@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using Vintasoft.Imaging;
 
 
-namespace WpfDemosCommonCode.CustomControls
+namespace WpfCommonCode.CustomControls
 {
     /// <summary>
     /// A control that allows to change the padding.

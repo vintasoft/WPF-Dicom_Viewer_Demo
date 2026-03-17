@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace WpfDemosCommonCode.CustomControls
+namespace WpfCommonCode.CustomControls
 {
     /// <summary>
     /// A control that allows to edit value in image processing configuration window.

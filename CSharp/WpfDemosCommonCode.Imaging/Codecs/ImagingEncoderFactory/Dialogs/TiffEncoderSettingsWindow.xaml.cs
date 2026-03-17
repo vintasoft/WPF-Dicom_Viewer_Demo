@@ -8,7 +8,7 @@ using Vintasoft.Imaging.Codecs.Encoders;
 using Vintasoft.Imaging.ImageProcessing;
 
 
-namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
+namespace WpfCommonCode.Imaging.Codecs.Dialogs
 {
     /// <summary>
     /// A form that allows to view and edit the TIFF encoder settings.

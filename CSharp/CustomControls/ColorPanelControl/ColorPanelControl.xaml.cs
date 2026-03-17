@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using Vintasoft.Imaging.Wpf;
 
 
-namespace WpfDemosCommonCode.CustomControls
+namespace WpfCommonCode.CustomControls
 {
     /// <summary>
     /// A panel that allows to show the selected color and change the selected color.

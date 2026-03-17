@@ -1,9 +1,9 @@
-﻿<Window x:Class="WpfDemosCommonCode.Imaging.AddDicomDataElementWindow"
+﻿<Window x:Class="WpfCommonCode.Imaging.AddDicomDataElementWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
+    xmlns:CustomControls="clr-namespace:WpfCommonCode.CustomControls"
     xmlns:WindowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-    xmlns:This="clr-namespace:WpfDemosCommonCode.Imaging"
+    xmlns:This="clr-namespace:WpfCommonCode.Imaging"
     Title="Add DICOM Data Element" 
     Width="346" MinWidth="346" MaxWidth="346"
     Height="300" MinHeight="190" >

@@ -1,7 +1,7 @@
-﻿<UserControl x:Class="WpfDemosCommonCode.CustomControls.ValueEditorControl"
+﻿<UserControl x:Class="WpfCommonCode.CustomControls.ValueEditorControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
+    xmlns:CustomControls="clr-namespace:WpfCommonCode.CustomControls"
     MinHeight="76" MaxHeight="76" MinWidth="130"
     HorizontalAlignment="Stretch">
     <Grid>

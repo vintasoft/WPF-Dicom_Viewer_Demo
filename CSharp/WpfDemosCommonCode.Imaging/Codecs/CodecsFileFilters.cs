@@ -1,9 +1,9 @@
-using Vintasoft.Imaging.Codecs;
+﻿using Vintasoft.Imaging.Codecs;
 using Microsoft.Win32;
 using Vintasoft.Imaging.Codecs.Decoders;
 using Vintasoft.Imaging.Codecs.Encoders;
 
-namespace WpfDemosCommonCode.Imaging.Codecs
+namespace WpfCommonCode.Imaging.Codecs
 {
     /// <summary>
     /// Class that contains filters for Open/Save dialogs.

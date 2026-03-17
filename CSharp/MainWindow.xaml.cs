@@ -43,11 +43,11 @@ using Vintasoft.Imaging.Wpf.UI.VisualTools;
 using Vintasoft.Imaging.Wpf.UI.VisualTools.UserInteraction;
 using Vintasoft.Primitives;
 
-using WpfDemosCommonCode;
-using WpfDemosCommonCode.CustomControls;
-using WpfDemosCommonCode.Imaging;
-using WpfDemosCommonCode.Imaging.Codecs;
-using WpfDemosCommonCode.Imaging.Codecs.Dialogs;
+using WpfCommonCode;
+using WpfCommonCode.CustomControls;
+using WpfCommonCode.Imaging;
+using WpfCommonCode.Imaging.Codecs;
+using WpfCommonCode.Imaging.Codecs.Dialogs;
 
 namespace WpfDicomViewerDemo
 {

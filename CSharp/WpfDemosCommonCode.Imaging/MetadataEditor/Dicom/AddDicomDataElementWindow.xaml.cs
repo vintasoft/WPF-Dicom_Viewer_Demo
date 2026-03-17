@@ -11,7 +11,7 @@ using Vintasoft.Imaging.Codecs.ImageFiles.Dicom;
 #endif
 using Vintasoft.Imaging.Metadata;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Represents a form that allows to add a DICOM data element to a DICOM data set of DICOM file.

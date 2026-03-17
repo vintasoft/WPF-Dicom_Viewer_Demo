@@ -4,7 +4,7 @@
 using Vintasoft.Imaging.Annotation.Wpf.UI.Measurements;
 #endif
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Creates visual tool action, which allows to enable/disable visual tool <see cref="WpfImageMeasureTool"/> in image viewer, and adds action to the toolstrip.

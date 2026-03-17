@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Windows;
 
 using Vintasoft.Imaging.Codecs.Encoders;
 using Vintasoft.Imaging.Codecs.ImageFiles.Bmp;
 
 
-namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
+namespace WpfCommonCode.Imaging.Codecs.Dialogs
 {
     /// <summary>
     /// A window that allows to view and edit the BMP encoder settings.

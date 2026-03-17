@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Windows;
 
 using Vintasoft.Imaging.Codecs.Encoders;
 using Vintasoft.Imaging.Codecs.ImageFiles.Pbm;
 
-namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
+namespace WpfCommonCode.Imaging.Codecs.Dialogs
 {
     /// <summary>
     /// A form that allows to view and edit the PBM encoder settings.

@@ -1,7 +1,7 @@
-﻿<Window x:Class="WpfDemosCommonCode.Imaging.RenderingSettingsWindow"
+﻿<Window x:Class="WpfCommonCode.Imaging.RenderingSettingsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
+    xmlns:CustomControls="clr-namespace:WpfCommonCode.CustomControls"
     Title="Rendering Settings" Height="269" Width="303" Topmost="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>

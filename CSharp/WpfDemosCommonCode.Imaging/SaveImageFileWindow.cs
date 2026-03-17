@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 
 using System;
 using System.Windows;
@@ -6,10 +6,10 @@ using System.Windows;
 using Vintasoft.Imaging;
 using Vintasoft.Imaging.Codecs.Encoders;
 
-using WpfDemosCommonCode.Imaging.Codecs;
+using WpfCommonCode.Imaging.Codecs;
 
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Allows to show a file save dialog and save an image to a file.

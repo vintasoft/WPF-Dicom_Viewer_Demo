@@ -1,7 +1,7 @@
-﻿<Window x:Class="WpfDemosCommonCode.Imaging.WpfMagnifierToolSettingsWindow"
+﻿<Window x:Class="WpfCommonCode.Imaging.WpfMagnifierToolSettingsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls" 
+    xmlns:CustomControls="clr-namespace:WpfCommonCode.CustomControls" 
     Title="Magnifier Tool Settings" Height="250" Width="357" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid Margin="4">
         <Grid.ColumnDefinitions>

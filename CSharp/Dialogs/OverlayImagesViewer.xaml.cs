@@ -12,8 +12,8 @@ using Vintasoft.Imaging.Codecs.Encoders;
 using Vintasoft.Imaging.Codecs.ImageFiles.Dicom;
 using Vintasoft.Imaging.Metadata;
 
-using WpfDemosCommonCode;
-using WpfDemosCommonCode.CustomControls;
+using WpfCommonCode;
+using WpfCommonCode.CustomControls;
 
 
 namespace WpfDicomViewerDemo

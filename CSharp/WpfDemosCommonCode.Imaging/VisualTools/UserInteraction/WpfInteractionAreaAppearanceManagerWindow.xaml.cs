@@ -4,7 +4,7 @@ using System.Windows;
 using Vintasoft.Imaging.Wpf.UI.VisualTools.UserInteraction;
 
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// A window that allows to edit InteractionAreaAppearanceManager settings.

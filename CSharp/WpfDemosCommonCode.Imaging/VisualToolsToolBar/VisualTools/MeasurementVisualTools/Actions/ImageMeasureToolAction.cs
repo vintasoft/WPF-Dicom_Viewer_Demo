@@ -14,7 +14,7 @@ using Vintasoft.Imaging.Annotation.Measurements;
 using Vintasoft.Imaging.Annotation.Wpf.UI;
 using Vintasoft.Imaging.Annotation.Wpf.UI.Measurements;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Stores information about a <see cref="WpfImageMeasureTool"/> action.

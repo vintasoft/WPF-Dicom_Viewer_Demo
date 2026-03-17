@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 
-namespace WpfDemosCommonCode
+namespace WpfCommonCode
 {
     /// <summary>
     /// A base window for the application about dialog.

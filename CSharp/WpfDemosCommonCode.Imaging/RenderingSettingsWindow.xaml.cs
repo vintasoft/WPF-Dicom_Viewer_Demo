@@ -7,7 +7,7 @@ using Vintasoft.Imaging.Codecs.Decoders;
 using Vintasoft.Imaging.Codecs.Encoders;
 using Vintasoft.Imaging.Drawing;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// A form that allows to view and edit the rendering settings.

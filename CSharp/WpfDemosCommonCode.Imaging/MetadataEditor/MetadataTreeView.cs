@@ -6,7 +6,7 @@ using System.Windows.Media;
 using Vintasoft.Imaging.Metadata;
 
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// A control that allows to view the metadata tree.

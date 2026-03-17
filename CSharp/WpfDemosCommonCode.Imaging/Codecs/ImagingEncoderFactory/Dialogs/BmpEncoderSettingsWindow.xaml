@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfDemosCommonCode.Imaging.Codecs.Dialogs.BmpEncoderSettingsWindow"
+﻿<Window x:Class="WpfCommonCode.Imaging.Codecs.Dialogs.BmpEncoderSettingsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="BMP Encoder Settings" Height="110" Width="250" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">

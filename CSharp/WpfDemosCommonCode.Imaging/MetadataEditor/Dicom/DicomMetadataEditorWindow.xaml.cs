@@ -6,7 +6,7 @@ using Vintasoft.Imaging.Codecs.ImageFiles.Dicom;
 #endif
 using Vintasoft.Imaging.Metadata;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Interaction logic for DicomMetadataEditorWindow.xaml

@@ -1,7 +1,7 @@
-﻿<Window x:Class="WpfDemosCommonCode.Imaging.ThumbnailViewerSettingsWindow"
+﻿<Window x:Class="WpfCommonCode.Imaging.ThumbnailViewerSettingsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
+    xmlns:CustomControls="clr-namespace:WpfCommonCode.CustomControls"
     Title="Thumbnail Viewer Settings" 
         Height="675" Width="540" 
         Topmost="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">

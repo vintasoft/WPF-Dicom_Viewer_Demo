@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Media;
 
@@ -10,7 +10,7 @@ using Vintasoft.Imaging.UI;
 using Vintasoft.Imaging.Wpf.UI;
 
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// A window that allows to view and change settings of the image viewer.

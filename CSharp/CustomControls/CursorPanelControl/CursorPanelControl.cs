@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 
-namespace WpfDemosCommonCode.CustomControls
+namespace WpfCommonCode.CustomControls
 {
     /// <summary>
     /// A panel that allows to show the selected cursor and change the selected cursor.

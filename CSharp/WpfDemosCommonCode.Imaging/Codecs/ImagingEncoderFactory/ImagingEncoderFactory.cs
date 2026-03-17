@@ -4,10 +4,10 @@ using System.Windows;
 
 using Vintasoft.Imaging.Codecs.Encoders;
 
-using WpfDemosCommonCode.Imaging.Codecs.Dialogs;
+using WpfCommonCode.Imaging.Codecs.Dialogs;
 
 
-namespace WpfDemosCommonCode.Imaging.Codecs
+namespace WpfCommonCode.Imaging.Codecs
 {
     /// <summary>
     /// Provides the ability to create the encoder (<see cref="EncoderBase"/> or 

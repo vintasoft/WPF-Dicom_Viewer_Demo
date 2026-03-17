@@ -9,7 +9,7 @@ using Vintasoft.Imaging;
 using Vintasoft.Imaging.UI;
 using Vintasoft.Imaging.Wpf.UI;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// A toolbar of image viewer.

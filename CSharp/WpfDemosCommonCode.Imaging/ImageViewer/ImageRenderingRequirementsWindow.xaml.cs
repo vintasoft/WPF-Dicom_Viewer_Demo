@@ -8,7 +8,7 @@ using System.Windows.Input;
 using Vintasoft.Imaging.ImageRendering;
 
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// A window that allows to view and edit the image rendering requirements.

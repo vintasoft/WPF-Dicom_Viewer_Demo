@@ -1,7 +1,7 @@
-﻿<UserControl x:Class="WpfDemosCommonCode.CustomControls.PaddingFEditorControl"
+﻿<UserControl x:Class="WpfCommonCode.CustomControls.PaddingFEditorControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:CustomControls="clr-namespace:WpfDemosCommonCode.CustomControls"
+    xmlns:CustomControls="clr-namespace:WpfCommonCode.CustomControls"
     Width="150" Height="78" MinWidth="150" MinHeight="78">
     <Grid>
         <Grid.ColumnDefinitions>

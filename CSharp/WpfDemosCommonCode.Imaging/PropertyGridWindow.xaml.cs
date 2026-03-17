@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// A window that shows the property grid with properties of specified object.

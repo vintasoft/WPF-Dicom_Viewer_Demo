@@ -2,7 +2,7 @@
 
 using Vintasoft.Imaging;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Stores information about a <see cref="UnitOfMeasure"/> action.

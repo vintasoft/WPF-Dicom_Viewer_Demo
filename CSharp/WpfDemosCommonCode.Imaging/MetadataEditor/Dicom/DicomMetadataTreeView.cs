@@ -1,6 +1,6 @@
 ﻿using Vintasoft.Imaging.Metadata;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// A control that allows to view the DICOM metadata tree.

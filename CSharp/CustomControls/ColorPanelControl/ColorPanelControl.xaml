@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfDemosCommonCode.CustomControls.ColorPanelControl"
+﻿<UserControl x:Class="WpfCommonCode.CustomControls.ColorPanelControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Width="Auto" MinWidth="50"

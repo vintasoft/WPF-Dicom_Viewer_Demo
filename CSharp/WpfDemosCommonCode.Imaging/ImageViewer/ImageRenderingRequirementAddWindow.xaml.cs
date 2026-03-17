@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// A window that allows to add an image rendering requirement.

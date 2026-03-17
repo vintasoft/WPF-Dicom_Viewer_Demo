@@ -10,7 +10,7 @@ using Vintasoft.Imaging.ImageProcessing.Effects;
 
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// A window that allows to edit magnifier tool settings.

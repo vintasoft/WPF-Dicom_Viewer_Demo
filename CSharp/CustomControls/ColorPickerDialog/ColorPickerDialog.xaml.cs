@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace WpfDemosCommonCode.CustomControls
+namespace WpfCommonCode.CustomControls
 {
     /// <summary>
     /// A dialog that shows a color picker.

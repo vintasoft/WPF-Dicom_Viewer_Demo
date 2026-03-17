@@ -5,7 +5,7 @@ using Vintasoft.Imaging.Annotation.Dicom.Wpf.UI.VisualTools;
 #endif
 using Vintasoft.Imaging.Wpf.UI.VisualTools;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Interaction logic for DicomAnnotatedViewerToolBar.xaml

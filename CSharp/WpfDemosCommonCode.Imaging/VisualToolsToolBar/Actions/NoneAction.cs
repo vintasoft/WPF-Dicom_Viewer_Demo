@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media.Imaging;
 
-namespace WpfDemosCommonCode.Imaging
+namespace WpfCommonCode.Imaging
 {
     /// <summary>
     /// Stores information about an empty visual tool action.

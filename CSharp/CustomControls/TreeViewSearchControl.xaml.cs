@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace WpfDemosCommonCode.CustomControls
+namespace WpfCommonCode.CustomControls
 {
     /// <summary>
     /// A control that allows to search <see cref="System.Windows.Controls.TreeViewItem"/> in the <see cref="System.Windows.Controls.TreeView"/>.

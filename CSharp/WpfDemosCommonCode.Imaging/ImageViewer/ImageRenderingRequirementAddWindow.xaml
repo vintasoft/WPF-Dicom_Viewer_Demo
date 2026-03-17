@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfDemosCommonCode.Imaging.ImageRenderingRequirementAddWindow"
+﻿<Window x:Class="WpfCommonCode.Imaging.ImageRenderingRequirementAddWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Image Rendering Requirement Add" Height="123" Width="351" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 using Vintasoft.Imaging;
 
-namespace WpfDemosCommonCode.CustomControls
+namespace WpfCommonCode.CustomControls
 {
     /// <summary> 
     /// Defines a UserControl for changing a value of <see cref="AnchorType"/> type.

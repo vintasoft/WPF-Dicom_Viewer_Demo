@@ -6,7 +6,7 @@ using Vintasoft.Imaging.Codecs.ImageFiles.Gif;
 using Vintasoft.Imaging.Codecs.Encoders;
 
 
-namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
+namespace WpfCommonCode.Imaging.Codecs.Dialogs
 {
     /// <summary>
     /// A window that allows to view and edit the GIF encoder settings.

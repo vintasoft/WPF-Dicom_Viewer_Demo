@@ -6,7 +6,7 @@ using Vintasoft.Imaging.Codecs.ImageFiles.Jpeg2000;
 using Vintasoft.Imaging.Codecs.Encoders;
 
 
-namespace WpfDemosCommonCode.Imaging.Codecs.Dialogs
+namespace WpfCommonCode.Imaging.Codecs.Dialogs
 {
     /// <summary>
     /// A form that allows to view and edit the JPEG2000 encoder settings.

@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 using Vintasoft.Imaging;
 
 
-namespace WpfDemosCommonCode
+namespace WpfCommonCode
 {
     /// <summary>
     /// Provides access to the resources of this demo.

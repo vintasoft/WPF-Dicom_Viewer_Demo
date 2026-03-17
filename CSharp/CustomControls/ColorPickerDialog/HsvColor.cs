@@ -1,5 +1,5 @@
-
-namespace WpfDemosCommonCode.CustomControls
+﻿
+namespace WpfCommonCode.CustomControls
 {
     /// <summary>
     /// Describes a color in terms of
