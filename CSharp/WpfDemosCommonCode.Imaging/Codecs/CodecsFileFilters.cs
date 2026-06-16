@@ -140,6 +140,14 @@ namespace WpfCommonCode.Imaging.Codecs
         /// </summary>
         const string WSI_FILE_DIALOG_FILTER = "WSI (Whole-Slide image) files|" + WSI_FILE_EXTENSIONS;
 
+        /// <summary>
+        /// The CAD file extensions.
+        /// </summary>
+        const string CAD_FILE_EXTENSIONS = "*.dxf;*.dwg";
+        /// <summary>
+        /// The file filter for CAD files.
+        /// </summary>
+        const string CAD_FILE_DIALOG_FILTER = "CAD Image Files|" + CAD_FILE_EXTENSIONS;
 
         /// <summary>
         /// The DICOM file extensions.
@@ -149,6 +157,15 @@ namespace WpfCommonCode.Imaging.Codecs
         /// The file filter for DICOM files.
         /// </summary>
         const string DICOM_FILE_DIALOG_FILTER = "DICOM files|" + DICOM_FILE_EXTENSIONS;
+
+        /// <summary>
+        /// The PPTX file extensions.
+        /// </summary>
+        const string PPTX_FILE_EXTENSIONS = "*.pptx";
+        /// <summary>
+        /// The file filter for PPTX files.
+        /// </summary>
+        const string PPTX_FILE_DIALOG_FILTER = "PPTX files|" + PPTX_FILE_EXTENSIONS;
 
         /// <summary>
         /// The DOCX file extensions.
@@ -538,6 +555,14 @@ namespace WpfCommonCode.Imaging.Codecs
                 _imageDecoderFilterDefaultIndex++;
             }
 
+            // if PPTX decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Pptx"))
+            {
+                filter1 += "|" + PPTX_FILE_DIALOG_FILTER;
+                filter2 += PPTX_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
             // if JPEG2000 decoder is available
             if (AvailableDecoders.IsDecoderAvailable("Jpeg2000"))
             {
@@ -551,6 +576,14 @@ namespace WpfCommonCode.Imaging.Codecs
             {
                 filter1 += "|" + RAW_FILE_DIALOG_FILTER;
                 filter2 += RAW_FILE_EXTENSIONS + ";";
+                _imageDecoderFilterDefaultIndex++;
+            }
+
+            // if CAD decoder is available
+            if (AvailableDecoders.IsDecoderAvailable("Cad"))
+            {
+                filter1 += "|" + CAD_FILE_DIALOG_FILTER;
+                filter2 += CAD_FILE_EXTENSIONS + ";";
                 _imageDecoderFilterDefaultIndex++;
             }
 

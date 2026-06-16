@@ -308,6 +308,16 @@ namespace WpfDicomViewerDemo
         #region Constructors
 
         /// <summary>
+        /// Initializes the <see cref="MainWindow"/> class.
+        /// </summary>
+        static MainWindow()
+        {
+            Jpeg2000AssemblyLoader.Load();
+
+            AnnotationTypeEditorRegistrator.Register();
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         public MainWindow()
@@ -316,10 +326,6 @@ namespace WpfDicomViewerDemo
             Vintasoft.Imaging.ImagingGlobalSettings.Register("REG_USER", "REG_EMAIL", "EXPIRATION_DATE", "REG_CODE");
 
             InitializeComponent();
-
-            Jpeg2000AssemblyLoader.Load();
-
-            AnnotationTypeEditorRegistrator.Register();
 
             InitFileDialogs();
 
