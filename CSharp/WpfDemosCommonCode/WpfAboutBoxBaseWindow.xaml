@@ -51,7 +51,7 @@
                     <Label Grid.Column="0" Grid.Row="3" Padding="3">Register:</Label>
                     <TextBlock Grid.Column="1" Grid.Row="3" Padding="1" Name="registerLinkLabel" MouseDown="linkLabel_MouseDown" Foreground="Blue" Cursor="Hand" VerticalAlignment="Center"><TextBlock.TextDecorations><TextDecoration /></TextBlock.TextDecorations>www.vintasoft.com/register.html</TextBlock>
                     <Label Grid.Column="0" Grid.Row="4" Padding="3">Forums:</Label>
-                    <TextBlock Grid.Column="1" Grid.Row="4" Padding="1" Name="forumsLinkLabel" MouseDown="linkLabel_MouseDown" Foreground="Blue" Cursor="Hand" VerticalAlignment="Center"><TextBlock.TextDecorations><TextDecoration /></TextBlock.TextDecorations>www.vintasoft.com/forums/</TextBlock>
+                    <TextBlock Grid.Column="1" Grid.Row="4" Padding="1" Name="forumsLinkLabel" MouseDown="linkLabel_MouseDown" Foreground="Blue" Cursor="Hand" VerticalAlignment="Center"><TextBlock.TextDecorations><TextDecoration /></TextBlock.TextDecorations>forums.vintasoft.com</TextBlock>
                 </Grid>
             </Grid>
         </Border>
